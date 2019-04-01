@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    this.http.get('http://nodejs.local.huynguyen.com.vn/api/user/show-user', {
+    this.http.get(`${environment.baseUrl}/user/show-user`, {
       headers: new HttpHeaders({
         'content-type':  'application/json',
         'token': localStorage.token

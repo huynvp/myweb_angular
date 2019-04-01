@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
 	selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
 			'content-type': 'application/json'
 		});
 
-		this.http.post('http://nodejs.local.huynguyen.com.vn/api/user/login', JSON.stringify({
+		this.http.post(`${environment.baseUrl}/user/login`, JSON.stringify({
 			username: this.username,
 			password: this.password
 		}), {
