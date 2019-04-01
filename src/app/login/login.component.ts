@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-login',
@@ -11,13 +12,15 @@ export class LoginComponent implements OnInit {
 	username:string;
 	password:string;
 
-	constructor(public http:HttpClient) {
+	constructor(public http:HttpClient, public router:Router) {
 		this.username = '';
 		this.password = '';
 	}
 
 	ngOnInit() {
-
+		if(localStorage.token !== undefined) {
+			this.router.navigate(['/home']);
+		}
 	}
 
 	handleLogin() {
@@ -34,8 +37,8 @@ export class LoginComponent implements OnInit {
 		})
 		.toPromise()
 		.then(res => {
-			alert('Login success');
 			localStorage.token = res['data'].token;
+			this.router.navigate(['/home']);
 		})
 		.catch(err => {
 			console.log(err);
