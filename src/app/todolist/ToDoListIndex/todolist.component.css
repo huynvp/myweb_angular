@@ -1,0 +1,9 @@
+.card {
+    margin: 10px
+}
+
+#title {
+    text-align: center;
+    font-weight: bold;
+    color: #b1b1b1;
+}

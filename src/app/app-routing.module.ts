@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
-import { TodolistModule } from './todolist/todolist.moduule';
+import { TodolistModule } from './todolist/todolist.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

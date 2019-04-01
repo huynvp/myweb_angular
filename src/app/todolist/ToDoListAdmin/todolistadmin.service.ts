@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 
-export class ToDoListService {
+export class ToDoListAdminService {
     constructor(public http:HttpClient) {
 
     }
