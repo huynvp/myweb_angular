@@ -37,4 +37,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  handleLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
 }

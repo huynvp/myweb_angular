@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { TodolistModule } from './todolist/todolist.moduule';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,8 +16,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    TodolistModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
   ],
   declarations: [
     LoginComponent,
