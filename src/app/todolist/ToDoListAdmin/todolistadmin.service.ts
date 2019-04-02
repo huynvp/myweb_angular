@@ -5,16 +5,36 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 
 export class ToDoListAdminService {
+    private header = new HttpHeaders({
+        'content-type': 'application/json',
+        'token': localStorage.token
+    });
+
     constructor(public http:HttpClient) {
 
     }
 
     getAll() {
-        let header = new HttpHeaders({
-            'content-type': 'application/json',
-            'token': localStorage.token
-        });
+        return this.http.get(`${environment.baseUrl}/note/show-all`, { headers: this.header }).toPromise();
+    }
 
-        return this.http.get(`${environment.baseUrl}/note/show-all`, { headers: header }).toPromise();
+    getLevel() {
+        return this.http.get(`${environment.baseUrl}/note/show-level`, {headers: this.header}).toPromise();
+    }
+
+    addWork(title, content, date, level, order) {
+        return this.http.post(
+            `${environment.baseUrl}/note/add`, 
+            JSON.stringify({
+                title: title,
+                content: content,
+                date: date,
+                level: level,
+                orders: order
+            }),
+            {
+                headers: this.header
+            }
+        ).toPromise();
     }
 }
