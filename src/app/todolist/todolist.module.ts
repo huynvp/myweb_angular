@@ -4,6 +4,7 @@ import { TodolistadminComponent } from './ToDoListAdmin/todolistadmin.component'
 import { Routes,RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
     { path: 'to-do-list', component: TodolistComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
-        CKEditorModule
+        CKEditorModule,
+        FormsModule,
     ],
     declarations: [
         TodolistComponent,

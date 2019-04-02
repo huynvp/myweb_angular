@@ -1,28 +1,149 @@
-<h3 id="title">GHI CHÚ CÁ NHÂN</h3>
-<!-- <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor> -->
-<a routerLink="/home" class="btn btn-sm btn-primary">Trở về trang chủ <i class="fas fa-home"></i></a> -
-<a routerLink="/to-do-list" class="btn btn-sm btn-primary">Trở về trang trước <i class="fas fa-chevron-circle-right"></i></a>
-<div class="row d-flex justify-content-center" id="work-list">
-  <div class="col-8" *ngFor="let data of datas">
-    <div class="card">
-      <div [ngSwitch]="data.level_id">
-        <div *ngSwitchCase="1">
-          <div class="card-header bg-info"><b>{{ data.title }}</b></div>
+<h3 id="title-page">QUẢN LÍ GHI CHÚ CÁ NHÂN</h3>
+
+<div class="container">
+  <a routerLink="/home" class="btn btn-sm btn-primary">Trở về trang chủ <i class="fas fa-home"></i></a> -
+  <a routerLink="/to-do-list" class="btn btn-sm btn-primary">Trở về trang trước <i class="fas fa-chevron-circle-right"></i></a> - 
+  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-note"><i class="fas fa-database"></i> Thêm công việc mới</button>
+
+  <table class="table table-bordered table-striped table-hover" id="to-do-list">
+    <thead class="bg-info text-white">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Title</th>
+        <th scope="col">Date</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let val of datas">
+        <td>{{ val.note_id }}</td>
+        <td><i class="fas fa-sticky-note"></i> {{ val.title }}</td>
+        <td><i class="fas fa-calendar-alt"></i> {{ val.date | date:'dd/MM/yyyy' }}</td>
+        <td><i class="fas fa-calendar-alt"></i> {{ val.created_at | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#edit-note" (click)=" handleEditWork(val.note_id)">
+            <i class="fas fa-edit"></i>Edit
+          </button> - 
+          <button type="button" class="btn btn-danger btn-delete" (click)=" handleDeleteWork(val.note_id)">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="add-note" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm công việc mới</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div *ngSwitchCase="2">
-          <div class="card-header bg-success"><b>{{ data.title }}</b></div>
+        <div class="modal-body">
+          <form action="">
+            <div class="form-group">
+              <label for="">Tiêu đề</label>
+              <input 
+                class="form-control" 
+                type="text" 
+                [(ngModel)]="title" 
+                [ngModelOptions]="{standalone: true}"/>
+            </div>
+            <div class="form-group">
+              <label for="">Nội dung</label>
+              <ckeditor 
+                [editor]="Editor" 
+                data="" 
+                [(ngModel)]="content" 
+                [ngModelOptions]="{standalone: true}">
+              </ckeditor>
+            </div>
+            <div class="form-group">
+              <label for="">Ngày hết hạn</label>
+              <input 
+                type="date" 
+                class="datepicker form-control" 
+                [(ngModel)]="date" 
+                [ngModelOptions]="{standalone: true}" />
+            </div>
+            <div class="form-group">
+              <label for="">Mức độ</label>
+              <select 
+                class="form-control" 
+                [(ngModel)]="level" 
+                [ngModelOptions]="{standalone: true}">
+                <option 
+                  value="{{ level.level_id }}" 
+                  *ngFor="let level of level_list">
+                  {{ level.level_name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="">Sắp xếp</label>
+              <input 
+                class="form-control" 
+                value="-1" 
+                type="number"
+                [(ngModel)]="order"
+                [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </form>
         </div>
-        <div *ngSwitchCase="3">
-          <div class="card-header bg-warning"><b>{{ data.title }}</b></div>
-        </div>
-        <div *ngSwitchDefault>
-            <div class="card-header bg-danger"><b>{{ data.title }}</b></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="handleAddWork()" data-dismiss="modal">Save changes</button>
         </div>
       </div>
-      <div class="card-body">
-        <p [innerHTML]="data.content"></p>
-        <p><b><i>Deadline:</i></b> {{ data.date }}</p>
-        <p><b><i>Tình trạng:</i></b>{{ data.level_name}}</p>
+    </div>
+  </div>
+
+  <div class="modal fade" id="edit-note" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa công việc</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div class="form-group">
+              <label for="">Tiêu đề</label>
+              <input class="form-control" type="text" id="title-edit">
+            </div>
+            <div class="form-group">
+              <label for="">Nội dung</label>
+              <textarea id="content-edit"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="">Ngày hết hạn</label>
+              <input type="text" class="datepicker form-control" id="date-edit">
+              <input type="hidden" id="id-edit">
+            </div>
+            <div class="form-group">
+              <label for="">Mức độ</label>
+              <select class="form-control" id="level-edit">
+                <option value="{{ level.level_id }}" *ngFor="let level of level_list">
+                  {{ level.level_name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="">Sắp xếp</label>
+              <input class="form-control" type="number" value="-1" id="orders-edit">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn-edit" data-dismiss="modal">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
