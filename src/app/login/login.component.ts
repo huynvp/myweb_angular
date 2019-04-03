@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-login',
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
 		.then(res => {
 			localStorage.token = res['data'].token;
 			this.router.navigate(['/home']);
+			Swal.fire('Success', 'Login success!')
 		})
 		.catch(err => {
 			console.log(err);

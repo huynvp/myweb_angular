@@ -22,6 +22,10 @@ export class ToDoListAdminService {
         return this.http.get(`${environment.baseUrl}/note/show-level`, {headers: this.header}).toPromise();
     }
 
+    getOne(id) {
+        return this.http.get(`${environment.baseUrl}/note/show/${id}`, {headers: this.header}).toPromise();
+    }
+
     addWork(title, content, date, level, order) {
         return this.http.post(
             `${environment.baseUrl}/note/add`, 
@@ -36,5 +40,30 @@ export class ToDoListAdminService {
                 headers: this.header
             }
         ).toPromise();
+    }
+
+    editWork(id, title, content, date, level, order) {
+        return this.http.post(`${environment.baseUrl}/note/update`,
+        JSON.stringify({
+            id: id,
+            title: title,
+            content: content,
+            date: date,
+            level: level,
+            orders: order
+        }),
+        {
+            headers: this.header
+        }).toPromise();
+    }
+
+    deleteWork(id) {
+        return this.http.post(`${environment.baseUrl}/note/delete`,
+        JSON.stringify({
+            id: id
+        }),
+        {
+            headers: this.header
+        }).toPromise();
     }
 }
