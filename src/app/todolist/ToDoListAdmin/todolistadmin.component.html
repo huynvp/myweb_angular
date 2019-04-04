@@ -23,7 +23,7 @@
         <td><i class="fas fa-calendar-alt"></i> {{ val.created_at | date:'dd/MM/yyyy HH:mm:ss' }}</td>
         <td>
           <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#edit-note" (click)=" handleEditWork(val.note_id)">
-            <i class="fas fa-edit"></i>Edit
+            <i class="fas fa-edit"></i> Edit
           </button> - 
           <button type="button" class="btn btn-danger btn-delete" (click)=" handleDeleteWork(val.note_id)">
             <i class="fas fa-trash"></i> Delete
