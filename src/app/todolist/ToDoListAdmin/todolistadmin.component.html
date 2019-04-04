@@ -22,8 +22,13 @@
         <td><i class="fas fa-calendar-alt"></i> {{ val.date | date:'dd/MM/yyyy' }}</td>
         <td><i class="fas fa-calendar-alt"></i> {{ val.created_at | date:'dd/MM/yyyy HH:mm:ss' }}</td>
         <td>
+<<<<<<< HEAD
           <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#edit-note" (click)=" handleEditWork(val.note_id)">
             <i class="fas fa-edit"></i> Edit
+=======
+          <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#edit-note" (click)="handleShowOneWork(val.note_id)">
+            <i class="fas fa-edit"></i>Edit
+>>>>>>> 01a67c10037ecce1c94a3a76eff77a7e97dcafc1
           </button> - 
           <button type="button" class="btn btn-danger btn-delete" (click)=" handleDeleteWork(val.note_id)">
             <i class="fas fa-trash"></i> Delete
@@ -44,7 +49,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="">
+          <form>
             <div class="form-group">
               <label for="">Tiêu đề</label>
               <input 
@@ -112,37 +117,61 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="">
+          <form>
             <div class="form-group">
               <label for="">Tiêu đề</label>
-              <input class="form-control" type="text" id="title-edit">
+              <input 
+                class="form-control" 
+                type="text" 
+                [(ngModel)]="title_edit" 
+                [ngModelOptions]="{standalone: true}"/>
             </div>
             <div class="form-group">
               <label for="">Nội dung</label>
-              <textarea id="content-edit"></textarea>
+              <ckeditor 
+                [editor]="Editor_edit" 
+                data="" 
+                [(ngModel)]="content_edit" 
+                [ngModelOptions]="{standalone: true}">
+              </ckeditor>
             </div>
             <div class="form-group">
               <label for="">Ngày hết hạn</label>
-              <input type="text" class="datepicker form-control" id="date-edit">
-              <input type="hidden" id="id-edit">
+              <input 
+                type="date" 
+                class="form-control" 
+                [(ngModel)]="date_edit" 
+                [ngModelOptions]="{standalone: true}" />
             </div>
             <div class="form-group">
               <label for="">Mức độ</label>
-              <select class="form-control" id="level-edit">
-                <option value="{{ level.level_id }}" *ngFor="let level of level_list">
-                  {{ level.level_name}}
+              <select 
+                class="form-control" 
+                [(ngModel)]="level_edit" 
+                [ngModelOptions]="{standalone: true}">
+                <option 
+                  value="{{ level.level_id }}" 
+                  *ngFor="let level of level_list" 
+                  [selected]="level.level_id==level_edit"
+                  >
+                    {{ level.level_name}}
                 </option>
               </select>
             </div>
             <div class="form-group">
               <label for="">Sắp xếp</label>
-              <input class="form-control" type="number" value="-1" id="orders-edit">
+              <input 
+                class="form-control" 
+                value="-1" 
+                type="number"
+                [(ngModel)]="order_edit"
+                [ngModelOptions]="{standalone: true}"/>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="btn-edit" data-dismiss="modal">Save changes</button>
+          <button type="button" class="btn btn-primary" (click)="handleEditWork()" data-dismiss="modal">Save changes</button>
         </div>
       </div>
     </div>
