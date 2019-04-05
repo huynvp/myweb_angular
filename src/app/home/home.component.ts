@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    this.http.get(`${environment.baseUrl}/user/show-user`, {
+    this.http.get(`${environment.baseUrl}/user/check-user`, {
       headers: new HttpHeaders({
         'content-type':  'application/json',
         'token': localStorage.token
