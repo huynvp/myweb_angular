@@ -20,7 +20,7 @@
                         class="form-control"
                         [(ngModel)]="new_pass"
                         [ngModelOptions]="{standalone: true}"
-                        (change)="handleChangePass()">
+                        (change)="handleChangeInput()">
                 </div>
                 <div class="form-group">
                     <label for="">Retype new password</label>
@@ -29,7 +29,7 @@
                         class="form-control"
                         [(ngModel)]="retype_new_pass"
                         [ngModelOptions]="{standalone: true}"
-                        (change)="handleChangePass()">
+                        (change)="handleChangeInput()">
                 </div>
                 <button class="btn btn-success" (click)="handleChangePass()">Change infomation</button>
                  - 

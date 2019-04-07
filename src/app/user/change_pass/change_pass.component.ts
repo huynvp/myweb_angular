@@ -21,7 +21,7 @@ export class ChangePassComponent implements OnInit {
 
   }
 
-  handleChangePass() {
+  handleChangeInput() {
     if(this.new_pass !== this.retype_new_pass && this.retype_new_pass !== "")
       Swal.fire('Error', 'New password and retype is not valid', 'error');
 
@@ -29,5 +29,14 @@ export class ChangePassComponent implements OnInit {
       Swal.fire('Error', 'New password must be different from old password', 'error');
   }
 
+  handleChangePass() {
+    this.change_pass_service.changePass(this.old_pass, this.new_pass)
+    .then(res => {
+      Swal.fire('Success', 'Change password success', 'success');
+    })
+    .catch(err => {
+      Swal.fire('Error', 'Change password error', 'error');
+    });
+  }
 
 }

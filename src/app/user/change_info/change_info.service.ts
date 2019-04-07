@@ -8,7 +8,7 @@ const base_url = environment.baseUrl;
 
 export class ChangeInfoService {
     private header = new HttpHeaders({
-        'content-type': 'applicati  on/json',
+        'content-type': 'application/json',
         'token': localStorage.token
     })
 
