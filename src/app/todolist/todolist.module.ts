@@ -7,8 +7,14 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
-    { path: 'to-do-list', component: TodolistComponent },
-    { path: 'to-do-list/admin', component: TodolistadminComponent },
+    { 
+        path: 'to-do-list', 
+        component: TodolistComponent 
+    },
+    { 
+        path: 'to-do-list/admin', 
+        component: TodolistadminComponent 
+    },
   ];
 
 @NgModule({

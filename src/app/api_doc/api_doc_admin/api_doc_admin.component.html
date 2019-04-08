@@ -1,0 +1,99 @@
+<div class="container">
+    <h3>Admin api document</h3>
+    <div class="form-inline" id="form-search">
+        <span>Select project: </span>
+        <select 
+            [(ngModel)]="project_check" 
+            id="select-project" 
+            class="form-control">
+            <option 
+                *ngFor='let data of project_list' 
+                value="{{ data.project_id }}">
+                {{ data.project_name }}
+            </option>
+        </select>
+        <button class="btn btn-success" (click)="handleShowProject()">Show</button> 
+    </div>
+
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">
+        Add api
+    </button>
+
+    <div class="card" *ngFor="let pro_detail of project_detail">
+        <div class="card-header">
+            <b>{{ pro_detail.api_method }}: </b>{{ pro_detail.api_name }}
+        </div>
+        <div class="card-body">
+            {{ pro_detail.api_name }}
+            <br>
+            <b><span>Params: </span></b><br>
+            <pre>{{ pro_detail.api_params }}</pre>
+            <b><span>Respone: </span></b><br>
+            <pre>{{ pro_detail.api_response }}</pre>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add new API</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="form-group">
+                        <label for="">Method</label>
+                        <select class="form-control">
+                            <option value="Post">Post</option>
+                            <option value="Get">Get</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Name</label>
+                        <input 
+                            class="form-control" 
+                            type="text" 
+                            [(ngModel)]="name"
+                            [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Content</label>
+                        <ckeditor 
+                            [editor]="editor_params" 
+                            data="" 
+                            [(ngModel)]="content" 
+                            [ngModelOptions]="{standalone: true}">
+                        </ckeditor>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Params</label>
+                        <textarea 
+                            class="form-control"
+                            [(ngModel)]="params"
+                            [ngModelOptions]="{standalone: true}">
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Response</label>
+                        <textarea 
+                            class="form-control"
+                            [(ngModel)]="response"
+                            [ngModelOptions]="{standalone: true}">
+                        </textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+      
+</div>

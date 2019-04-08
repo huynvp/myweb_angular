@@ -22,5 +22,5 @@ min-height: 200px;
 #nav {
     min-height: 100px;
     margin-bottom: 20px;
-    background-color: beige;
+    background-image: url('../../public/image/title_background.jpg')
 }

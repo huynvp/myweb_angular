@@ -7,8 +7,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
-    { path: 'change-info', component: ChangeInfoComponent },
-    { path: 'change-pass', component: ChangePassComponent },
+    { 
+        path: 'change-info',
+        component: ChangeInfoComponent,
+        pathMatch: 'full' 
+    },
+    { 
+        path: 'change-pass', 
+        component: ChangePassComponent ,
+        pathMatch: 'full' 
+    },
 ];
 
 @NgModule({

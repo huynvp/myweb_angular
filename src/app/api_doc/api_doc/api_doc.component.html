@@ -1,0 +1,19 @@
+<div class="container">
+    <a routerLink='/home' class="btn btn-secondary">Back to home</a> - 
+    <a routerLink='/api-document/admin' class="btn btn-success">Go to admin</a>
+    <hr>
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Api document</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group" *ngFor="let project of data">
+                <li class="list-group-item">
+                    {{ project.project_name }}
+                    <span class="badge badge-success badge-pill">{{ project.count_project }}</span> - 
+                    <a class="btn btn-primary" routerLink="/api-document/detail/{{ project.project_id }}">Detail</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
