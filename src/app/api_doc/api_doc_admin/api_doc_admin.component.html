@@ -12,24 +12,43 @@
                 {{ data.project_name }}
             </option>
         </select>
-        <button class="btn btn-success" (click)="handleShowProject()">Show</button> 
+        <button 
+            class="btn btn-success" 
+            (click)="handleShowProject()">
+            Show
+        </button> 
+        <input 
+            type="text" 
+            class="form-control" 
+            id="txt-add-project"
+            [(ngModel)]="txt_project"
+            [ngModelOptions]="{standalone: true}">
+        <button 
+            class="btn btn-primary" 
+            (click)="handleAddProject()">
+            Add project
+        </button> 
     </div>
 
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">
         Add api
     </button>
+    <hr>
+    <a class="btn btn-success" routerLink="/api-document"> Api document </a>
 
     <div class="card" *ngFor="let pro_detail of project_detail">
         <div class="card-header">
             <b>{{ pro_detail.api_method }}: </b>{{ pro_detail.api_name }}
         </div>
         <div class="card-body">
-            {{ pro_detail.api_name }}
+            <span [innerHTML]="pro_detail.api_content"></span>
             <br>
             <b><span>Params: </span></b><br>
-            <pre>{{ pro_detail.api_params }}</pre>
+            <span [innerHTML]="pro_detail.api_params"></span>
             <b><span>Respone: </span></b><br>
-            <pre>{{ pro_detail.api_response }}</pre>
+            <span [innerHTML]="pro_detail.api_response"></span>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#editModal" (click)="handleShowOneApi(pro_detail.api_id)">Edit</button> - 
+            <button class="btn btn-danger" (click)="handleDeleteApi(pro_detail.api_id)">Delete</button>
         </div>
     </div>
 
@@ -47,7 +66,9 @@
                 <form action="">
                     <div class="form-group">
                         <label for="">Method</label>
-                        <select class="form-control">
+                        <select class="form-control" 
+                            [(ngModel)]="method"
+                            [ngModelOptions]="{standalone: true}">
                             <option value="Post">Post</option>
                             <option value="Get">Get</option>
                         </select>
@@ -63,7 +84,7 @@
                     <div class="form-group">
                         <label for="">Content</label>
                         <ckeditor 
-                            [editor]="editor_params" 
+                            [editor]="editor_content" 
                             data="" 
                             [(ngModel)]="content" 
                             [ngModelOptions]="{standalone: true}">
@@ -71,29 +92,94 @@
                     </div>
                     <div class="form-group">
                         <label for="">Params</label>
-                        <textarea 
-                            class="form-control"
-                            [(ngModel)]="params"
+                        <ckeditor 
+                            [editor]="editor_params" 
+                            data="" 
+                            [(ngModel)]="params" 
                             [ngModelOptions]="{standalone: true}">
-                        </textarea>
+                        </ckeditor>
                     </div>
                     <div class="form-group">
                         <label for="">Response</label>
-                        <textarea 
-                            class="form-control"
-                            [(ngModel)]="response"
+                        <ckeditor 
+                            [editor]="editor_response" 
+                            data="" 
+                            [(ngModel)]="response" 
                             [ngModelOptions]="{standalone: true}">
-                        </textarea>
+                        </ckeditor>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleAddApi()">Save changes</button>
             </div>
           </div>
         </div>
     </div>
 
-      
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit API</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <label for="">Method</label>
+                            <select class="form-control" 
+                                [(ngModel)]="method_edit"
+                                [ngModelOptions]="{standalone: true}">
+                                <option value="Post">Post</option>
+                                <option value="Get">Get</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input 
+                                class="form-control" 
+                                type="text" 
+                                [(ngModel)]="name_edit"
+                                [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Content</label>
+                            <ckeditor 
+                                [editor]="editor_content_edit" 
+                                data="" 
+                                [(ngModel)]="content_edit" 
+                                [ngModelOptions]="{standalone: true}">
+                            </ckeditor>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Params</label>
+                            <ckeditor 
+                                [editor]="editor_params_edit" 
+                                data="" 
+                                [(ngModel)]="params_edit" 
+                                [ngModelOptions]="{standalone: true}">
+                            </ckeditor>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Response</label>
+                            <ckeditor 
+                                [editor]="editor_response_edit" 
+                                data="" 
+                                [(ngModel)]="response_edit" 
+                                [ngModelOptions]="{standalone: true}">
+                            </ckeditor>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleEditApi()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>      
 </div>

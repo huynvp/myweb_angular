@@ -10,11 +10,11 @@ import { DatePipe } from '@angular/common';
   providers: [ ChangeInfoService ]
 })
 export class ChangeInfoComponent implements OnInit {
-  private name:string = '';
-  private address:string = '';
-  private email:string = '';
-  private birthday:string = '';
-  private phone:string = '';
+  public name:string = '';
+  public address:string = '';
+  public email:string = '';
+  public birthday:string = '';
+  public phone:string = '';
 
 
   constructor(
