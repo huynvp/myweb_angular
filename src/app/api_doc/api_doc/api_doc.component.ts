@@ -7,7 +7,7 @@ import { ApiDocService } from './api_doc.service';
   providers: [ ApiDocService ]
 })
 export class ApiDocComponent implements OnInit {
-  private data = [];
+  public data = [];
   constructor(private api_doc_service:ApiDocService) { 
 
   }

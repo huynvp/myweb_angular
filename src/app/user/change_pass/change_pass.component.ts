@@ -10,9 +10,9 @@ import Swal from 'sweetalert2';
   providers: [ ChangePassService ]
 })
 export class ChangePassComponent implements OnInit {
-  private old_pass:string = '';
-  private new_pass:string = '';
-  private retype_new_pass:string = '';
+  public old_pass:string = '';
+  public new_pass:string = '';
+  public retype_new_pass:string = '';
 
   constructor(private change_pass_service:ChangePassService) { }
 
