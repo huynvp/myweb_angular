@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'myweb';
 
   private header:HttpHeaders;
@@ -16,7 +16,7 @@ export class AppComponent {
   private token:string;
 
   constructor(public http:HttpClient) {
-    this.token = null;
+    this.token = localStorage.token;
   }
 
   ngOnInit() {
@@ -26,11 +26,6 @@ export class AppComponent {
         this.header = new HttpHeaders({
           'content-type': 'application/json',
           'token': this.token
-        });
-      } else {
-        this.header = new HttpHeaders({
-          'content-type': 'application/json',
-          'token': localStorage.token
         });
       }
       this.http.post(`${environment.baseUrl}/user/refresh-token`, null, {headers: this.header})
@@ -44,7 +39,7 @@ export class AppComponent {
         console.log(err)
       });
       // clearInterval(i)
-    }, 60000);
+    }, 3000);
   }
 
   ngOnDestroy() {
