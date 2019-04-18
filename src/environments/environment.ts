@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://myweb-api.local.huynguyen.com.vn/api'
+  baseUrl: 'http://myweb-local-api.huynguyen.xyz/api'
 };
 
 /*
