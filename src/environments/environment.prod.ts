@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://myweb-api.huynguyen.xyz/api'
+  baseUrl: 'http://myweb-local-api.huynguyen.xyz/api'
 };

@@ -2,17 +2,17 @@
     <a routerLink="/api-document">Back to home</a>
     <h3>Api doc detail</h3>
 
-    <div class="card" *ngFor="let pro_detail of data">
-        <div class="card-header">
+    <div class="card api-detail" *ngFor="let pro_detail of data">
+        <div class="card-header bg-info text-white">
             <b>{{ pro_detail.api_method }}: </b>{{ pro_detail.api_name }}
         </div>
         <div class="card-body">
             <span [innerHTML]="pro_detail.api_content"></span>
             <br>
             <b><span>Params: </span></b><br>
-            <span [innerHTML]="pro_detail.api_params"></span>
+            <pre [innerHTML]="pro_detail.api_params"></pre>
             <b><span>Respone: </span></b><br>
-            <span [innerHTML]="pro_detail.api_response"></span>
+            <pre [innerHTML]="pro_detail.api_response"></pre>
         </div>
     </div>
 </div>
