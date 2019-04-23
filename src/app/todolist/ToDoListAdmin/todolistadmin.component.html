@@ -1,10 +1,11 @@
 <h3 id="title-page">QUẢN LÍ GHI CHÚ CÁ NHÂN</h3>
 
 <div class="container">
-  <a routerLink="/home" class="btn btn-sm btn-primary">Trở về trang chủ <i class="fas fa-home"></i></a> -
-  <a routerLink="/to-do-list" class="btn btn-sm btn-primary">Trở về trang trước <i class="fas fa-chevron-circle-right"></i></a> - 
-  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-note"><i class="fas fa-database"></i> Thêm công việc mới</button>
-
+  <div class="button-group">
+      <a routerLink="/home" class="btn btn-sm btn-primary">Trở về trang chủ <i class="fas fa-home"></i></a> -
+      <a routerLink="/to-do-list" class="btn btn-sm btn-primary"><i class="fas fa-chevron-circle-left"></i> Trở về trang trước</a> - 
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-note"><i class="fas fa-database"></i> Thêm công việc mới</button>
+  </div>
   <table class="table table-bordered table-striped table-hover" id="to-do-list">
     <thead class="bg-info text-white">
       <tr>
