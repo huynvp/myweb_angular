@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChangeInfoService } from './change_info.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-change-info',
@@ -44,10 +45,11 @@ export class ChangeInfoComponent implements OnInit {
   handleChangeInfo() {
     this.change_info_service.changeInfo(this.name, this.birthday, this.address, this.phone)
     .then(res => {
-      console.log(res);
+      Swal.fire('Success', 'Change info success', 'success');
       this.ngOnInit();
     })
     .catch(err => {
+      Swal.fire('Error', 'Change info error', 'error');
       console.log(err)
     })
 
