@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://nodejs.local.huynguyen.com.vn/api'
+  baseUrl: 'http://myweb-local-api.huynguyen.xyz/api'
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
