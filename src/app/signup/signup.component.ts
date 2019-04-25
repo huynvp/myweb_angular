@@ -10,12 +10,12 @@ import Swal from 'sweetalert2';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  private name:'';
-  private email:'';
-  private birthday:'';
-  private address:'';
-  private phone:'';
-  private password:'';
+  public name:'';
+  public email:'';
+  public birthday:'';
+  public address:'';
+  public phone:'';
+  public password:'';
 
   constructor(public router:Router, public http:HttpClient) {
     if(localStorage.token !== undefined) {
