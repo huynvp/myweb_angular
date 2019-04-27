@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { TodolistModule } from './todolist/todolist.module';
 import { UserModule } from './user/user.module';
 import { ApiDocModule } from './api_doc/api_doc.module';
+import { ChatModule } from './chat/chat.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   imports: [
     TodolistModule,
     UserModule,
+    ChatModule,
     ApiDocModule,
     RouterModule.forRoot(routes),
     FormsModule,
