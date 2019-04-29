@@ -1,0 +1,16 @@
+#content {
+    background-color: antiquewhite;
+    height: 100%;
+}
+
+.container {
+    height: 100%;
+}
+
+.row {
+    height: 100%;
+}
+
+#chat-content{
+    margin-top: 10px
+}

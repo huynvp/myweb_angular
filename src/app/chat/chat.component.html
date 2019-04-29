@@ -1,3 +1,73 @@
 <div class="container">
     <h3>Chat</h3>
+    <a routerLink="/home">Go home</a>
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-title bg-info text-white">
+                    <div class="card-header">
+                        User online
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>123</li>
+                        <li>123</li>
+                        <li>123</li>
+                        <li>123</li>
+                        <li>123</li>
+                        <li>123</li>
+                        <li>123</li>
+                        <li>123</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div id="content">
+                List message
+            </div>
+            <div>
+                <form action="">
+                    <div class="form-group">
+                        <input 
+                            id="chat-content"
+                            [(ngModel)] = "content_mess"
+                            [ngModelOptions]="{standalone: true}"
+                            type="text" 
+                            class="form-control" 
+                            (keyup.enter)="handleSendMess()" 
+                            (focusin)="handleFoucusIn()"
+                            (focusout)="handleFoucusOut()"
+                            />
+                        <span>Press enter to send message</span>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-3">
+                <div class="card">
+                    <div class="card-title bg-info text-white">
+                        <div class="card-header">
+                            Action
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+                            <li>123</li>
+    
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </div>
 </div>

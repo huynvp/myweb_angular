@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	handleLogin() {
-
 		let header = new HttpHeaders({
 			'content-type': 'application/json'
 		});
@@ -41,11 +40,11 @@ export class LoginComponent implements OnInit {
 		.then(res => {
 			localStorage.token = res['data'].token;
 			this.router.navigate(['/home']);
-			Swal.fire('Success', 'Login success!')
+			Swal.fire('Success', 'Login success!','success')
 		})
 		.catch(err => {
+			Swal.fire('Error', `Error: ${err.error.message}`,'error')
 			console.log(err);
 		});
 	}
-
 }
