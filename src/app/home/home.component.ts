@@ -10,8 +10,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  username:string
+  url: string
   constructor(public router:Router, public http:HttpClient) {
-
+    this.url = `${environment.publicUrl}/image/avatar/default.png`;
   }
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class HomeComponent implements OnInit {
     })
     .toPromise()
     .then(res => {
+      this.username = res['data']['user_name'];
       console.log(res);
     })
     .catch(err => {
@@ -41,6 +44,7 @@ export class HomeComponent implements OnInit {
 
   handleLogout() {
     localStorage.removeItem('token');
+    Swal.fire('Success', 'See you again', 'info');
     this.router.navigate(['/login']);
   }
 

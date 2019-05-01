@@ -16,7 +16,7 @@ export class ChangeInfoComponent implements OnInit {
   public email:string = '';
   public birthday:string = '';
   public phone:string = '';
-
+  public file = null;
 
   constructor(
     private change_info_service: ChangeInfoService,
@@ -42,17 +42,30 @@ export class ChangeInfoComponent implements OnInit {
     })
   }
 
+  onFileSelected(event) {
+    this.file = event.target.files['0'];
+  }
+
   handleChangeInfo() {
     this.change_info_service.changeInfo(this.name, this.birthday, this.address, this.phone)
     .then(res => {
-      Swal.fire('Success', 'Change info success', 'success');
+      if(this.file != null) {
+        this.change_info_service.uploadAvatar(this.file)
+        .then(data => {
+          Swal.fire('Success', 'Change info success', 'success');   
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      } else {
+        Swal.fire('Success', 'Change info success', 'success');   
+      }
       this.ngOnInit();
     })
     .catch(err => {
       Swal.fire('Error', 'Change info error', 'error');
       console.log(err)
     })
-
   }
 
 

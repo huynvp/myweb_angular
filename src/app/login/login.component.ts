@@ -20,12 +20,14 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		document.getElementById("txtUsername").focus();
 		if(localStorage.token !== undefined) {
 			this.router.navigate(['/home']);
 		}
 	}
 
 	handleLogin() {
+		document.getElementById("btn-login").innerHTML = 'Loading ...';
 		let header = new HttpHeaders({
 			'content-type': 'application/json'
 		});
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
 		.catch(err => {
 			Swal.fire('Error', `Error: ${err.error.message}`,'error')
 			console.log(err);
+			document.getElementById("btn-login").innerHTML = 'Login';
 		});
 	}
 }

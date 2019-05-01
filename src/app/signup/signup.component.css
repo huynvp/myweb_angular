@@ -1,0 +1,27 @@
+#card-form-sign-up {
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    width: 40%; 
+    border-bottom-right-radius: 2%; 
+    border-bottom-left-radius: 2%;
+}
+
+.text-login {
+    color: #000270
+}
+
+.bg-info {
+    background-color: #000270 !important;
+}
+
+input {
+    border: 1px #000270 solid;
+}
+
+.card {
+    border: 1px #000270 solid; 
+}
+
+#btn-sign-up {
+    background-color: #000270;
+}

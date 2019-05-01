@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://nodejs.local.huynguyen.com.vn/api'
+  baseUrl: 'http://nodejs.local.huynguyen.com.vn/api',
+  publicUrl: 'http://nodejs.local.huynguyen.com.vn'
 };
 
 
