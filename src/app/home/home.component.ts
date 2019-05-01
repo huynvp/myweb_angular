@@ -32,7 +32,10 @@ export class HomeComponent implements OnInit {
     .toPromise()
     .then(res => {
       this.username = res['data']['user_name'];
-      console.log(res);
+
+      if(res['data']['avatar_path'] != null) {
+        this.url = `${environment.publicUrl}/image/avatar/${res['data']['avatar_path']}`;
+      }
     })
     .catch(err => {
       localStorage.removeItem('token');
