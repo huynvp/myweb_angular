@@ -1,5 +1,6 @@
+const BASE_URL = 'http://myweb-api.huynguyen.xyz';
 export const environment = {
-  production: true,
-  baseUrl: 'http://myweb-api.huynguyen.xyz/api',
-  publicUrl: 'http://nodejs.local.huynguyen.com.vn'
+  production: false,
+  baseUrl: `${BASE_URL}/api`,
+  publicUrl: `${BASE_URL}`,
 };
