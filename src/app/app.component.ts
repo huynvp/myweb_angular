@@ -8,7 +8,6 @@ import { AppService } from './app.service';
   providers: [ AppService ]
 })
 export class AppComponent implements OnInit{
-  title = 'myweb';
   private time:any;
   private subcCription:any;
 
@@ -16,25 +15,15 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    // let that = this;
-    // this.time = setInterval(() => {
-    //   this.subcCription = that.app_service.refreshToken()
-    //   .subscribe(data => {
-    //     console.log(data);
-    //   });
-      // .then(res => {
-      //   localStorage.token = res['data']['token'];
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // });
-    // }, 1000);
-  }
-
-  ngOnDestroy() {
-    // clearInterval(this.time);
-    // if (this.subcCription) {
-    //     this.subcCription.unsubscribe();
-    // }
+    if(localStorage.access_token != null)
+      this.time = setInterval(() => {
+        this.subcCription = this.app_service.refreshToken()
+        .subscribe(res => {
+          localStorage.access_token = res['data']['access_token'];
+          localStorage.refresh_token = res['data']['refresh_token'];
+        }, err => {
+          console.log(err)
+        });
+      }, 15000);
   }
 }

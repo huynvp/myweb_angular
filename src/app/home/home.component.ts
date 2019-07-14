@@ -13,32 +13,31 @@ export class HomeComponent implements OnInit {
   username:string
   url: string
   constructor(public router:Router, public http:HttpClient) {
-    this.url = `${environment.publicUrl}/image/avatar/default.png`;
+    this.url = `${environment.publicUrl}/image/avatar/default-avatar.png`;
   }
 
   ngOnInit() {
     //check user
-    if(localStorage.token === undefined) {
+    if(localStorage.access_token === undefined) {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.http.get(`${environment.baseUrl}/user/check-user`, {
+    this.http.get(`${environment.baseUrl}/user/me`, {
       headers: new HttpHeaders({
-        'content-type':  'application/json',
-        'token': localStorage.token
+        'Authorization': 'Bearer ' + localStorage.access_token
       })
     })
     .toPromise()
     .then(res => {
-      this.username = res['data']['user_name'];
+      this.username = res['data']['name'];
 
-      if(res['data']['avatar_path'] != null) {
-        this.url = `${environment.publicUrl}/image/avatar/${res['data']['avatar_path']}`;
+      if(res['data']['avatar'] != null) {
+        this.url = `${environment.publicUrl}/image/avatar/${res['data']['avatar']}`;
       }
     })
     .catch(err => {
-      localStorage.removeItem('token');
+      localStorage.removeItem('access_token');
       console.log(err);
       Swal.fire('Eror', 'Token invalid', 'error');
       this.router.navigate(['/login']);
@@ -46,7 +45,7 @@ export class HomeComponent implements OnInit {
   }
 
   handleLogout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
     Swal.fire('Success', 'See you again', 'info');
     this.router.navigate(['/login']);
   }

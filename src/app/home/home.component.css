@@ -24,3 +24,9 @@ min-height: 200px;
     margin-bottom: 20px;
     background-image: url('../../public/image/title_background.jpg')
 }
+
+.list-group-item:hover {
+	background-color: #EEEEEE;
+	font-weight: bold;
+	color: blue;
+}

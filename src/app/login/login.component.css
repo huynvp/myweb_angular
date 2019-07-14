@@ -1,26 +1,39 @@
 #card-form-login {
     margin-top: 10px; 
-    width: 40%; 
-    border-bottom-right-radius: 2%; 
-    border-bottom-left-radius: 2%;
+    width: 50%; 
+    border-bottom-right-radius: 3%; 
+    border-bottom-left-radius: 3%;
 }
 
 .text-login {
-    color: #000270
+    color: #563D7C;
+    font-weight: bold;
 }
 
 .bg-info {
-    background-color: #000270 !important;
+    background-color: #563D7C !important;
 }
 
 input {
-    border: 1px #000270 solid;
+    border: 1px #563D7C solid;
 }
 
+input:hover {
+	border: 3px #563D7C solid;
+}
 .card {
-    border: 1px #000270 solid; 
+    border: 1px #563D7C solid; 
 }
 
 #btn-login {
-    background-color: #000270;
+    background-color: #563D7C;
+}
+
+a {
+	color: #563D7C;
+	font-weight: bold;
+}
+
+a:hover {
+	color: red;
 }

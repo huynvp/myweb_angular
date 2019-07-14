@@ -27,23 +27,22 @@ export class SignupComponent implements OnInit {
   }
 
   handleSignup() {
-    let header = new HttpHeaders({
-			'content-type': 'application/json'
-		});
-    this.http.post(`${environment.baseUrl}/user/sign-up`, JSON.stringify({
-      'name':this.name,
-      'email':this.email,
-      'birthday':this.birthday,
-      'address':this.address,
-      'phone':this.phone,
-      'password':this.password
-    }), {headers: header})
+    const formData = new FormData();
+    formData.append('name', this.name);
+    formData.append('email', this.email);
+    formData.append('birthday', this.birthday);
+    formData.append('address', this.address);
+    formData.append('phone', this.phone);
+    formData.append('password', this.password);
+
+    this.http.post(`${environment.baseUrl}/user/sign-up`, formData)
     .toPromise()
     .then(data => {
       Swal.fire('Success', 'Signup success, please login go to system', 'success');
     })
     .catch(err => {
-      Swal.fire('Error', err['message'], 'error');
+      console.log(err);
+      Swal.fire('Error', err['error']['message'], 'error');
     })
   }
 }

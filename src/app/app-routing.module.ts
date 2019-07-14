@@ -9,6 +9,9 @@ import { UserModule } from './user/user.module';
 import { ApiDocModule } from './api_doc/api_doc.module';
 import { ChatModule } from './chat/chat.module';
 
+import { RecaptchaModule} from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignupComponent },
@@ -25,6 +28,8 @@ const routes: Routes = [
     ApiDocModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   declarations: [
     LoginComponent,

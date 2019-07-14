@@ -26,6 +26,7 @@
     "core-js": "^2.5.4",
     "jquery": "^3.4.0",
     "moment": "^2.24.0",
+    "ng-recaptcha": "^4.2.1",
     "open-iconic": "^1.1.1",
     "rxjs": "~6.3.3",
     "socket.io-client": "^2.2.0",

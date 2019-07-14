@@ -8,34 +8,26 @@ const base_url = environment.baseUrl;
 
 export class ChangeInfoService {
     private header = new HttpHeaders({
-        'content-type': 'application/json',
-        'token': localStorage.token
+        'Authorization': 'Bearer ' + localStorage.access_token
     })
 
     constructor(public http:HttpClient) {
     }
 
     getInfo() {
-        return this.http.get(`${base_url}/user/show-user`, {headers: this.header}).toPromise();
+        return this.http.get(`${base_url}/user/me`, {headers: this.header}).toPromise();
     }
 
-    changeInfo(name, birthday, address, phone) {
-        return this.http.post(`${base_url}/user/change-info`, JSON.stringify({
-            name: name,
-            birthday: birthday,
-            address: address,
-            phone: phone,
-        }),{headers: this.header}).toPromise();
-    }
+    changeInfo(name, birthday, address, phone, file) {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('birthday', birthday);
+        formData.append('address', address);
+        formData.append('phone', phone);
 
-    uploadAvatar(file) {
-        let form_data = new FormData();
-        form_data.append('file', file, file.name);
+        if(file != null)
+            formData.append('file', file, file.name);
 
-        return this.http.post(`${base_url}/user/update-avatar`, 
-            form_data ,
-            {
-                headers: new HttpHeaders({'token': localStorage.token})
-            }).toPromise();
+        return this.http.put(`${base_url}/user/me`, formData, {headers: this.header}).toPromise();
     }
 }

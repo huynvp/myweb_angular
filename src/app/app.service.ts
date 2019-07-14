@@ -9,22 +9,12 @@ export class AppService{
     protected header = null;
 
     constructor(public http:HttpClient) {
-        if(localStorage.getItem('token') != null) {
-            this.token = localStorage.getItem('token')
-        }
-
-        this.header = new HttpHeaders({
-            'token': this.token,
-            'content-type': 'application/json'
-        });
     }
 
     refreshToken():Observable<any> {
-        return this.http.post(`${environment.baseUrl}/user/refresh-token`, null, {headers: this.header});
-    }
-
-    test() {
-
+        const formData = new FormData();
+        formData.append('refreshToken', localStorage.getItem('refresh_token'));
+        return this.http.put(`${environment.baseUrl}/user/refresh-token`, formData);
     }
 }
 

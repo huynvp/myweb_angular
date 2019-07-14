@@ -21,33 +21,31 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit() {
 		document.getElementById("txtUsername").focus();
-		if(localStorage.token !== undefined) {
+		if(localStorage.access_token !== undefined) {
 			this.router.navigate(['/home']);
 		}
 	}
 
 	handleLogin() {
 		document.getElementById("btn-login").innerHTML = 'Loading ...';
-		let header = new HttpHeaders({
-			'content-type': 'application/json'
-		});
 
-		this.http.post(`${environment.baseUrl}/user/login`, JSON.stringify({
-			username: this.username,
-			password: this.password
-		}), {
-			headers: header
-		})
-		.toPromise()
-		.then(res => {
-			localStorage.token = res['data'].token;
-			this.router.navigate(['/home']);
-			Swal.fire('Success', 'Login success!','success')
-		})
-		.catch(err => {
-			Swal.fire('Error', `Error: ${err.error.message}`,'error')
-			console.log(err);
-			document.getElementById("btn-login").innerHTML = 'Login';
-		});
+		const formData = new FormData();
+		formData.append('username', this.username);
+		formData.append('password', this.password);
+
+	    this.http.post(`${environment.baseUrl}/user/login`,
+            formData).subscribe(
+	    	res => {
+				localStorage.access_token = res['data']['access_token'];
+				localStorage.refresh_token = res['data']['refresh_token'];
+				this.router.navigate(['/home']);
+				Swal.fire('Success', 'Login success!','success')
+			},
+	    	err => {
+				// Swal.fire('Error', `Error: ${err.error.message}`,'error')
+				console.log(err);
+				document.getElementById("btn-login").innerHTML = 'Login';
+			}
+	    );
 	}
 }
