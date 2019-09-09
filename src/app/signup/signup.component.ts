@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit {
   public address:'';
   public phone:'';
   public password:'';
+  public re_password:'';
 
   constructor(public router:Router, public http:HttpClient) {
     if(localStorage.token !== undefined) {
@@ -27,15 +28,18 @@ export class SignupComponent implements OnInit {
   }
 
   handleSignup() {
-    const formData = new FormData();
-    formData.append('name', this.name);
-    formData.append('email', this.email);
-    formData.append('birthday', this.birthday);
-    formData.append('address', this.address);
-    formData.append('phone', this.phone);
-    formData.append('password', this.password);
+    let json = JSON.stringify({
+      name: this.name,
+      email: this.email,
+      birthday: this.birthday,
+      address: this.address,
+      phone: this.phone,
+      password: this.password,
+    })
 
-    this.http.post(`${environment.baseUrl}/user/sign-up`, formData)
+    this.http.post(`${environment.baseUrl}/user/sign-up`, json, {
+      headers: new HttpHeaders({'content-type': 'application/json'})
+    })
     .toPromise()
     .then(data => {
       Swal.fire('Success', 'Signup success, please login go to system', 'success');
