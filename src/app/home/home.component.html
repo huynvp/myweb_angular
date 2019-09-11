@@ -34,10 +34,12 @@
                 </a>
             </div>
         </div>
-        <div class="col-3" id="right-menu">
+        <div class="col-3" id="right-menu" >
             <ul class="list-group">
                 <li class="list-group-item"><img src="{{url}}" alt="avatar" height="50px" width="50px"></li>
                 <li class="list-group-item" ([ngModel])="username">Hello {{ username }}</li>
+                <li class="list-group-item" ([ngModel])="permission">Permission {{ permission }}</li>
+                <li class="list-group-item"><a routerLink="/admin">Quản trị</a></li>
                 <li class="list-group-item"><a routerLink="/change-info">Thay đổi thông tin</a></li>
                 <li class="list-group-item"><a routerLink="/change-pass">Thay đổi mật khẩu</a></li>
                 <li class="list-group-item" (click)="handleLogout()"><a routerLink="/">Đăng xuất</a></li>

@@ -14,7 +14,9 @@ import { BaseComponent } from '../../shread/base.component';
 })
 export class HomeComponent extends BaseComponent implements OnInit {
   username:string;
-  url: string;
+  url: string = "";
+  admin: string = "";
+  permission:string;
 
   constructor(public router: Router, public http: HttpClient, private spinner: NgxSpinnerService) {
     super(router, http);
@@ -24,23 +26,30 @@ export class HomeComponent extends BaseComponent implements OnInit {
   async ngOnInit() {
     this.spinner.show();
     await super.ngOnInit();
-    await this.http.get(`${environment.baseUrl}/user/me`, {
+    this.http.get(`${environment.baseUrl}/user/me`, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.access_token
       })
     })
-    .subscribe(res => {
-      this.username = res['data']['name'];
-      if (res['data']['avatar'] != null) {
-        this.url = `${environment.publicUrl}/image/avatar/${res['data']['avatar']}`;
-      } else {
-        this.url = `${ environment.publicUrl }/image/avatar/default-avatar.png`;
-      }
-    }, err => {
-      localStorage.removeItem('access_token');
-      console.log(err);
-      Swal.fire('Eror', 'Token invalid', 'error');
-      this.router.navigate(['/login']);
+      .subscribe(res => {
+        this.username = res['data']['name'];
+        if (res['data']['permission'] == null) {
+          localStorage.removeItem('access_token');
+          Swal.fire('Error', 'Permission denied', 'error');
+          this.router.navigate(['/login']);
+        }
+        this.permission = res['data']['permission']['name'];
+        if (res['data']['avatar'] != null) {
+          this.url = `${environment.publicUrl}/image/avatar/${res['data']['avatar']}`;
+        }
+        else {
+          this.url = `${environment.publicUrl}/image/avatar/default-avatar.png`;
+        }
+      }, err => {
+        localStorage.removeItem('access_token');
+        console.log(err);
+        Swal.fire('Eror', 'Token invalid', 'error');
+        this.router.navigate(['/login']);
       });
     this.spinner.hide();
   }

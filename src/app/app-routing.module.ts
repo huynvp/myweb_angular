@@ -11,6 +11,7 @@ import { ChatModule } from './chat/chat.module';
 
 import { RecaptchaModule} from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { AdminModule } from './admin/admin.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
     UserModule,
     ChatModule,
     ApiDocModule,
+    AdminModule,
     RouterModule.forRoot(routes),
     FormsModule,
     RecaptchaModule,
