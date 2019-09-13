@@ -12,7 +12,7 @@ import { ToDoListService } from './todolist.service';
 export class TodolistComponent implements OnInit {
   datas = [];
 
-  constructor(private  todolist:ToDoListService) { 
+  constructor(private todolist:ToDoListService) { 
 
   }
 
