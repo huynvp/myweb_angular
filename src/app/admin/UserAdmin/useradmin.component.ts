@@ -17,6 +17,7 @@ import { BaseComponent } from 'src/shread/base.component';
 })
 export class UserAdminComponent extends BaseComponent implements OnInit{
   dtOptions: DataTables.Settings = {};
+  permisisons: any;
   constructor(public router: Router, public http: HttpClient, private user:UserAdminService) { 
     super(router, http);
   }
@@ -25,7 +26,8 @@ export class UserAdminComponent extends BaseComponent implements OnInit{
     await super.ngOnInit();
     await this.user.getPermission()
     .then(data => {
-      console.log(data);
+      this.permisisons = data['data'];
+      console.log(this.permisisons);
     })
     .catch(err => console.log(err));
   }
