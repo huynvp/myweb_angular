@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient , HttpHeaders} from '@angular/common/http';
-import { environment } from '../environments/environment';
-import Swal from 'sweetalert2';
+import { HttpClient} from '@angular/common/http';
 import { AppService } from '../app/app.service';
 
-@Component({
-})
 export class BaseComponent implements OnInit {
   private time:any;
   private subcCription:any;

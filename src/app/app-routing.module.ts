@@ -12,6 +12,7 @@ import { ChatModule } from './chat/chat.module';
 import { RecaptchaModule} from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { AdminModule } from './admin/admin.module';
+import { HomeModule } from './home/home.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
     ChatModule,
     ApiDocModule,
     AdminModule,
+    // HomeModule,
     RouterModule.forRoot(routes),
     FormsModule,
     RecaptchaModule,

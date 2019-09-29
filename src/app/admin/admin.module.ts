@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UserAdminComponent } from './UserAdmin/useradmin.component';
+import { PermissionUserAdminComponent } from './UserAdmin/Permission/permissionuseradmin';
 
 const routes: Routes = [
     { 
@@ -21,6 +22,7 @@ const routes: Routes = [
     ],
     declarations: [
         UserAdminComponent,
+        PermissionUserAdminComponent
     ]
 })
 
