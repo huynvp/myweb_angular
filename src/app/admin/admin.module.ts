@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UserAdminComponent } from './UserAdmin/useradmin.component';
 import { PermissionUserAdminComponent } from './UserAdmin/Permission/permissionuseradmin';
+import {LogUserAdminComponent} from './UserAdmin/Log/loguseradmin';
 
 const routes: Routes = [
-    { 
-        path: 'admin', 
-        component: UserAdminComponent 
+    {
+        path: 'admin',
+        component: UserAdminComponent
     },
   ];
 
@@ -22,7 +23,8 @@ const routes: Routes = [
     ],
     declarations: [
         UserAdminComponent,
-        PermissionUserAdminComponent
+        PermissionUserAdminComponent,
+        LogUserAdminComponent,
     ]
 })
 
