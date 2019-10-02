@@ -22,7 +22,7 @@ export class LogUserAdminComponent extends BaseComponent implements OnInit {
   countPage: number;
   countPageArr: any;
   currentPage: number = 1;
-  numberOfPage: number = 100;
+  numberOfPage: number = 10;
 
   constructor(public router: Router, public http: HttpClient, private user: UserAdminService, private spinner: NgxSpinnerService) {
     super(router, http);

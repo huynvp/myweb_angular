@@ -43,7 +43,6 @@ export class UserAdminService {
     }
 
     getLogUser(numberOfPage: number, currentPage: number) {
-        console.log(`${environment.baseUrl}/user/logs?numberOfPage=${numberOfPage}&currentPage=${currentPage}`);
         return this.http.
         get(`${environment.baseUrl}/user/logs?numberOfPage=${numberOfPage}&currentPage=${currentPage}`, {headers: this.header}).toPromise();
     }
