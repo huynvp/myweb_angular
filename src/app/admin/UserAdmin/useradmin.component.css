@@ -1,6 +1,30 @@
-.content {
-    margin: 1%;
-    min-height: 700px;
-    border: 1px solid #58ACFA;
-    padding: 1%;
+.left-menu {
+    /* background: */
+    min-height: 100px;
+    border-right: 1px solid #dfdfdf;
+}
+
+.text:hover {
+    /* background-color: rgb(52, 65, 36);
+    color: aliceblue; */
+    text-decoration-line: none;
+}
+
+a:hover {
+    text-decoration-line: none;
+}
+
+.text {
+    background: #232E32;
+    color: #dfdfdf;
+}
+
+.nav-link {
+    border-radius: 0%;
+}
+
+.tab-title {
+    font-weight: bold;
+    font-size: 20px;
+    background: #1C2127;
 }

@@ -6,6 +6,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UserAdminComponent } from './UserAdmin/useradmin.component';
 import { PermissionUserAdminComponent } from './UserAdmin/Permission/permissionuseradmin';
 import {LogUserAdminComponent} from './UserAdmin/Log/loguseradmin';
+import { TaskWorkAdminComponent } from './UserAdmin/TaskWork/taskworkadmin';
 
 const routes: Routes = [
     {
@@ -25,6 +26,7 @@ const routes: Routes = [
         UserAdminComponent,
         PermissionUserAdminComponent,
         LogUserAdminComponent,
+        TaskWorkAdminComponent,
     ]
 })
 

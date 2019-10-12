@@ -1,0 +1,10 @@
+.content {
+    margin: 1%;
+    min-height: 700px;
+    border: 1px solid #58ACFA;
+    padding: 1%;
+}
+
+.btn {
+    margin: 1%;
+}

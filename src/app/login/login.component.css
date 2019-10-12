@@ -10,17 +10,24 @@
     font-weight: bold;
 }
 
+input {
+    border: none;
+    outline: none !important;
+    background: none;
+    border-bottom: 1px solid #dddddd;
+}
+
+input:focus{
+    box-shadow:none;
+}
+
 .bg-info {
     background-color: #563D7C !important;
 }
 
-input {
-    border: 1px #563D7C solid;
-}
-
-input:hover {
+/* input:hover {
 	border: 3px #563D7C solid;
-}
+} */
 .card {
     border: 1px #563D7C solid; 
 }
