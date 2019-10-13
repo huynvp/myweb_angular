@@ -64,7 +64,7 @@
           </div>
           <div class="form-group">
             <label>Date</label>
-            <input type="date" class="form-control" [(ngModel)]="txtDateTaskWork" [ngModelOptions]="{standalone: true}">
+            <input type="date" class="form-control" [(ngModel)]="txtDateTask" [ngModelOptions]="{standalone: true}">
           </div>
           <div class="form-group">
             <label>Status</label>
@@ -94,7 +94,7 @@
   </div>
 </div>
 
-<!-- Edit permisison -->
+Edit permisison
 <div class="modal fade" id="modalEditPermission">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -106,34 +106,12 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label>Permission key</label>
-            <input readonly type="text" class="form-control" [(ngModel)]="txtPermissionKeyEdit"
-              [ngModelOptions]="{standalone: true}">
-          </div>
-          <div class="form-group">
-            <label>Permission name</label>
-            <input type="text" class="form-control" [(ngModel)]="txtPermissionNameEdit"
-              [ngModelOptions]="{standalone: true}">
-          </div>
-          <div class="form-group">
-            <label>Created at</label>
-            <input readonly type="text" class="form-control" [(ngModel)]="txtPermissionCreatedEdit"
-              [ngModelOptions]="{standalone: true}">
-          </div>
-          <div class="form-group">
-            <label>Updated at</label>
-            <input readonly type="text" class="form-control" [(ngModel)]="txtPermissionUpdatedEdit"
-              [ngModelOptions]="{standalone: true}">
-          </div>
-        </form>
+        
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="handleEditPermission()"
-          data-dismiss="modal">Edit</button>
+        <button type="button" class="btn btn-success"data-dismiss="modal">Edit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
 
@@ -153,25 +131,6 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>User</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td>{{ user.key }}</td>
-              <td>{{ user.name }}</td>
-              <td [ngSwitch]="user.status">
-                <button class="btn btn-success" *ngSwitchCase="1">Active</button>
-                <button class="btn btn-dark" *ngSwitchCase="0">Not active</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
 
       <!-- Modal footer -->
