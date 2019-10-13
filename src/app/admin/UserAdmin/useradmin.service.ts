@@ -47,4 +47,29 @@ export class UserAdminService {
         get(`${environment.baseUrl}/user/logs?numberOfPage=${numberOfPage}&currentPage=${currentPage}`, {headers: this.header}).toPromise();
     }
 
+    showListTask() {
+        return this.http
+        .get(`${environment.baseUrl}/taskWorks`, {headers: this.header}).toPromise();
+    }
+
+    showDetailTask(id:number) {
+        return this.http
+        .get(`${environment.baseUrl}/taskWorks/${id}`, {headers: this.header}).toPromise();
+    }
+
+    addNewTask(title:string, content:string, date:string, status:number, type:number) {
+        return this.http
+        .post(`${environment.baseUrl}/taskWorks`, JSON.stringify({
+            "Title": title,
+            "Content": content,
+            "DateOfTask": date,
+            "Status": status,
+            "Type": type
+        }), {headers: this.header}).toPromise();
+    }
+
+    deleteTask(id:number) {
+        return this.http
+        .delete(`${environment.baseUrl}/taskWorks/${id}`, {headers: this.header}).toPromise();
+    }
 }

@@ -7,6 +7,7 @@ import { UserAdminComponent } from './UserAdmin/useradmin.component';
 import { PermissionUserAdminComponent } from './UserAdmin/Permission/permissionuseradmin';
 import {LogUserAdminComponent} from './UserAdmin/Log/loguseradmin';
 import { TaskWorkAdminComponent } from './UserAdmin/TaskWork/taskworkadmin';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 const routes: Routes = [
     {
@@ -21,6 +22,7 @@ const routes: Routes = [
         CommonModule,
         CKEditorModule,
         FormsModule,
+        AngularEditorModule,
     ],
     declarations: [
         UserAdminComponent,

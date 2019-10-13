@@ -1,28 +1,39 @@
 <!-- Quyền -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddPermission">
-  Add permission
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddWork">
+  Add new task work
 </button>
 <hr>
 <table class="table">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Permission</th>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Type</th>
       <th>Created at</th>
       <th>Updated at</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let permisison of permisisons">
-      <td>{{ permisison.key }}</td>
-      <td>{{ permisison.name }}</td>
-      <td>{{ permisison.created_at }}</td>
-      <td>{{ permisison.updated_at }}</td>
+    <tr *ngFor="let listTask of listTasks">
+      <td>{{ listTask.key }}</td>
+      <td>{{ listTask.title }}</td>
+      <td>{{ listTask.dateOfTask | date: 'dd/MM/yyyy' }}</td>
+      <td [ngSwitch]="listTask.status">
+        <button class="btn btn-sm btn-success" *ngSwitchCase="1">Active</button>
+        <button class="btn btn-sm btn-dark" *ngSwitchCase="0">Not active</button>
+      </td>
+      <td [ngSwitch]="listTask.type">
+        <button class="btn btn-sm btn-success" *ngSwitchCase="1">Success</button>
+        <button class="btn btn-sm btn-warning" *ngSwitchCase="0">Warning</button>
+        <button class="btn btn-sm btn-danger" *ngSwitchCase="-1">Dangerous</button>
+      </td>
+      <td>{{ listTask.created_at | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+      <td>{{ listTask.updated_at | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
       <td>
-        <button class="btn btn-sm btn-success" (click)="handleShowPermission(permisison.key)" data-toggle="modal" data-target="#modalEditPermission"><i class="fas fa-edit"></i> Edit</button>
-        <button class="btn btn-sm btn-danger" (click)="handleDeletePermission(permisison.key)"><i class="fas fa-trash"></i> Delete</button>
-        <button class="btn btn-sm btn-primary" (click)="handleDetailPermission(permisison.key)" data-toggle="modal" data-target="#modalDetailPermission"><i class="fas fa-info-circle"></i> Detail</button>
+        <button class="btn btn-sm btn-danger" (click)="handleDeleteTaskWork(listTask.key)">Delete task</button>
       </td>
     </tr>
   </tbody>
@@ -30,12 +41,12 @@
 
 <!-- The Modal -->
 <!-- Add permisison -->
-<div class="modal fade" id="modalAddPermission">
+<div class="modal fade" id="modalAddWork">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Add permission</h4>
+        <h4 class="modal-title">Add new task</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
@@ -43,16 +54,39 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label>Permission name</label>
-            <input type="text" class="form-control" [(ngModel)]="txtPermissionName"
-              [ngModelOptions]="{standalone: true}">
+            <label>Title</label>
+            <input type="text" class="form-control" [(ngModel)]="txtTitleTask" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="form-group">
+            <label>Content</label>
+            <angular-editor [placeholder]="'Enter text here...'" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="txtContentTask"></angular-editor>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-control" [(ngModel)]="txtDateTaskWork" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control" [(ngModel)]="txtStatusTaskWork" [ngModelOptions]="{standalone: true}">
+              <option value="1">Active</option>
+              <option value="0">No active</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <select class="form-control" [(ngModel)]="txtTypeTaskWork" [ngModelOptions]="{standalone: true}">
+              <option value="1">Success</option>
+              <option value="0">Warning</option>
+              <option value="-1">Dangerous</option>
+            </select>
           </div>
         </form>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="handleAddPermission()" data-dismiss="modal">Add</button>
+        <button type="button" class="btn btn-success" (click)="handleAddTaskWork()" data-dismiss="modal">Add</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
 
@@ -98,7 +132,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="handleEditPermission()" data-dismiss="modal">Edit</button>
+        <button type="button" class="btn btn-success" (click)="handleEditPermission()"
+          data-dismiss="modal">Edit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
 
@@ -118,7 +153,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <table class="table"> 
+        <table class="table">
           <thead>
             <tr>
               <th>STT</th>
@@ -135,7 +170,7 @@
                 <button class="btn btn-dark" *ngSwitchCase="0">Not active</button>
               </td>
             </tr>
-          </tbody>      
+          </tbody>
         </table>
       </div>
 

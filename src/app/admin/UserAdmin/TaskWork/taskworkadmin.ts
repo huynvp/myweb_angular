@@ -17,6 +17,13 @@ import { BaseComponent } from 'src/shread/base.component';
   ]
 })
 export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
+  listTasks: any;
+  txtContentTask: string;
+  txtTitleTask: string;
+  txtDateTask: string;
+  txtStatusTaskWork: number;
+  txtTypeTaskWork: number;
+
   constructor(public router: Router, public http: HttpClient, private user: UserAdminService, private spinner: NgxSpinnerService) {
     super(router, http);
   }
@@ -24,7 +31,67 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
   async ngOnInit() {
     await super.ngOnInit();
     this.spinner.show();
-    
+    await this.user.showListTask()
+      .then(data => {
+        console.log(data);
+        this.listTasks = data["data"];
+      });
     this.spinner.hide();
+  }
+
+  resetData() {
+    this.txtContentTask = "";
+    this.txtTitleTask = "";
+    this.txtDateTask = "";
+    this.txtStatusTaskWork = 0;
+    this.txtTypeTaskWork = 0;
+  }
+
+  async handleAddTaskWork() {
+    this.spinner.show();
+    await this.user.addNewTask(
+      this.txtTitleTask,
+      this.txtContentTask,
+      this.txtDateTask,
+      this.txtStatusTaskWork,
+      this.txtTypeTaskWork)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
+    await this.ngOnInit();
+    this.spinner.hide();
+  }
+
+  handleEditTask() {
+
+  }
+
+  handleShowDetailTask(id: number) {
+    alert(id);
+  }
+
+  async handleDeleteTaskWork(id: number) {
+    Swal.fire({
+      title: 'Delete task',
+      text: 'Do you want delete this task?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.user.deleteTask(id)
+          .then(data => {
+            this.ngOnInit();
+            Swal.fire('Deleted!', data["message"], 'success');
+          })
+          .catch(err => {
+            console.log(err);
+            Swal.fire('Deleted!', 'Delete error, please check again', 'error');
+          })
+        this.spinner.hide();
+      }
+    })
   }
 }
