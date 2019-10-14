@@ -23,6 +23,7 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
   txtDateTask: string;
   txtStatusTaskWork: number;
   txtTypeTaskWork: number;
+  key: number;
 
   constructor(public router: Router, public http: HttpClient, private user: UserAdminService, private spinner: NgxSpinnerService) {
     super(router, http);
@@ -63,12 +64,38 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
     this.spinner.hide();
   }
 
-  handleEditTask() {
-
+  async handleEditTask() {
+    this.spinner.show();
+    await this.user.editTask(
+      this.key,
+      this.txtTitleTask,
+      this.txtContentTask,
+      this.txtDateTask,
+      this.txtStatusTaskWork,
+      this.txtTypeTaskWork)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
+    await this.ngOnInit();
+    this.spinner.hide();
   }
 
-  handleShowDetailTask(id: number) {
-    alert(id);
+  handleShowDetailTaskWork(id: number) {
+    this.user.showDetailTask(id)
+      .then(data => {
+        var datePipe = new DatePipe('en-US');
+        var data = data["data"];
+        this.key = data["key"];
+        this.txtTitleTask = data["title"];
+        this.txtDateTask = datePipe.transform(data["dateOfTask"], 'yyyy-MM-dd');
+        this.txtContentTask = data["content"];
+        this.txtStatusTaskWork = data["status"];
+        this.txtTypeTaskWork = data["type"];
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   async handleDeleteTaskWork(id: number) {

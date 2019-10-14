@@ -68,6 +68,17 @@ export class UserAdminService {
         }), {headers: this.header}).toPromise();
     }
 
+    editTask(id:number, title:string, content:string, date:string, status:number, type:number) {
+        return this.http
+        .put(`${environment.baseUrl}/taskWorks/${id}`, JSON.stringify({
+            "Title": title,
+            "Content": content,
+            "DateOfTask": date,
+            "Status": status,
+            "Type": type
+        }), {headers: this.header}).toPromise();
+    }
+
     deleteTask(id:number) {
         return this.http
         .delete(`${environment.baseUrl}/taskWorks/${id}`, {headers: this.header}).toPromise();
