@@ -64,6 +64,33 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
     this.spinner.hide();
   }
 
+  async changeStatusTask(key: number, status: number) {
+    this.spinner.show();
+    await this.user.showDetailTask(key)
+      .then(data => {
+        var data = data["data"];
+        this.user.editTask(
+          data["key"],
+          data["title"],
+          data["content"],
+          data["dateOfTask"],
+          status,
+          data["type"])
+          .then(data => {
+            console.log(data);
+            this.ngOnInit();
+            this.spinner.hide();
+          })
+          .catch(err => {
+            console.log(err);
+            this.spinner.hide();
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   async handleEditTask() {
     this.spinner.show();
     await this.user.editTask(

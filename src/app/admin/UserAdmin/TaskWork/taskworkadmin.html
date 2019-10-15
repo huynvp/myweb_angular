@@ -22,8 +22,8 @@
       <td>{{ listTask.title }}</td>
       <td>{{ listTask.dateOfTask | date: 'dd/MM/yyyy' }}</td>
       <td [ngSwitch]="listTask.status">
-        <button class="btn btn-sm btn-success" *ngSwitchCase="1">Active</button>
-        <button class="btn btn-sm btn-dark" *ngSwitchCase="0">Not active</button>
+        <button class="btn btn-sm btn-success" (click)="changeStatusTask(listTask.key, 0)" *ngSwitchCase="1">Active</button>
+        <button class="btn btn-sm btn-dark" (click)="changeStatusTask(listTask.key, 1)" *ngSwitchCase="0">Not active</button>
       </td>
       <td [ngSwitch]="listTask.type">
         <button class="btn btn-sm btn-success" *ngSwitchCase="1">Success</button>
@@ -33,8 +33,10 @@
       <td>{{ listTask.created_at | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
       <td>{{ listTask.updated_at | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
       <td>
-        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalEditWork"
+        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditWork"
           (click)="handleShowDetailTaskWork(listTask.key)">Edit task</button>
+        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalDetailTaskWork"
+          (click)="handleShowDetailTaskWork(listTask.key)">Detail</button>
         <button class="btn btn-sm btn-danger" (click)="handleDeleteTaskWork(listTask.key)">Delete task</button>
       </td>
     </tr>
@@ -96,7 +98,6 @@
   </div>
 </div>
 
-Edit permisison
 <div class="modal fade" id="modalEditWork">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -120,7 +121,8 @@ Edit permisison
           </div>
           <div class="form-group">
             <label>Date</label>
-            <input type="date" class="form-control" data-date-format="DD MMMM YYYY" [(ngModel)]="txtDateTask" [ngModelOptions]="{standalone: true}">
+            <input type="date" class="form-control" data-date-format="DD MMMM YYYY" [(ngModel)]="txtDateTask"
+              [ngModelOptions]="{standalone: true}">
           </div>
           <div class="form-group">
             <label>Status</label>
@@ -150,7 +152,7 @@ Edit permisison
   </div>
 </div>
 
-<div class="modal fade" id="modalDetailPermission">
+<div class="modal fade" id="modalDetailTaskWork">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -162,6 +164,8 @@ Edit permisison
 
       <!-- Modal body -->
       <div class="modal-body">
+        <p>Detail</p>
+        <div [innerHTML]="txtContentTask"></div>
       </div>
 
       <!-- Modal footer -->
