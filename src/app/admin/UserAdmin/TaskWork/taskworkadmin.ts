@@ -69,13 +69,7 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
     await this.user.showDetailTask(key)
       .then(data => {
         var data = data["data"];
-        this.user.editTask(
-          data["key"],
-          data["title"],
-          data["content"],
-          data["dateOfTask"],
-          status,
-          data["type"])
+        this.user.changeStatusTask(data["key"], status)
           .then(data => {
             console.log(data);
             this.ngOnInit();
