@@ -10,7 +10,6 @@ import { ApiDocModule } from './api_doc/api_doc.module';
 import { ChatModule } from './chat/chat.module';
 
 import { RecaptchaModule} from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { AdminModule } from './admin/admin.module';
 import { HomeModule } from './home/home.module';
 
@@ -33,7 +32,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FormsModule,
     RecaptchaModule,
-    RecaptchaFormsModule
   ],
   declarations: [
     LoginComponent,
