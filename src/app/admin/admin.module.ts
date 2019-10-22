@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes,RouterModule } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -8,6 +9,8 @@ import { PermissionUserAdminComponent } from './UserAdmin/Permission/permissionu
 import {LogUserAdminComponent} from './UserAdmin/Log/loguseradmin';
 import { TaskWorkAdminComponent } from './UserAdmin/TaskWork/taskworkadmin';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { DataTablesModule } from 'angular-datatables';
+
 
 const routes: Routes = [
     {
@@ -23,6 +26,8 @@ const routes: Routes = [
         CKEditorModule,
         FormsModule,
         AngularEditorModule,
+        DataTablesModule,
+        BrowserModule
     ],
     declarations: [
         UserAdminComponent,

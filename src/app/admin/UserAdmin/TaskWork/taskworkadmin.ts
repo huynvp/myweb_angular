@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserAdminService } from '../useradmin.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import Swal from "sweetalert2";
 import { Router } from '@angular/router';
