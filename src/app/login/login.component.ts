@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
 	username: string;
 	password: string;
+	@ViewChild('form_login', {static:false}) form_login: { value: { username: any; password: any; }; };
 
 	constructor(public http: HttpClient, public router: Router, private spinner: NgxSpinnerService) {
 		this.username = '';
@@ -21,7 +22,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		document.getElementById("txtUsername").focus();
 		if (localStorage.access_token !== undefined) {
 			this.router.navigate(['/home']);
 		}
@@ -29,15 +29,11 @@ export class LoginComponent implements OnInit {
 
 	async handleLogin() {
 		this.spinner.show();
-		document.getElementById("btn-login").innerHTML = 'Loading ...';
-
-		const formData = new FormData();
-		formData.append('username', this.username);
-		formData.append('password', this.password);
+		console.log(this.form_login.value);
 		await this.http.post(`${environment.baseUrl}/user/login`,
 			JSON.stringify({
-				username: this.username,
-				password: this.password,
+				username: this.form_login.value.username,
+				password: this.form_login.value.password,
 			}),
 			{
 				headers: new HttpHeaders({ 'content-type': 'application/json' })
@@ -51,8 +47,6 @@ export class LoginComponent implements OnInit {
 			})
 			.catch(err => {
 				Swal.fire('Error', `Error: ${err.error.message}`, 'error')
-				console.log(err);
-				document.getElementById("btn-login").innerHTML = 'Login';
 			});
 		this.spinner.hide();
 	}
