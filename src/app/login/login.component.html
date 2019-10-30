@@ -7,13 +7,11 @@
             <form #form_login="ngForm">
                 <input type="text" id="login" class="fadeIn second" [(ngModel)]="username" email required name="username"
                     placeholder="Username/ Tên tài khoản" />
-                <p class="message-validate">Username phải là 1 email</p>
                 <input type="text" id="password" class="fadeIn third" [(ngModel)]="password" required name="password"
                     placeholder="Password/ Mật khẩu" />
-                <p class="message-validate">Password không hợp lệ hoặc không được để trống</p>
                 <button 
                     type="button" 
-                    class="btn btn-success fadeIn fourth" 
+                    class="btn btn-info fadeIn fourth" 
                     [disabled]="form_login.invalid" 
                     type="button" 
                     (click)="handleLogin()" >

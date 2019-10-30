@@ -2,7 +2,7 @@
 /* BASIC */
 
 html {
-    background-color: #56baed;
+    background-color: #1AA1B8;
   }
   
   body {
@@ -11,7 +11,7 @@ html {
   }
   
   a {
-    color: #92badd;
+    color: #1AA1B8;
     display:inline-block;
     text-decoration: none;
     font-weight: 400;
@@ -24,11 +24,8 @@ html {
     text-transform: uppercase;
     display:inline-block;
     margin: 40px 8px 10px 8px; 
-    color: #cccccc;
+    color: #1AA1B8;
   }
-  
-  
-  
   /* STRUCTURE */
   
   .wrapper {
@@ -64,8 +61,6 @@ html {
     border-radius: 0 0 10px 10px;
   }
   
-  
-  
   /* TABS */
   
   h2.inactive {
@@ -74,15 +69,13 @@ html {
   
   h2.active {
     color: #0d0d0d;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #1AA1B8;
   }
-  
-  
   
   /* FORM TYPOGRAPHY*/
   
   input[type=button], input[type=button], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #1AA1B8;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -104,7 +97,7 @@ html {
   }
   
   input[type=button]:hover, input[type=button]:hover, input[type=reset]:hover  {
-    background-color: #39ace7;
+    background-color: #1AA1B8;
   }
   
   input[type=button]:active, input[type=button]:active, input[type=reset]:active  {
@@ -138,7 +131,7 @@ html {
   
   input[type=text]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #1AA1B8;
   }
   
   input[type=text]:placeholder {
@@ -236,7 +229,7 @@ html {
     bottom: -10px;
     width: 0;
     height: 2px;
-    background-color: #56baed;
+    background-color: #1AA1B8;
     content: "";
     transition: width 0.2s;
   }
@@ -271,4 +264,16 @@ html {
 
   .message-validate-none {
       display: none;
+  }
+
+  .btn:disabled {
+    background: rgb(2, 74, 87);
+  }
+
+  .btn {
+    margin: 2%;
+  }
+
+  ::placeholder {
+    color: #dfdfdf;
   }
