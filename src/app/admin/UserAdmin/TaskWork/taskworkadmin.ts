@@ -31,14 +31,12 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await super.ngOnInit();
-    this.spinner.show();
-    await this.user.showListTask()
+    super.ngOnInit();
+    this.user.showListTask()
       .then(data => {
         console.log(data);
         this.listTasks = data["data"];
       });
-    this.spinner.hide();
   }
 
   resetData() {

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserAdminService } from './useradmin.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DatePipe } from '@angular/common';
 import Swal from "sweetalert2";
@@ -8,16 +7,15 @@ import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { BaseComponent } from 'src/shread/base.component';
 
 @Component({
-  selector: 'app-todolist',
-  templateUrl: './useradmin.component.html',
-  styleUrls: ['./useradmin.component.css'],
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css'],
   providers: [
-    UserAdminService
   ]
 })
-export class UserAdminComponent extends BaseComponent implements OnInit{
+export class AdminComponent extends BaseComponent implements OnInit{
   permisisons: any;
-  constructor(public router: Router, public http: HttpClient, private user:UserAdminService) { 
+  constructor(public router: Router, public http: HttpClient) { 
     super(router, http);
   }
 

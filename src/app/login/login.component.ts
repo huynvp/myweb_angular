@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 				localStorage.access_token = res['data']['access_token'];
 				localStorage.refresh_token = res['data']['refresh_token'];
 				this.router.navigate(['/home']);
-				Swal.fire('Success', 'Login success!', 'success')
+				// Swal.fire('Success', 'Login success!', 'success')
 			})
 			.catch(err => {
 				Swal.fire('Error', `Error: ${err.error.message}`, 'error')

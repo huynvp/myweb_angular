@@ -28,3 +28,12 @@ a:hover {
     font-size: 20px;
     background: #1C2127;
 }
+
+.right-menu {
+    margin-left: 1%;
+    margin-top: 1%;
+}
+
+.link-active {
+    background: red;
+}

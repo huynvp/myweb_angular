@@ -1,32 +1,37 @@
-<!-- Quyền -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddPermission">
-  Add permission
-</button>
-<hr>
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Permission</th>
-      <th>Created at</th>
-      <th>Updated at</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let permisison of permisisons">
-      <td>{{ permisison.key }}</td>
-      <td>{{ permisison.name }}</td>
-      <td>{{ permisison.created_at }}</td>
-      <td>{{ permisison.updated_at }}</td>
-      <td>
-        <button class="btn btn-sm btn-success" (click)="handleShowPermission(permisison.key)" data-toggle="modal" data-target="#modalEditPermission"><i class="fas fa-edit"></i> Edit</button>
-        <button class="btn btn-sm btn-danger" (click)="handleDeletePermission(permisison.key)"><i class="fas fa-trash"></i> Delete</button>
-        <button class="btn btn-sm btn-primary" (click)="handleDetailPermission(permisison.key)" data-toggle="modal" data-target="#modalDetailPermission"><i class="fas fa-info-circle"></i> Detail</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="fadeIn second">
+  <!-- Quyền -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddPermission">
+    Add permission
+  </button>
+  <hr>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Permission</th>
+        <th>Created at</th>
+        <th>Updated at</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permisison of permisisons">
+        <td>{{ permisison.key }}</td>
+        <td>{{ permisison.name }}</td>
+        <td>{{ permisison.created_at }}</td>
+        <td>{{ permisison.updated_at }}</td>
+        <td>
+          <button class="btn btn-sm btn-success" (click)="handleShowPermission(permisison.key)" data-toggle="modal"
+            data-target="#modalEditPermission"><i class="fas fa-edit"></i> Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="handleDeletePermission(permisison.key)"><i
+              class="fas fa-trash"></i> Delete</button>
+          <button class="btn btn-sm btn-primary" (click)="handleDetailPermission(permisison.key)" data-toggle="modal"
+            data-target="#modalDetailPermission"><i class="fas fa-info-circle"></i> Detail</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- The Modal -->
 <!-- Add permisison -->
@@ -98,7 +103,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="handleEditPermission()" data-dismiss="modal">Edit</button>
+        <button type="button" class="btn btn-success" (click)="handleEditPermission()"
+          data-dismiss="modal">Edit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
 
@@ -118,7 +124,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <table class="table"> 
+        <table class="table">
           <thead>
             <tr>
               <th>STT</th>
@@ -135,7 +141,7 @@
                 <button class="btn btn-dark" *ngSwitchCase="0">Not active</button>
               </td>
             </tr>
-          </tbody>      
+          </tbody>
         </table>
       </div>
 

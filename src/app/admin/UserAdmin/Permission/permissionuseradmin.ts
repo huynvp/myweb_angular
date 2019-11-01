@@ -29,12 +29,10 @@ export class PermissionUserAdminComponent extends BaseComponent implements OnIni
   }
 
   async ngOnInit() {
-    await super.ngOnInit();
-    this.spinner.show();
-    await this.user.getPermission()
+    super.ngOnInit();
+    this.user.getPermission()
       .then(data => this.permisisons = data['data'])
       .catch(err => console.log(err));
-    this.spinner.hide();
   }
 
   resetInput() {
