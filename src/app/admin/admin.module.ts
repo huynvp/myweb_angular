@@ -44,11 +44,7 @@ const routes: Routes = [
         BrowserModule
     ],
     declarations: [
-        AdminComponent,
-        // UserAdminComponent,
-        // PermissionUserAdminComponent,
-        // LogUserAdminComponent,
-        // TaskWorkAdminComponent,
+        AdminComponent
     ]
 })
 

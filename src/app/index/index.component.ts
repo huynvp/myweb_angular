@@ -7,10 +7,10 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { BaseComponent } from '../../shread/base.component';
 @Component({
   selector: 'app-home-index',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css']
 })
-export class HomeComponent extends BaseComponent implements OnInit {
+export class IndexComponent extends BaseComponent implements OnInit {
   username: string;
   url: string = "";
   admin: string = "";

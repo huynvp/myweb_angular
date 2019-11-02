@@ -1,0 +1,32 @@
+.container {
+    margin-top: 10px;
+
+}
+
+.row {
+min-height: 200px;
+}
+
+#left-menu {
+    background-color: azure;
+}
+
+#content {
+    background-color: azure;
+}
+
+#right-menu {
+    background-color: azure;
+}
+
+#nav {
+    min-height: 100px;
+    margin-bottom: 20px;
+    background-image: url('../../public/image/title_background.jpg')
+}
+
+.list-group-item:hover {
+	background-color: #EEEEEE;
+	font-weight: bold;
+	color: blue;
+}

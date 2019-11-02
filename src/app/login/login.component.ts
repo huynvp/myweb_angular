@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
 	async ngOnInit() {
 		if (localStorage.access_token !== undefined) {
-			this.router.navigate(['/home']);
+			this.router.navigate(['/']);
 		}
 	}
 
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 			.then(res => {
 				localStorage.access_token = res['data']['access_token'];
 				localStorage.refresh_token = res['data']['refresh_token'];
-				this.router.navigate(['/home']);
+				this.router.navigate(['/']);
 				// Swal.fire('Success', 'Login success!', 'success')
 			})
 			.catch(err => {
