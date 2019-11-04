@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { UserAdminService } from '../useradmin.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import Swal from "sweetalert2";
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseComponent } from 'src/shread/base.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'task-work-admin',
@@ -25,19 +26,97 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
   txtStatusTaskWork: number;
   txtTypeTaskWork: number;
   key: number;
+  dataTable: any;
 
   constructor(public router: Router, public http: HttpClient, private user: UserAdminService, private spinner: NgxSpinnerService) {
     super(router, http);
   }
 
   async ngOnInit() {
-    super.ngOnInit();
-    this.user.showListTask()
-      .then(data => {
-        console.log(data);
-        this.listTasks = data["data"];
-      });
+    await super.ngOnInit();
+    this.DrawDataTable();
   }
+
+  DrawDataTable() {
+    this.dataTable = $('#data_table_task').DataTable(
+      {
+        processing: true,
+        serverSide: true,
+        searching: true,
+        paging: true,
+        order: [],
+        ajax: {
+          url: environment.baseUrl + '/taskWorks',
+          headers: {
+            'Authorization': `Bearer ${localStorage.access_token}`
+          },
+        },
+        'drawCallback': function () {
+          $('#data_table_task').addClass("table");
+          $('#data_table_task').addClass("table-bordered");
+          $('#data_table_task').addClass("table-hover");
+          $('#data_table_task').addClass("table-striped");
+          $('#data_table_task').children('thead').addClass('bg-info text-white');
+          // $('#data_table_task').on('click', 'btn-active', function() {
+          //   alert(1);
+          // })
+        },
+        columns: [
+          { data: 'key', name: 'key', 'title': 'ID' },
+          { data: 'title', name: 'title', 'title': 'Title' },
+          { data: 'dateOfTask', name: 'dateOfTask', 'title': 'Date' },
+          { data: 'status', name: 'status', 'title': 'Status' },
+          { data: 'type', name: 'type', 'title': 'Type' },
+          { data: 'created_at', name: 'created_at', 'title': 'Created At' },
+          { data: 'updated_at', name: 'updated_at', 'title': 'Updated At' },
+          { data: '', name: '', 'title': 'Action' },
+        ],
+        columnDefs: [
+          {
+            'targets': 2,
+            'render': function (data) {
+              return new Date(data).toLocaleDateString('en-GB');
+            }
+          },
+          {
+            'targets': 3,
+            'render': function (data, type, row) {
+              if(data == 0)
+                return '<button class="btn btn-sm btn-success" id="btn-active" data-id="'+ row.key +'">Active</button>';
+              else 
+                return '<button class="btn btn-sm btn-dark" id="btn-inactive" data-id="'+ row.key +'">Deactive</button>';
+            }
+          },
+          {
+            'targets': 4,
+            'render': function (data, type, row) {
+              if(data == 1)
+                return '<button class="btn btn-sm btn-success">Success</button>';
+              else if(data == 0)
+                return '<button class="btn btn-sm btn-warning">Warning</button>';
+              else
+                return '<button class="btn btn-sm btn-danger">Dangerous</button>';
+            }
+          },
+          {
+            'targets': [5,6],
+            'render': function (data) {
+              return new Date(data).toLocaleDateString('en-GB') + " " + new Date(data).toLocaleTimeString('en-GB');
+            }
+          },
+          {
+            'targets': 7,
+            'render': function (data, type, row) {
+              return '<button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditWork">Edit task</button>' +
+                '<button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalDetailTaskWork">Detail</button>'+
+                '<button class="btn btn-sm btn-danger" (click)="handleDeleteTaskWork(listTask.key)">Delete task</button>';
+            }
+          },
+        ]
+      },
+    );
+  }
+
 
   resetData() {
     this.txtContentTask = "";

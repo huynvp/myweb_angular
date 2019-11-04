@@ -40,7 +40,7 @@ const routes: Routes = [
         CKEditorModule,
         FormsModule,
         AngularEditorModule,
-        DataTablesModule,
+        // DataTablesModule,
         BrowserModule
     ],
     declarations: [
