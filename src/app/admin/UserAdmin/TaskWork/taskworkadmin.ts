@@ -27,6 +27,7 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
   txtTypeTaskWork: number;
   key: number;
   dataTable: any;
+  loadTable: boolean = true;
 
   constructor(public router: Router, public http: HttpClient, private user: UserAdminService, private spinner: NgxSpinnerService) {
     super(router, http);
@@ -38,6 +39,7 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
   }
 
   DrawDataTable() {
+    const that = this;
     this.dataTable = $('#data_table_task').DataTable(
       {
         processing: true,
@@ -57,9 +59,25 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
           $('#data_table_task').addClass("table-hover");
           $('#data_table_task').addClass("table-striped");
           $('#data_table_task').children('thead').addClass('bg-info text-white');
-          // $('#data_table_task').on('click', 'btn-active', function() {
-          //   alert(1);
-          // })
+          if (that.loadTable) {
+            $('#data_table_task').on('click', '.btn-active', function () {
+              that.changeStatusTask($(this).data('id'), -1);
+            })
+            $('#data_table_task').on('click', '.btn-inactive', function () {
+              that.changeStatusTask($(this).data('id'), 0);
+            })
+            $('#data_table_task').on('click', '.btn_detail', function () {
+              that.handleShowDetailTaskWork($(this).data('id'));
+            })
+            $('#data_table_task').on('click', '.btn_edit', function () {
+              that.handleShowDetailTaskWork($(this).data('id'));
+            })
+            $('#data_table_task').on('click', '.btn_delete', function () {
+              that.handleDeleteTaskWork($(this).data('id'));
+            })
+
+          }
+          that.loadTable = false;
         },
         columns: [
           { data: 'key', name: 'key', 'title': 'ID' },
@@ -81,25 +99,25 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
           {
             'targets': 3,
             'render': function (data, type, row) {
-              if(data == 0)
-                return '<button class="btn btn-sm btn-success" id="btn-active" data-id="'+ row.key +'">Active</button>';
-              else 
-                return '<button class="btn btn-sm btn-dark" id="btn-inactive" data-id="'+ row.key +'">Deactive</button>';
+              if (data == 0)
+                return '<button class="btn btn-sm btn-success btn-active" data-id="' + row.key + '">Active</button>';
+              else
+                return '<button class="btn btn-sm btn-dark btn-inactive" data-id="' + row.key + '">Deactive</button>';
             }
           },
           {
             'targets': 4,
             'render': function (data, type, row) {
-              if(data == 1)
+              if (data == 1)
                 return '<button class="btn btn-sm btn-success">Success</button>';
-              else if(data == 0)
+              else if (data == 0)
                 return '<button class="btn btn-sm btn-warning">Warning</button>';
               else
                 return '<button class="btn btn-sm btn-danger">Dangerous</button>';
             }
           },
           {
-            'targets': [5,6],
+            'targets': [5, 6],
             'render': function (data) {
               return new Date(data).toLocaleDateString('en-GB') + " " + new Date(data).toLocaleTimeString('en-GB');
             }
@@ -107,9 +125,9 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
           {
             'targets': 7,
             'render': function (data, type, row) {
-              return '<button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditWork">Edit task</button>' +
-                '<button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalDetailTaskWork">Detail</button>'+
-                '<button class="btn btn-sm btn-danger" (click)="handleDeleteTaskWork(listTask.key)">Delete task</button>';
+              return '<button class="btn btn-sm btn-warning btn_edit" data-id="' + row.key + '" data-toggle="modal" data-target="#modalEditWork">Edit task</button>' +
+                '<button class="btn btn-sm btn-info btn_detail" data-id="' + row.key + '" data-toggle="modal" data-target="#modalDetailTaskWork">Detail</button>' +
+                '<button class="btn btn-sm btn-danger btn_delete" data-id="' + row.key + '">Delete task</button>';
             }
           },
         ]
@@ -135,32 +153,37 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
       this.txtStatusTaskWork,
       this.txtTypeTaskWork)
       .then(data => {
+        Swal.fire('Success', "Add new task success", 'success');
         console.log(data);
       })
-      .catch(err => console.log(err));
-    await this.ngOnInit();
+      .catch(err => {
+        console.log(err)
+        Swal.fire('Error', err.error.message, 'error');
+      });
+    this.dataTable.ajax.reload(null, false);
     this.spinner.hide();
   }
 
   async changeStatusTask(key: number, status: number) {
     this.spinner.show();
     await this.user.showDetailTask(key)
-      .then(data => {
+      .then(async data => {
         var data = data["data"];
-        this.user.changeStatusTask(data["key"], status)
+        await this.user.changeStatusTask(data["key"], status)
           .then(data => {
+            this.dataTable.clear();
+            this.dataTable.ajax.reload(null, false);
             console.log(data);
-            this.ngOnInit();
-            this.spinner.hide();
           })
           .catch(err => {
             console.log(err);
-            this.spinner.hide();
           });
       })
       .catch(err => {
         console.log(err);
       })
+
+    this.spinner.hide();
   }
 
   async handleEditTask() {
@@ -173,10 +196,12 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
       this.txtStatusTaskWork,
       this.txtTypeTaskWork)
       .then(data => {
+        Swal.fire('Success', 'Change success', 'success');
         console.log(data);
       })
       .catch(err => console.log(err));
-    await this.ngOnInit();
+    this.dataTable.clear();
+    this.dataTable.ajax.reload(null, false);
     this.spinner.hide();
   }
 
@@ -209,7 +234,8 @@ export class TaskWorkAdminComponent extends BaseComponent implements OnInit {
         this.spinner.show();
         this.user.deleteTask(id)
           .then(data => {
-            this.ngOnInit();
+            this.dataTable.clear();
+            this.dataTable.ajax.reload(null, false);
             Swal.fire('Deleted!', data["message"], 'success');
           })
           .catch(err => {
