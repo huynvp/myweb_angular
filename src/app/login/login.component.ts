@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
 	selector: 'app-login',
@@ -43,10 +44,14 @@ export class LoginComponent implements OnInit {
 				localStorage.access_token = res['data']['access_token'];
 				localStorage.refresh_token = res['data']['refresh_token'];
 				this.router.navigate(['/']);
-				// Swal.fire('Success', 'Login success!', 'success')
 			})
 			.catch(err => {
-				Swal.fire('Error', `Error: ${err.error.message}`, 'error')
+				$.notify({
+					icon: 'glyphicon glyphicon-remove',
+					message: `Error: ${err.error.message}`,
+				}, {
+					type: 'danger',
+				});
 			});
 		this.spinner.hide();
 	}

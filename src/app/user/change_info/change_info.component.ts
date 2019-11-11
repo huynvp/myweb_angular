@@ -3,6 +3,7 @@ import { ChangeInfoService } from './change_info.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-change-info',
@@ -47,11 +48,23 @@ export class ChangeInfoComponent implements OnInit {
   handleChangeInfo() {
     this.change_info_service.changeInfo(this.name, this.birthday, this.address, this.phone, this.file)
     .then(res => {
-      Swal.fire('Success', 'Change info success', 'success');
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        title: 'Success: ',
+        message: `Change info success`,
+      }, {
+        type: 'success',
+      });
       this.ngOnInit();
     })
     .catch(err => {
-      Swal.fire('Error', 'Change info error', 'error');
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        title: 'Error: ',
+        message: `Change info error`,
+      }, {
+        type: 'danger',
+      });
       console.log(err)
     })
   }
