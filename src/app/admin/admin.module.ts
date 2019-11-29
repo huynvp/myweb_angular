@@ -28,6 +28,14 @@ const routes: Routes = [
             {
                 path: 'taskWork',
                 loadChildren: './UserAdmin/TaskWork/taskworkadmin.module#TaskWorkAdminModule'
+            },
+            {
+                path: 'messageLog',
+                loadChildren: './UserAdmin/MessageLog/messagelog.module#MessageLogModule'
+            },
+            {
+                path: 'logDebug',
+                loadChildren: './Debug/Log/logDebug.module#LogDebugUserAdminModule'
             }
         ]
     }

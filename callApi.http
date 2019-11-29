@@ -1,0 +1,43 @@
+###
+# @url=
+@url=http://localhost:5000/api/
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJhSFY1Ym5ad1FHZHRZV2xzTG1OdmJRPT0iLCJleHAiOjE1NzQzNTQwNTEsIm5iZiI6MTU3NDM1MDQ1MSwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.EMQv0ctNj-Bn665ybdKxK9sIICoeWzbvp2hGPMCLt0k
+@refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJZbUZvWkdKb1lXSnphR1JpYUdGelltUm9ZbVJpYW5GcmJuZHVaR2x5ZFdsdmRYVnBiMlIxWVhOcGIyUnFkM0ZwYW1ScmJHcHJiR0Z6YW1ScmJHcGhjMnhyWkdwcmJHRnoiLCJleHAiOjE1NzQ5NTUzODEsIm5iZiI6MTU3NDM1MDU4MSwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.GsJVbma_9o3bWfeQBbbDZ7D_ZGs0eGDpk2aiotV2kCA
+
+###
+POST  {{url}}user/login Http/1.1
+Content-Type: application/json
+
+{
+    "username": "huynvp@gmail.com",
+    "password": "123"
+}
+
+###
+
+PUT {{url}}user/refresh-token Http/1.1
+Content-Type: application/json
+
+{
+    "refreshToken": "{{refreshToken}}"
+}
+
+###
+GET {{url}}projectLogs Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+POST  {{url}}projectLogs Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "MyWeb_Localhost",
+    "status": 1
+}
+
+###
+DELETE  {{url}}projectLogs/5dd6b44e3fa58d057ba2525b Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}

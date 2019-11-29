@@ -88,4 +88,29 @@ export class UserAdminService {
         return this.http
         .delete(`${environment.baseUrl}/taskWorks/${id}`, {headers: this.header}).toPromise();
     }
+
+    showDetailMess(id:number) {
+        return this.http
+        .get(`${environment.baseUrl}/admin/messageLogs/${id}`, {headers: this.header}).toPromise();
+    }
+
+    addNewMess(title:string, content:string) {
+        return this.http
+        .post(`${environment.baseUrl}/admin/messageLogs`, JSON.stringify({
+            "Title": title,
+            "Content": content
+        }), {headers: this.header}).toPromise();
+    }
+    editMess(id:number, title:string, content:string, timestamp:string) {
+        return this.http
+        .put(`${environment.baseUrl}/admin/messageLogs/${id}`, JSON.stringify({
+            "Title": title,
+            "Content": content,
+            "Timestamp": timestamp
+        }), {headers: this.header}).toPromise();
+    }
+    deleteMess(id:number) {
+        return this.http
+        .delete(`${environment.baseUrl}/admin/messageLogs/${id}`, {headers: this.header}).toPromise();
+    }
 }

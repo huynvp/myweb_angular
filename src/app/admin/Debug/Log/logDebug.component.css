@@ -1,0 +1,8 @@
+.row .col {
+    margin-top: 1%;
+}
+
+.btn-actived {
+    background: gray;
+    color: #dddddd;
+}
