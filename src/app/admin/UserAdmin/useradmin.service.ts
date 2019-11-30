@@ -113,4 +113,16 @@ export class UserAdminService {
         return this.http
         .delete(`${environment.baseUrl}/admin/messageLogs/${id}`, {headers: this.header}).toPromise();
     }
+
+    addNewProject(data) {
+        return this.http
+        .post(`${environment.baseUrl}/projectLogs`, JSON.stringify(data), {headers:this.header})
+        .toPromise();
+    }
+
+    deleteProject(key) {
+        return this.http
+        .delete(`${environment.baseUrl}/projectLogs/${key}`, {headers:this.header})
+        .toPromise();
+    }
 }
