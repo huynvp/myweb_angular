@@ -7,12 +7,17 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { DataTablesModule } from 'angular-datatables';
 import { LogDebugComponent } from './logDebug.component';
+import { LogDetailComponent } from './logDetail/logDetail.component';
 
 
 const routes: Routes = [
     {
         path: '',
         component: LogDebugComponent
+    },
+    {
+        path: 'detail/:id',
+        component: LogDetailComponent
     }
 ];
 
@@ -26,7 +31,8 @@ const routes: Routes = [
         DataTablesModule,
     ],
     declarations: [
-        LogDebugComponent
+        LogDebugComponent,
+        LogDetailComponent
     ]
 })
 

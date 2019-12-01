@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserAdminService } from '../../UserAdmin/useradmin.service';
+import { UserAdminService } from '../../../UserAdmin/useradmin.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DatePipe } from '@angular/common';
@@ -12,14 +12,14 @@ import { environment } from 'src/environments/environment';
 declare var $: any;
 
 @Component({
-  selector: 'log-debug-user-admin',
-  templateUrl: './logDebug.html',
-  styleUrls: ['./logDebug.component.css'],
+  selector: 'log-detail-user-admin',
+  templateUrl: './logDetail.html',
+  styleUrls: ['./logDetail.component.css'],
   providers: [
     UserAdminService
   ]
 })
-export class LogDebugComponent extends BaseComponent implements OnInit {
+export class LogDetailComponent extends BaseComponent implements OnInit {
   dataTable: any;
   checkStatus = 0;
   txtAddName: string;
@@ -59,9 +59,6 @@ export class LogDebugComponent extends BaseComponent implements OnInit {
             $('#data_table_log').on('click', '.delete', function() {
               that.deleteProject($(this).data('id'));
             });
-            $('#data_table_log').on('click', '.detail', function() {
-              that.router.navigate(['/admin/logDebug/detail', $(this).data('id')]);
-            });
           }
           that.loadTable = false;
         },
@@ -98,7 +95,7 @@ export class LogDebugComponent extends BaseComponent implements OnInit {
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <span class="dropdown-item delete" data-id="${row.key}">Delete</span>
-                <span class="dropdown-item detail" data-id="${row.key}">View Log</span>
+                <span class="dropdown-item">View Log</span>
               </div>
             </div>`;
             }
