@@ -4,7 +4,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DatePipe } from '@angular/common';
 import Swal from "sweetalert2";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseComponent } from 'src/shread/base.component';
 import { environment } from 'src/environments/environment';
@@ -24,14 +24,26 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
   checkStatus = 0;
   txtAddName: string;
   loadTable: boolean = true;
+  id: any;
 
-  constructor(public router: Router, public http: HttpClient, private user: UserAdminService, private spinner: NgxSpinnerService) {
+  constructor(public router: Router, 
+              public http: HttpClient, 
+              private user: UserAdminService,
+              private activatedRoute: ActivatedRoute, 
+              private spinner: NgxSpinnerService) {
     super(router, http);
   }
 
   async ngOnInit() {
     await super.ngOnInit();
+    this.activatedRoute.params.subscribe(param => {
+      this.id = param.id;
+    });
     this.DrawDataTable();
+  }
+
+  refreshTable() {
+    this.dataTable.ajax.reload(null, false);
   }
 
   DrawDataTable() {
@@ -44,7 +56,7 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
         paging: true,
         order: [],
         ajax: {
-          url: environment.baseUrl + '/projectLogs',
+          url: environment.baseUrl + '/projectLogs/' + this.id + '/logs',
           headers: {
             'Authorization': `Bearer ${localStorage.access_token}`
           },
@@ -63,31 +75,30 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
           that.loadTable = false;
         },
         columns: [
-          { data: 'key', name: 'key', 'title': 'ID' },
-          { data: 'name', name: 'name', 'title': 'Name' },
-          { data: 'status', name: 'status', 'title': 'Status' },
-          { data: 'enable', name: 'enable', 'title': 'Enable' },
+          { data: 'id', name: 'id', 'title': 'ID' },
+          { data: 'content', name: 'content', 'title': 'Content' },
+          { data: 'type', name: 'type', 'title': 'Type' },
           { data: 'createdAt', name: 'created_at', 'title': 'Created At' },
           { title:'Select'}
         ],
         columnDefs: [
+          // {
+          //   'targets': 2,
+          //   'render': function (data) {
+          //     if(data == 1)
+          //       return `<button class="btn btn-sm btn-success">Active</button>`;
+          //     else 
+          //       return `<button class="btn btn-sm btn-danger">Deactive</button>`;
+          //   }
+          // },
           {
-            'targets': 2,
-            'render': function (data) {
-              if(data == 1)
-                return `<button class="btn btn-sm btn-success">Active</button>`;
-              else 
-                return `<button class="btn btn-sm btn-danger">Deactive</button>`;
-            }
-          },
-          {
-            'targets': 4,
+            'targets': 3,
             'render': function (data) {
               return new Date(data).toLocaleDateString('en-GB') + " " + new Date(data).toLocaleTimeString('en-GB');
             }
           },
           {
-            'targets': 5,
+            'targets': 4,
             'render': function(data, m, row) {
               return `<div class="dropdown">
               <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
