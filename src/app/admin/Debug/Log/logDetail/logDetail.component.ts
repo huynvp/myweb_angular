@@ -25,6 +25,7 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
   txtAddName: string;
   loadTable: boolean = true;
   id: any;
+  id_arr: any = [];
 
   constructor(public router: Router, 
               public http: HttpClient, 
@@ -68,18 +69,43 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
           $('#data_table_log').addClass("table-striped");
           $('#data_table_log').children('thead').addClass('bg-info text-white');
           if (that.loadTable) {
-            $('#data_table_log').on('click', '.delete', function() {
-              that.deleteProject($(this).data('id'));
+            $('#data_table_log').on('click', '.check', function() {
+              that.id_arr = [];
+              const check_list = $('.check');
+              if (check_list.length > 0) {
+                  check_list.map((i, e) => {
+                    if(e.checked == true)
+                      that.id_arr.push(e.value);
+                  });
+              }
+            });
+            $('#data_table_log').on('click', '#checkAll', function() {
+              that.id_arr = [];
+              const check_list = $('.check');
+              if($('#checkAll')[0].checked != false) {
+                if (check_list.length > 0) {
+                    check_list.map((i, e) => {
+                        e.checked = true;
+                        that.id_arr.push(e.value);
+                    });
+                }
+              } else {
+                  if (check_list.length > 0) {
+                    check_list.map((i, e) => {
+                        e.checked = false;
+                    });
+                }
+              }
             });
           }
           that.loadTable = false;
         },
         columns: [
-          { data: 'id', name: 'id', 'title': 'ID' },
+          // { data: 'id', name: 'id', 'title': 'ID' },
           { data: 'content', name: 'content', 'title': 'Content' },
           { data: 'type', name: 'type', 'title': 'Type' },
           { data: 'createdAt', name: 'created_at', 'title': 'Created At' },
-          { title:'Select'}
+          { title:'<input type="checkbox" id="checkAll" value="${row.id}">'}
         ],
         columnDefs: [
           // {
@@ -92,29 +118,27 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
           //   }
           // },
           {
-            'targets': 3,
+            'targets': 2,
             'render': function (data) {
               return new Date(data).toLocaleDateString('en-GB') + " " + new Date(data).toLocaleTimeString('en-GB');
             }
           },
           {
-            'targets': 4,
+            'targets': 3,
+            orderable: false,
             'render': function(data, m, row) {
-              return `<div class="dropdown">
-              <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Action
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <span class="dropdown-item delete" data-id="${row.key}">Delete</span>
-                <span class="dropdown-item">View Log</span>
-              </div>
-            </div>`;
+              return `<input type="checkbox" class="check" value="${row.id}">`;
             }
           }
 
         ]
       },
     );
+  }
+
+  checkCheckBox()
+  {
+    alert(1)
   }
 
   resetData() {
