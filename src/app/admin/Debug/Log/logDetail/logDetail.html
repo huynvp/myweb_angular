@@ -1,6 +1,13 @@
 <h3>Log debug detail</h3>
-<button (click)="refreshTable()" class="btn btn-sm btn-primary">Refresh Data</button>
-<button (click)="refreshTable()" class="btn btn-sm btn-danger">Delete All</button>
+<button (click)="goBack()" class="btn btn-sm btn-warning">
+    <i class="fas fa-chevron-circle-left"></i> Go Back
+</button>
+<button (click)="refreshTable()" class="btn btn-sm btn-primary">
+    <i class="fas fa-sync-alt"></i> Refresh Data
+</button>
+<button (click)="deleteMuity()" class="btn btn-sm btn-danger">
+    <i class="fas fa-trash-alt"></i> Delete Muilty
+</button>
 <div class="row">
     <div class="table-responsive">
         <table id="data_table_log"></table>

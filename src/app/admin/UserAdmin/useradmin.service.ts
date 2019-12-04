@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
@@ -124,5 +124,18 @@ export class UserAdminService {
         return this.http
         .delete(`${environment.baseUrl}/projectLogs/${key}`, {headers:this.header})
         .toPromise();
+    }
+
+    deleteLog(projectKey, logId) {
+        return this.http
+        .delete(`${environment.baseUrl}/projectLogs/${projectKey}/logs/${logId}`, {headers:this.header})
+        .toPromise();
+    }
+
+    deleteLogs(projectKey, logIdArr) {
+        return this.http.request('DELETE', `${environment.baseUrl}/projectLogs/${projectKey}/logs`, {
+            headers: this.header,
+            body: { Id: logIdArr }
+        }).toPromise();
     }
 }

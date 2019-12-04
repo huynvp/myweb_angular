@@ -1,7 +1,7 @@
 ###
 # @url=
 @url=http://localhost:5000/api/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJhSFY1Ym5ad1FHZHRZV2xzTG1OdmJRPT0iLCJleHAiOjE1NzQzNTQwNTEsIm5iZiI6MTU3NDM1MDQ1MSwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.EMQv0ctNj-Bn665ybdKxK9sIICoeWzbvp2hGPMCLt0k
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJhSFY1Ym5ad1FHZHRZV2xzTG1OdmJRPT0iLCJleHAiOjE1NzU0NzY1NjQsIm5iZiI6MTU3NTQ3Mjk2NCwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.UXY_k2M47heEJDrCbL9YWMURdva8jeG2OOMQ9qcmKk4
 @refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJZbUZvWkdKb1lXSnphR1JpYUdGelltUm9ZbVJpYW5GcmJuZHVaR2x5ZFdsdmRYVnBiMlIxWVhOcGIyUnFkM0ZwYW1ScmJHcHJiR0Z6YW1ScmJHcGhjMnhyWkdwcmJHRnoiLCJleHAiOjE1NzQ5NTUzODEsIm5iZiI6MTU3NDM1MDU4MSwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.GsJVbma_9o3bWfeQBbbDZ7D_ZGs0eGDpk2aiotV2kCA
 
 ###
@@ -28,7 +28,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
-POST  {{url}}projectLogs Http/1.1
+POST {{url}}projectLogs Http/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -36,6 +36,46 @@ Authorization: Bearer {{token}}
     "name": "MyWeb_Localhost",
     "status": 1
 }
+
+###
+POST {{url}}projectLogs/XB35-T4N4-B2IR-QVBT-UK3G-KD6J/logs Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "MyWeb_Localhost",
+    "type": 1
+}
+
+###
+GET {{url}}projectLogs/XB35-T4N4-B2IR-QVBT-UK3G-KD6J/logs Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "MyWeb_Localhost",
+    "type": 1
+}
+
+###
+DELETE  {{url}}projectLogs/XB35-T4N4-B2IR-QVBT-UK3G-KD6J/logs/5de7d4823d9427048f436bc9 Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+DELETE  {{url}}projectLogs/XB35-T4N4-B2IR-QVBT-UK3G-KD6J/logs Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Id": [
+        "5de7d4ae3d9427048f436bca",
+        "5de7d4af3d9427048f436bcb",
+        "5de3fb78cbf6b70594da7a4e",
+        "5de3fb82cbf6b70594da7a4f"
+    ]
+}
+
 
 ###
 DELETE  {{url}}projectLogs/5dd6b44e3fa58d057ba2525b Http/1.1

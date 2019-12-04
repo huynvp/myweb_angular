@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserAdminService } from '../../../UserAdmin/useradmin.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import Swal from "sweetalert2";
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -31,6 +31,7 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
               public http: HttpClient, 
               private user: UserAdminService,
               private activatedRoute: ActivatedRoute, 
+              private location: Location,
               private spinner: NgxSpinnerService) {
     super(router, http);
   }
@@ -136,68 +137,40 @@ export class LogDetailComponent extends BaseComponent implements OnInit {
     );
   }
 
-  checkCheckBox()
-  {
-    alert(1)
-  }
-
-  resetData() {
-    this.txtAddName = '';
-  }
-
-  changeStatus() {
-    if(this.checkStatus == 0)
-      this.checkStatus = 1;
-      else this.checkStatus = 0;
-    console.log(this.checkStatus);
-  }
-
-  async addProject() {
-    this.spinner.show();
-    const data = {
-      Name: this.txtAddName,
-      Status: this.checkStatus
-    }
-    await this.user.addNewProject(data)
-    .then(data => {
-      $.notify({
-        message: data["message"],
-      }, {
-        type: 'success',
-      });
+  deleteMuity() {
+    Swal.fire(
+      {
+        title: 'Are you sure delete log checked?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+      }
+    ).then(async (result) => {
+      if (result.value) {
+        this.spinner.show();
+        $('#checkAll')[0].checked = false;
+        await this.user.deleteLogs(this.id, this.id_arr)
+        .then(data => {
+          $.notify({
+            message: data["message"],
+          }, {
+            type: 'success',
+          });
+        })
+        .catch(err => {
+          $.notify({
+            message: err["error"]["message"],
+          }, {
+            type: 'danger',
+          });
+        })
+        this.dataTable.ajax.reload(null, false);
+        this.spinner.hide();
+        ;
+      }
     })
-    .catch(err => {
-      $.notify({
-        message: err["error"]["message"],
-      }, {
-        type: 'danger',
-      });
-    });
-
-    this.dataTable.ajax.reload(null, false);
-    this.spinner.hide();
-    this.resetData();
   }
 
-  async deleteProject(key:string) {
-    this.spinner.show();
-    await this.user.deleteProject(key)
-    .then(data => {
-      $.notify({
-        message: data["message"],
-      }, {
-        type: 'success',
-      });
-    })
-    .catch(err => {
-      $.notify({
-        message: err["error"]["message"],
-      }, {
-        type: 'danger',
-      });
-    });
-
-    this.dataTable.ajax.reload(null, false);
-    this.spinner.hide();
+  goBack() {
+    this.location.back();
   }
 }
