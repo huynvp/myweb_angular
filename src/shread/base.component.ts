@@ -16,16 +16,16 @@ export class BaseComponent implements OnInit {
     if(localStorage.access_token != null)
       this.subcCription = this.app_service.refreshToken()
       .subscribe(res => {
-        localStorage.access_token = res['data']['access_token'];
-        localStorage.refresh_token = res['data']['refresh_token'];
+        localStorage.access_token = res['data']['accessToken'];
+        localStorage.refresh_token = res['data']['refreshToken'];
       }, err => {
         console.log(err)
       });
       this.time = setInterval(() => {
         this.subcCription = this.app_service.refreshToken()
         .subscribe(res => {
-          localStorage.access_token = res['data']['access_token'];
-          localStorage.refresh_token = res['data']['refresh_token'];
+          localStorage.access_token = res['data']['accessToken'];
+          localStorage.refresh_token = res['data']['refreshToken'];
         }, err => {
           console.log(err)
         });

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePassService } from './change_pass.service';
-
-import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-change-pass',
@@ -22,20 +21,32 @@ export class ChangePassComponent implements OnInit {
   }
 
   handleChangeInput() {
-    if(this.new_pass !== this.retype_new_pass && this.retype_new_pass !== "")
-      Swal.fire('Error', 'New password and retype is not valid', 'error');
+    // if(this.new_pass !== this.retype_new_pass && this.retype_new_pass !== "")
+    //   Swal.fire('Error', 'New password and retype is not valid', 'error');
 
-    if(this.old_pass === this.new_pass && this.new_pass !== '')
-      Swal.fire('Error', 'New password must be different from old password', 'error');
+    // if(this.old_pass === this.new_pass && this.new_pass !== '')
+    //   Swal.fire('Error', 'New password must be different from old password', 'error');
   }
 
   handleChangePass() {
     this.change_pass_service.changePass(this.old_pass, this.new_pass)
     .then(res => {
-      Swal.fire('Success', 'Change password success', 'success');
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        title: 'Success: ',
+        message: res['message'],
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
-      Swal.fire('Error', 'Change password error', 'error');
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        title: 'Error: ',
+        message: err['error']['message'],
+      }, {
+        type: 'danger',
+      });
     });
   }
 

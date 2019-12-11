@@ -7,17 +7,18 @@ import { environment } from '../../../environments/environment';
 export class ChangePassService {
     private header=new HttpHeaders({
         'content-type':'application/json',
-        'token': localStorage.token
+        'Authorization': 'Bearer ' + localStorage.access_token
     });
     constructor(public http:HttpClient) {
         
     }
 
     changePass(old_pass, new_pass) {
-        return this.http.post(`${environment.baseUrl}/user/change-pass`, 
+        console.log(localStorage.access_token);
+        return this.http.put(`${environment.baseUrl}/user/password`, 
             JSON.stringify({
-                'old_pass':old_pass,
-                'new_pass':new_pass,
+                'OldPass':old_pass,
+                'NewPass':new_pass,
             }),{ headers: this.header }).toPromise();
     }
 }
