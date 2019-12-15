@@ -25,6 +25,10 @@ const routes: Routes = [
                 path: 'index',
                 loadChildren: '../index/index.module#IndexModule'
             },
+            {
+                path: 'to-do-list',
+                loadChildren: '../todolist/todolist.module#TodolistModule'
+            },
         ]
     }
   ];
