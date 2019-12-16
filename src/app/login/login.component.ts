@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
 	async handleLogin() {
 		this.spinner.show();
-		console.log(this.form_login.value);
 		await this.http.post(`${environment.baseUrl}/user/login`,
 			JSON.stringify({
 				username: this.form_login.value.username,
@@ -41,8 +40,9 @@ export class LoginComponent implements OnInit {
 			})
 			.toPromise()
 			.then(res => {
-				localStorage.access_token = res['data']['access_token'];
-				localStorage.refresh_token = res['data']['refresh_token'];
+				console.log(res);
+				localStorage.access_token = res['data']['accessToken'];
+				localStorage.refresh_token = res['data']['refreshToken'];
 				this.router.navigate(['/']);
 			})
 			.catch(err => {

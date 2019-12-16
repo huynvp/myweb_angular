@@ -7,3 +7,16 @@
     font-weight: bold;
     color: #b1b1b1;
 }
+
+.title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #40363A;
+    color: white;
+}
+
+.table_todolist {
+    border: 2px solid blue;
+    box-shadow: 7px 7px grey;
+}

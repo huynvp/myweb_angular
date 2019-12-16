@@ -52,13 +52,15 @@ export class LogUserAdminComponent extends BaseComponent implements OnInit {
         },
         columns: [
           { data: 'id', name: 'id', 'title': 'ID' },
-          { data: 'userId', name: 'user', 'title': 'User' },
-          { data: 'content', name: 'content', 'title': 'Content' },
+          { data: 'email', name: 'email', 'title': 'User' },
+          // { data: 'function', name: 'function', 'title': 'Content' },
+          { data: 'path', name: 'path', 'title': 'Path' },
+          { data: 'method', name: 'method', 'title': 'Method' },
           { data: 'createdAt', name: 'created_at', 'title': 'Created At' },
         ],
         columnDefs: [
           {
-            'targets': 3,
+            'targets': 4,
             'render': function (data) {
                 return new Date(data).toLocaleDateString('en-GB') + " " + new Date(data).toLocaleTimeString('en-GB');
             }

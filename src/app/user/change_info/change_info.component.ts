@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ChangeInfoService } from './change_info.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({

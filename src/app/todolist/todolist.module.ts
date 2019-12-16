@@ -8,11 +8,11 @@ import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
     { 
-        path: 'to-do-list', 
+        path: '', 
         component: TodolistComponent 
     },
     { 
-        path: 'to-do-list/admin', 
+        path: '/admin', 
         component: TodolistadminComponent 
     },
   ];
