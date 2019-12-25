@@ -17,6 +17,27 @@
 }
 
 .table_todolist {
-    border: 2px solid blue;
-    box-shadow: 7px 7px grey;
+    /* border: 2px solid black; */
+    /* box-shadow: 7px 7px grey; */
+    border-collapse: collapse;
+  /* border-radius: 2em; */
+}
+
+thead tr{
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #C9D1D7;
+    background-color: #3668B0;
+}
+td, th{
+    border: 2px solid #C9D1D7;
+}
+
+.table_checkbox {
+    text-align: center;
+    background: #DEDFE2;
+}
+
+.table_proccess {
+    background: #D4F9D2;
 }

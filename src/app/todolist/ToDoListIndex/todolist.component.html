@@ -26,62 +26,66 @@
     </div>
   </div>
 </div> -->
-
 <h4 class="title">to do list</h4>
-<select name="" id="">
-  <option value="">20-10-2910</option>
-  <option value="">20-10-2910</option>
-  <option value="">20-10-2910</option>
-  <option value="">20-10-2910</option>
-  <option value="">20-10-2910</option>
-  <option value="">20-10-2910</option>
-</select>
+<span>Chọn ngày</span> 
+<input type="date" name="" id="">
+<hr>
+<table class="table table-bordered">
+  <td>Ngày: 20-11-2019</td>
+  <td>Công việc đã làm</td>
+  <td>Công việc chưa làm</td>
+  <td>Hiệu suất</td>
+</table>
 <hr>
 <div class="row">
   <div class="table-responsive table_todolist">
-      <table class="table ">
+      <table class="table table-bordered table-hover">
         <thead class="bg-info text-white">
-          <tr>
-            <th>STT</th>
-            <th>Name</th>
-            <th>Ngày</th>
+          <tr class="tr_border">
+            <th>Hoàn thành</th>
+            <th style="width: 40%;">Nội dung</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
             <th>Mức độ</th>
             <th>Tiến trình</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><input type="checkbox" name="" id=""></td>
-            <td>Công việc 1</td>
+            <td class="table_checkbox"><input type="checkbox" name="" id=""></td>
+            <td>Công việc 1 a dá da sd á d huh uhuah uhui huhu huihu d đa a dá dá d á d d</td>
+            <td>30-10-2019</td>
             <td>30-10-2019</td>
             <td><span class="text-success">Hoàn thành</span></td>
-            <td>
-              <div class="progress" style="height:10px;">
-                  <div class="progress-bar" style="width:10%;height:10px">15%</div>
+            <td class="table_proccess">
+              <div class="progress" style="height:100%;">
+                  <div class="progress-bar" style="width:34%;height:100%">34%</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="tr_border">
+            <td class="table_checkbox"><input type="checkbox" name="" id=""></td>
+            <td>Công việc 1</td>
+            <td>30-10-2019</td>
+            <td>30-10-2019</td>
+            <td><span class="text-danger">Hoàn thành</span></td>
+            <td class="table_proccess">
+              <div class="progress" style="height:100%;">
+                  <div class="progress-bar" style="width:15%;height:100%">15%</div>
               </div>
             </td>
           </tr>
           <tr>
-            <td><input type="checkbox" name="" id=""></td>
+            <td class="table_checkbox"><input type="checkbox" name="" id=""></td>
             <td>Công việc 1</td>
             <td>30-10-2019</td>
-            <td><span class="text-danger">Hoàn thành</span></td>
-            <td>
-                <div class="progress" style="height:10px;">
-                    <div class="progress-bar" style="width:50%;height:10px">50%</div>
-                </div>
-              </td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" name="" id=""></td>
-            <td>Công việc 1</td>
             <td>30-10-2019</td>
             <td><span class="text-warning">Hoàn thành</span></td>
-            <td>
-                <div class="progress" style="height:10px;">
-                    <div class="progress-bar" style="width:90%;height:10px">90%</div>
-                </div>
-              </td>
+            <td class="table_proccess">
+              <div class="progress" style="height:100%;">
+                  <div class="progress-bar" style="width:90%;height:100%">90%</div>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
