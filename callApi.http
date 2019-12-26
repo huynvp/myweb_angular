@@ -1,7 +1,7 @@
 ###
 # @url=
 @url=http://localhost:5000/api/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJhSFY1Ym5ad1FHZHRZV2xzTG1OdmJRPT0iLCJleHAiOjE1NzY1MTE0NjUsIm5iZiI6MTU3NjUwNzg2NSwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.h-lGIk-2lbfWlf67P4Eyf1msbKPRr4PwsnrjnAjnhtg
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJhSFY1Ym5ad1FHZHRZV2xzTG1OdmJRPT0iLCJleHAiOjE1NzczODIwNTksIm5iZiI6MTU3NzM3ODQ1OSwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.hl5fsPxjI4QFBxOwh7Ac7n1J9WOy1UKjd75qU7Mr4pQ
 @refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eW52cEBnbWFpbC5jb20iLCJpYXQiOiJiV3hvYUVGSVNqaGpjREJYTkdjd2IwNU1VMlo1WmtGdGFVcHlVR2hxTUZKb1V6azBaR0l6WjNwWk1HRTRhbUpMWVhWUVpYVmtaa1phUkdKT2VHdzFUMUJKTnpkbGRnPT0iLCJleHAiOjE1NzcxMTQ3MjQsIm5iZiI6MTU3NjUwOTkyNCwiaXNzIjoiaHR0cHM6Ly9teXdlYi1kb3RuZXQuaHV5bmd1eWVuLnh5ei8iLCJhdWQiOiJodHRwczovL215d2ViLWRvdG5ldC5odXluZ3V5ZW4ueHl6LyJ9.GcIig-4tnJYddJ-8LZo3SounM4D_K0rqXGBvz6LDN4A
 
 ###
@@ -91,3 +91,25 @@ Authorization: Bearer {{token}}
 DELETE  {{url}}admin/messageLogs/1 Http/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+#ToDoList
+###
+GET {{url}}toDoList Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}toDoList/1 Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+POST  {{url}}toDoList Http/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Content": "Test content",
+    "DateStart": "2019-12-20",
+    "DateEnd": "2019-12-29"
+}
