@@ -1,34 +1,9 @@
-<!-- <h3 id="title">GHI CHÚ CÁ NHÂN</h3>
-<a routerLink="/home" class="btn btn-sm btn-primary">Trở về trang chủ <i class="fas fa-home"></i></a> -
-<a routerLink="/to-do-list/admin" class="btn btn-sm btn-primary">Quản lí ghi chú <i class="fas fa-chevron-circle-right"></i></a>
-<div class="row d-flex justify-content-center" id="work-list">
-  <div class="col-8" *ngFor="let data of datas">
-    <div class="card">
-      <div [ngSwitch]="data.level_id">
-        <div *ngSwitchCase="1">
-          <div class="card-header bg-info"><b>{{ data.title }}</b></div>
-        </div>
-        <div *ngSwitchCase="2">
-          <div class="card-header bg-success"><b>{{ data.title }}</b></div>
-        </div>
-        <div *ngSwitchCase="3">
-          <div class="card-header bg-warning"><b>{{ data.title }}</b></div>
-        </div>
-        <div *ngSwitchDefault>
-            <div class="card-header bg-danger"><b>{{ data.title }}</b></div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p [innerHTML]="data.content"></p>
-        <p><b><i>Deadline:</i></b> {{ data.date | date:'dd/MM/yyyy' }}</p>
-        <p><b><i>Tình trạng:</i></b>{{ data.level_name}}</p>
-      </div>
-    </div>
-  </div>
-</div> -->
 <h4 class="title">to do list</h4>
-<span>Chọn ngày</span> 
-<input type="date" name="" id="">
+<mat-form-field>
+  <input matInput (dateChange)="hanleChangeDateInput('change', $event)" [matDatepicker]="picker" placeholder="Choose a date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
 <hr>
 <table class="table table-bordered">
   <td>Ngày: 20-11-2019</td>

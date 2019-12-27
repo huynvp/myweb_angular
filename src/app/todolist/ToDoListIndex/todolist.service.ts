@@ -12,9 +12,9 @@ export class ToDoListService {
     getAll() {
         let header = new HttpHeaders({
             'content-type': 'application/json',
-            'token': localStorage.token
+            'Authorization': 'Bearer' + localStorage.token
         });
 
-        return this.http.get(`${environment.baseUrl}/note/show-all`, { headers: header }).toPromise();
+        return this.http.get(`${environment.baseUrl}/toDoList`, { headers: header }).toPromise();
     }
 }
