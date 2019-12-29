@@ -41,3 +41,16 @@ td, th{
 .table_proccess {
     background: #D4F9D2;
 }
+
+.mt_form_add_todolist {
+    display: flex;
+    flex-direction: column;
+}
+
+.mt_form_add_todolist > * {
+    width: 100%;
+}
+
+mat-radio-button {
+    margin: 5px;
+}

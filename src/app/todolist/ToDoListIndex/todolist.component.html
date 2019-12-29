@@ -1,12 +1,56 @@
 <h4 class="title">to do list</h4>
 <mat-form-field>
-  <input matInput (dateChange)="hanleChangeDateInput('change', $event)" [matDatepicker]="picker" placeholder="Choose a date">
+  <input matInput (dateChange)="hanleChangeDateInput('change', $event)" [matDatepicker]="picker"
+    placeholder="Choose a date">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 <hr>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Thêm công việc mới
+      </mat-panel-title>
+      <mat-panel-description>
+        Thêm các công việc cần làm mới
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="mt_form_add_todolist" (keyup.enter)="handleKeyPressAddTask()">
+      <mat-form-field>
+        <mat-label>Tên công việc</mat-label>
+        <textarea matInput [(ngModel)]="content" placeholder="Nhập nội dung công việc"></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Ngày bắt đầu</mat-label>
+        <input matInput name="dateFrom" [(ngModel)]="dateFrom" [matDatepicker]="picker1" placeholder="Chọn ngày bắt đầu">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Ngày kết thúc</mat-label>
+        <input matInput name="dateTo" [(ngModel)]="dateTo" [matDatepicker]="picker2" placeholder="Chọn ngày kết thúc">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <label>Mức độ ưu tiên</label>
+      <mat-radio-group [(ngModel)]="priority">
+        <mat-radio-button class="example-radio-button" *ngFor="let item of priorityArr" [value]="item.key">
+          {{item.value}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <button mat-stroked-button color="primary" (click)="handleClickAdd()">Thêm công việc mới</button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<hr>
 <table class="table table-bordered">
-  <td>Ngày: 20-11-2019</td>
+  <td>Ngày: {{dateStrView}}</td>
   <td>Công việc đã làm</td>
   <td>Công việc chưa làm</td>
   <td>Hiệu suất</td>
@@ -14,55 +58,45 @@
 <hr>
 <div class="row">
   <div class="table-responsive table_todolist">
-      <table class="table table-bordered table-hover">
-        <thead class="bg-info text-white">
-          <tr class="tr_border">
-            <th>Hoàn thành</th>
-            <th style="width: 40%;">Nội dung</th>
-            <th>Ngày bắt đầu</th>
-            <th>Ngày kết thúc</th>
-            <th>Mức độ</th>
-            <th>Tiến trình</th>
-          </tr>
-        </thead>
-        <tbody>
+    <table class="table table-bordered table-hover">
+      <thead class="bg-info text-white">
+        <tr class="tr_border">
+          <th>Hoàn thành</th>
+          <th style="width: 40%;">Nội dung</th>
+          <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th>
+          <th>Mức độ</th>
+          <th>Tiến trình</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <ng-template *ngFor="let item of datas"> -->
+        <ng-template ngFor let-item [ngForOf]="datas" let-i="index">
           <tr>
-            <td class="table_checkbox"><input type="checkbox" name="" id=""></td>
-            <td>Công việc 1 a dá da sd á d huh uhuah uhui huhu huihu d đa a dá dá d á d d</td>
-            <td>30-10-2019</td>
-            <td>30-10-2019</td>
-            <td><span class="text-success">Hoàn thành</span></td>
+            <td class="table_checkbox">
+              <input type="checkbox" name="" id="" [checked]="item.finish" (change)="hanleChangeCheckFinish(item.id)">
+            </td>
+            <td>{{item.content}}</td>
+            <td>{{convertDateToStrView(item.dateStart)}}</td>
+            <td>{{convertDateToStrView(item.dateEnd)}}</td>
+            <td>
+              <span *ngIf="item.priority == 1" class="text-primary">Nhẹ</span>
+              <span *ngIf="item.priority == 2" class="text-warning">Trung bình</span>
+              <span *ngIf="item.priority == 3" class="text-danger">Khẩn cấp</span>
+            </td>
             <td class="table_proccess">
               <div class="progress" style="height:100%;">
-                  <div class="progress-bar" style="width:34%;height:100%">34%</div>
+                <div class="progress-bar" style="height:100%" [ngStyle]="{'width':item.percent + '%'}">{{item.percent}}%
+                </div>
               </div>
             </td>
-          </tr>
-          <tr class="tr_border">
-            <td class="table_checkbox"><input type="checkbox" name="" id=""></td>
-            <td>Công việc 1</td>
-            <td>30-10-2019</td>
-            <td>30-10-2019</td>
-            <td><span class="text-danger">Hoàn thành</span></td>
-            <td class="table_proccess">
-              <div class="progress" style="height:100%;">
-                  <div class="progress-bar" style="width:15%;height:100%">15%</div>
-              </div>
+            <td>
+              <button (click)="handleDeleteNote(item.id)">Xóa</button>
             </td>
           </tr>
-          <tr>
-            <td class="table_checkbox"><input type="checkbox" name="" id=""></td>
-            <td>Công việc 1</td>
-            <td>30-10-2019</td>
-            <td>30-10-2019</td>
-            <td><span class="text-warning">Hoàn thành</span></td>
-            <td class="table_proccess">
-              <div class="progress" style="height:100%;">
-                  <div class="progress-bar" style="width:90%;height:100%">90%</div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        </ng-template>
+      </tbody>
+    </table>
   </div>
 </div>

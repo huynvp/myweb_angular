@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatRadioModule} from '@angular/material/radio';
 
 const routes: Routes = [
     { 
@@ -34,7 +36,9 @@ const routes: Routes = [
         // MatDatepickerInput,
         MatRippleModule,
         MatInputModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatExpansionModule,
+        MatRadioModule
     ],
     declarations: [
         TodolistComponent,

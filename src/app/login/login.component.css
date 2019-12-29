@@ -109,7 +109,7 @@ html {
   }
   
   input[type=text], input[type=email], input[type=date], input[type=password] {
-    background-color: #f6f6f6;
+    background-color: #2DA7BD;
     border: none;
     color: #0d0d0d;
     padding: 15px 32px;

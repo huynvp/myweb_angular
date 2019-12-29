@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { NgxSpinnerService } from "ngx-spinner";
-import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -15,6 +14,7 @@ declare var $: any;
 export class LoginComponent implements OnInit {
 	username: string;
 	password: string;
+	forgotEmail: string;
 	@ViewChild('form_login', {static:false}) form_login: { value: { username: any; password: any; }; };
 
 	constructor(public http: HttpClient, public router: Router, private spinner: NgxSpinnerService) {
@@ -44,6 +44,29 @@ export class LoginComponent implements OnInit {
 				localStorage.access_token = res['data']['accessToken'];
 				localStorage.refresh_token = res['data']['refreshToken'];
 				this.router.navigate(['/']);
+			})
+			.catch(err => {
+				$.notify({
+					icon: 'glyphicon glyphicon-remove',
+					message: `Error: ${err.error.message}`,
+				}, {
+					type: 'danger',
+				});
+			});
+		this.spinner.hide();
+	}
+
+	async hanleForgotPass() {
+		this.spinner.show();
+		await this.http.get(`${environment.baseUrl}/user/sendEmailForgotPassword/${this.forgotEmail}`)
+			.toPromise()
+			.then(res => {
+				$.notify({
+					icon: 'glyphicon glyphicon-remove',
+					message: `${res['message']}`,
+				}, {
+					type: 'success',
+				});
 			})
 			.catch(err => {
 				$.notify({

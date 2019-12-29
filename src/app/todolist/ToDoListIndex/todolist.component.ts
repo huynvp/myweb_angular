@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToDoListService } from './todolist.service';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
+
 @Component({
   selector: 'app-todolist',
   templateUrl: './todolist.component.html',
@@ -12,23 +13,136 @@ declare var $: any;
 })
 export class TodolistComponent implements OnInit {
   datas = [];
+  dateChange = null;
+  dateStrView = null;
+  panelOpenState = false;
+  priorityArr = [
+    {
+      value: 'Thấp',
+      key: 1
+    },
+    {
+      value: 'Trung bình',
+      key: 2
+    },
+    {
+      value: 'Cao',
+      key: 3
+    }
+  ];
 
-  constructor(private todolist:ToDoListService) { 
+  content: string;
+  dateFrom: string;
+  dateTo: string;
+  priority: any;
+
+  constructor(private todolist: ToDoListService, private spinner: NgxSpinnerService) {
 
   }
 
   ngOnInit() {
-    this.todolist.getAll()
-    .then(res => {
-      this.datas = res['data'];
-    })
-    .catch(err => console.log(err));
+    this.dateStrView = this.convertDateToStrView(null);
+    this.showAll();
+  }
+
+  showAll() {
+    this.todolist.getAll(this.convertDateToString(null))
+      .then(res => {
+        this.datas = res['data'];
+        console.log(this.datas)
+      })
+      .catch(err => console.log(err));
   }
 
   hanleChangeDateInput(change, event) {
-    console.log(change);
-    var date = new Date(event.value);
-    date.getDate();
-    console.log(date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate());
+    this.dateStrView = this.convertDateToStrView(event.value);
+    console.log(this.convertDateToString(event.value));
+  }
+
+  hanleChangeCheckFinish(id) {
+    alert(id)
+  }
+
+  convertDateToString(dateStr: string) {
+    if (dateStr === null) {
+      var date = new Date();
+    }
+    else {
+      var date = new Date(dateStr);
+    }
+    return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+  }
+
+  convertDateToStrView(dateStr: string) {
+    if (dateStr === null) {
+      var date = new Date();
+    }
+    else {
+      var date = new Date(dateStr);
+    }
+    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+  }
+
+  handleKeyPressAddTask() {
+    this.addNewData();
+  }
+
+  handleClickAdd() {
+    this.addNewData();
+  }
+
+  async addNewData() {
+    this.spinner.show();
+    var data = JSON.stringify({
+      Content: this.content,
+      DateStart: this.convertDateToString(this.dateFrom),
+      DateEnd: this.convertDateToString(this.dateTo),
+      Priority: this.priority
+    });
+    await this.todolist.addNewData(data)
+      .then(res => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `${res['message']}`,
+        }, {
+          type: 'success',
+        });
+      })
+      .catch(err => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `Error: ${err.error.message}`,
+        }, {
+          type: 'danger',
+        });
+      });
+    this.showAll();
+    this.spinner.hide();
+  }
+
+  async handleDeleteNote(id) {
+    if (confirm("Do you want delete this note?")) {
+      this.spinner.show();
+      await this.todolist.deleteData(id)
+        .then(res => {
+          $.notify({
+            icon: 'glyphicon glyphicon-remove',
+            message: `${res['message']}`,
+          }, {
+            type: 'success',
+          });
+        })
+        .catch(err => {
+          $.notify({
+            icon: 'glyphicon glyphicon-remove',
+            message: `Error: ${err.error.message}`,
+          }, {
+            type: 'danger',
+          });
+        });
+      this.showAll();
+      this.spinner.hide();
+    }
   }
 }
+
