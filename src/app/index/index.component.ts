@@ -15,11 +15,30 @@ export class IndexComponent extends BaseComponent implements OnInit {
   url: string = "";
   admin: string = "";
   permission: string;
+
+  days: any;
+  hours: any;
+  minutes: any;
+  seconds: any;
+
+  dateEvent: any = new Date(2020, 0, 1, 0, 0, 0, 0);
+  dateNow: any = new Date();
   constructor(public router: Router, public http: HttpClient, private spinner: NgxSpinnerService) {
     super(router, http);
     this.url = ``;
   }
   async ngOnInit() {
+    setInterval(() => {
+      let dateNow:any = new Date();
+      var distance = this.dateEvent - dateNow;
+
+      this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      this.seconds = Math.floor((distance % (1000 * 60)) / (1000));
+
+      console.log(this.seconds);
+    }, 500);
     this.spinner.show();
     await super.ngOnInit();
     this.http.get(`${environment.baseUrl}/user/me`, {

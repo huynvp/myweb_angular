@@ -30,3 +30,7 @@ min-height: 200px;
 	font-weight: bold;
 	color: blue;
 }
+
+.active {
+    border-left: 8px solid #17A1B8 !important;
+}
