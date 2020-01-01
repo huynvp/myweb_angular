@@ -75,7 +75,7 @@
         <ng-template ngFor let-item [ngForOf]="datas" let-i="index">
           <tr>
             <td class="table_checkbox">
-              <input type="checkbox" name="" id="" [checked]="item.finish" (change)="hanleChangeCheckFinish(item.id)">
+              <input type="checkbox" name="" id="" [checked]="item.finish" (change)="hanleChangeCheckFinish(item.id, item.finish)">
             </td>
             <td>{{item.content}}</td>
             <td>{{convertDateToStrView(item.dateStart)}}</td>

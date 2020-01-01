@@ -21,6 +21,10 @@ export class ToDoListService {
         return this.http.post(`${environment.baseUrl}/toDoList`, data, {headers: this.header}).toPromise();
     }
 
+    updateData(id, data) {
+        return this.http.put(`${environment.baseUrl}/toDoList/${id}`, data, {headers: this.header}).toPromise();
+    }
+
     deleteData(id) {
         return this.http.delete(`${environment.baseUrl}/toDoList/${id}`, {headers: this.header}).toPromise();
     }

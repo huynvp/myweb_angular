@@ -20,7 +20,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
   hours: any;
   minutes: any;
   seconds: any;
-
+  time1: any;
   dateEvent: any = new Date(2020, 0, 1, 0, 0, 0, 0);
   dateNow: any = new Date();
   constructor(public router: Router, public http: HttpClient, private spinner: NgxSpinnerService) {
@@ -28,7 +28,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
     this.url = ``;
   }
   async ngOnInit() {
-    setInterval(() => {
+    this.time1 = setInterval(() => {
       let dateNow:any = new Date();
       var distance = this.dateEvent - dateNow;
 
@@ -73,5 +73,10 @@ export class IndexComponent extends BaseComponent implements OnInit {
     localStorage.removeItem('refresh_token');
     Swal.fire('Success', 'See you again', 'info');
     this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.time1);
+    super.ngOnDestroy();
   }
 }

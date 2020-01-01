@@ -59,8 +59,30 @@ export class TodolistComponent implements OnInit {
     console.log(this.convertDateToString(event.value));
   }
 
-  hanleChangeCheckFinish(id) {
-    alert(id)
+  async hanleChangeCheckFinish(id, checked) {
+    this.spinner.show();
+    let data = {
+      finish: !checked
+    };
+    await this.todolist.updateData(id, data)
+      .then(res => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `${res['message']}`,
+        }, {
+          type: 'success',
+        });
+      })
+      .catch(err => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `Error: ${err.error.message}`,
+        }, {
+          type: 'danger',
+        });
+      });
+    this.showAll();
+    this.spinner.hide();
   }
 
   convertDateToString(dateStr: string) {
