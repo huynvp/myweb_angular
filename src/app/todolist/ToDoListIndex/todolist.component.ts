@@ -36,6 +36,14 @@ export class TodolistComponent implements OnInit {
   dateTo: string;
   priority: any;
 
+  idEdit: any;
+  contentEdit: string;
+  dateFromEdit: any;
+  dateToEdit: any;
+  priorityEdit: any;
+  processEdit:any = 0;
+  finishEdit: any;
+
   constructor(private todolist: ToDoListService, private spinner: NgxSpinnerService) {
 
   }
@@ -165,6 +173,61 @@ export class TodolistComponent implements OnInit {
       this.showAll();
       this.spinner.hide();
     }
+  }
+
+  async hanleLoadDetail(id) {
+    this.spinner.show();
+    await this.todolist.getDetail(id)
+    .then(res => {
+      var data = res['data'];
+      this.idEdit = data['id'];
+      this.contentEdit = data['content'];
+      this.dateFromEdit = new Date(data['dateStart']);
+      this.dateToEdit = new Date(data['dateEnd']);
+      this.priorityEdit = data['priority'];
+      this.processEdit = data['percent'];
+      this.finishEdit = data['finish'];
+      console.log(this)
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    })
+    this.spinner.hide();
+  }
+
+  async handleEdit() {
+    this.spinner.show();
+    var req = JSON.stringify({
+      Content: this.contentEdit,
+      DateStart: this.convertDateToString(this.dateFromEdit),
+      DateEnd: this.convertDateToString(this.dateToEdit),
+      Priority: this.priorityEdit,
+      Percent: this.processEdit
+    });
+    await this.todolist.updateData(this.idEdit, req)
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    })
+    this.showAll();
+    this.spinner.hide();
   }
 }
 

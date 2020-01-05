@@ -12,6 +12,8 @@ import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
 
 const routes: Routes = [
     { 
@@ -38,7 +40,9 @@ const routes: Routes = [
         MatInputModule,
         MatNativeDateModule,
         MatExpansionModule,
-        MatRadioModule
+        MatRadioModule,
+        MatSlideToggleModule,
+        MatSliderModule
     ],
     declarations: [
         TodolistComponent,

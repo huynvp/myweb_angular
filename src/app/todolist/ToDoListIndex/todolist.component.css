@@ -54,3 +54,8 @@ td, th{
 mat-radio-button {
     margin: 5px;
 }
+
+::ng-deep .cdk-overlay-container {
+    position: fixed !important;
+    z-index: 100000 !important; /* set value you need */
+}

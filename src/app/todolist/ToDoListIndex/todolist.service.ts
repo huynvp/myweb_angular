@@ -17,6 +17,10 @@ export class ToDoListService {
         return this.http.get(`${environment.baseUrl}/toDoList?date=${date}`, { headers: this.header }).toPromise();
     }
 
+    getDetail(id) {
+        return this.http.get(`${environment.baseUrl}/toDoList/${id}`, { headers: this.header }).toPromise();
+    }
+
     addNewData(data) {
         return this.http.post(`${environment.baseUrl}/toDoList`, data, {headers: this.header}).toPromise();
     }
