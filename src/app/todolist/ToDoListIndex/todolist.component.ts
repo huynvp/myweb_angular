@@ -50,11 +50,11 @@ export class TodolistComponent implements OnInit {
 
   ngOnInit() {
     this.dateStrView = this.convertDateToStrView(null);
-    this.showAll();
+    this.showAll(null); //ngày hiện tại
   }
 
-  showAll() {
-    this.todolist.getAll(this.convertDateToString(null))
+  showAll(dateChoose) {
+    this.todolist.getAll(this.convertDateToString(dateChoose))
       .then(res => {
         this.datas = res['data'];
         console.log(this.datas)
@@ -62,9 +62,13 @@ export class TodolistComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  hanleChangeDateInput(change, event) {
+  async hanleChangeDateInput(change, event) {
+    this.spinner.show();
+    this.dateChange = event.value;
     this.dateStrView = this.convertDateToStrView(event.value);
-    console.log(this.convertDateToString(event.value));
+    await this.showAll(this.convertDateToString(this.dateChange))
+    // console.log(this.convertDateToString(event.value));
+    this.spinner.hide();
   }
 
   async hanleChangeCheckFinish(id, checked) {
@@ -89,7 +93,7 @@ export class TodolistComponent implements OnInit {
           type: 'danger',
         });
       });
-    this.showAll();
+    this.showAll(this.convertDateToString(this.dateChange));
     this.spinner.hide();
   }
 
@@ -146,7 +150,7 @@ export class TodolistComponent implements OnInit {
           type: 'danger',
         });
       });
-    this.showAll();
+      this.showAll(this.convertDateToString(this.dateChange));
     this.spinner.hide();
   }
 
@@ -170,7 +174,7 @@ export class TodolistComponent implements OnInit {
             type: 'danger',
           });
         });
-      this.showAll();
+        this.showAll(this.convertDateToString(this.dateChange));
       this.spinner.hide();
     }
   }
@@ -226,7 +230,7 @@ export class TodolistComponent implements OnInit {
         type: 'danger',
       });
     })
-    this.showAll();
+    this.showAll(this.convertDateToString(this.dateChange));
     this.spinner.hide();
   }
 }
