@@ -4,7 +4,7 @@
             <div class="fadeIn first">
                 <h2>Login to system</h2>
             </div>
-            <form #form_login="ngForm">
+            <form #form_login="ngForm" (keyup.enter)="handleLogin()">
                 <input type="text" id="login" class="fadeIn second" [(ngModel)]="username" email required
                     name="username" placeholder="Username/ Tên tài khoản" />
                 <input type="password" id="password" class="fadeIn third" [(ngModel)]="password" required

@@ -29,6 +29,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	async handleLogin() {
+		if(this.form_login['invalid'] == true)
+		{
+			return;
+		}
 		this.spinner.show();
 		await this.http.post(`${environment.baseUrl}/user/login`,
 			JSON.stringify({
@@ -43,7 +47,7 @@ export class LoginComponent implements OnInit {
 				console.log(res);
 				localStorage.access_token = res['data']['accessToken'];
 				localStorage.refresh_token = res['data']['refreshToken'];
-				this.router.navigate(['/']);
+				this.router.navigate(['/index']);
 			})
 			.catch(err => {
 				$.notify({

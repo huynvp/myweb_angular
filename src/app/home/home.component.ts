@@ -52,7 +52,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
   handleLogout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    Swal.fire('Success', 'See you again', 'info');
+    // Swal.fire('Success', 'See you again', 'info');
     this.router.navigate(['/login']);
   }
 }
