@@ -31,6 +31,9 @@ export class TodolistComponent implements OnInit {
     }
   ];
 
+  dateFilterFrom: any;
+  dateFilterTo: any;
+
   content: string;
   dateFrom: string;
   dateTo: string;
@@ -49,25 +52,26 @@ export class TodolistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dateStrView = this.convertDateToStrView(null);
-    this.showAll(null); //ngày hiện tại
+    this.dateFilterFrom = new Date();
+    this.dateFilterTo = new Date();
+    this.showAll();
   }
 
-  showAll(dateChoose) {
-    this.todolist.getAll(this.convertDateToString(dateChoose))
+  async showAll() {
+    this.spinner.show();
+    const dateFrom = this.convertDateToString(this.dateFilterFrom);
+    const dateTo = this.convertDateToString(this.dateFilterTo);
+    await this.todolist.getAll(dateFrom, dateTo)
       .then(res => {
         this.datas = res['data'];
-        console.log(this.datas)
       })
       .catch(err => console.log(err));
+    this.spinner.hide();
   }
 
-  async hanleChangeDateInput(change, event) {
+  async hanleChangeDateInput() {
     this.spinner.show();
-    this.dateChange = event.value;
-    this.dateStrView = this.convertDateToStrView(event.value);
-    await this.showAll(this.convertDateToString(this.dateChange))
-    // console.log(this.convertDateToString(event.value));
+    await this.showAll();
     this.spinner.hide();
   }
 
@@ -93,7 +97,7 @@ export class TodolistComponent implements OnInit {
           type: 'danger',
         });
       });
-    this.showAll(this.convertDateToString(this.dateChange));
+    this.showAll();
     this.spinner.hide();
   }
 
@@ -150,7 +154,7 @@ export class TodolistComponent implements OnInit {
           type: 'danger',
         });
       });
-      this.showAll(this.convertDateToString(this.dateChange));
+      this.showAll();
     this.spinner.hide();
   }
 
@@ -174,7 +178,7 @@ export class TodolistComponent implements OnInit {
             type: 'danger',
           });
         });
-        this.showAll(this.convertDateToString(this.dateChange));
+        this.showAll();
       this.spinner.hide();
     }
   }
@@ -230,7 +234,7 @@ export class TodolistComponent implements OnInit {
         type: 'danger',
       });
     })
-    this.showAll(this.convertDateToString(this.dateChange));
+    this.showAll();
     this.spinner.hide();
   }
 }

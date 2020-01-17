@@ -1,9 +1,15 @@
 <h4 class="title">to do list</h4>
 <mat-form-field>
-  <input matInput (dateChange)="hanleChangeDateInput('change', $event)" [matDatepicker]="picker"
-    placeholder="Choose a date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
+  <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
+    placeholder="Choose a date from">
+  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+  <mat-datepicker #pickerFrom></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+  <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo"
+    placeholder="Choose a date to">
+  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+  <mat-datepicker #pickerTo></mat-datepicker>
 </mat-form-field>
 <hr>
 
@@ -50,7 +56,8 @@
 </mat-accordion>
 <hr>
 <table class="table table-bordered">
-  <td>Ngày: {{dateStrView}}</td>
+  <td>Ngày bắt đầu: {{convertDateToStrView(dateFilterFrom)}}</td>
+  <td>Ngày kết thúc: {{convertDateToStrView(dateFilterTo)}}</td>
   <td>Công việc đã làm</td>
   <td>Công việc chưa làm</td>
   <td>Hiệu suất</td>

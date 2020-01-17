@@ -13,8 +13,8 @@ export class ToDoListService {
 
     }
 
-    getAll(date:string) {
-        return this.http.get(`${environment.baseUrl}/toDoList?date=${date}`, { headers: this.header }).toPromise();
+    getAll(dateFrom:string, dateTo: string) {
+        return this.http.get(`${environment.baseUrl}/toDoList?dateFrom=${dateFrom}&dateTo=${dateTo}`, { headers: this.header }).toPromise();
     }
 
     getDetail(id) {
