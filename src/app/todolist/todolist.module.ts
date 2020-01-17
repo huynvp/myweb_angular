@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TodolistComponent } from './ToDoListIndex/todolist.component';
+import { TodolistComponent, DialogOverviewExampleDialog } from './ToDoListIndex/todolist.component';
 import { TodolistadminComponent } from './ToDoListAdmin/todolistadmin.component';
 import { Routes,RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
     { 
@@ -42,12 +43,15 @@ const routes: Routes = [
         MatExpansionModule,
         MatRadioModule,
         MatSlideToggleModule,
-        MatSliderModule
+        MatSliderModule,
+        MatDialogModule
     ],
     declarations: [
         TodolistComponent,
-        TodolistadminComponent
-    ]
+        TodolistadminComponent,
+        DialogOverviewExampleDialog
+    ],
+    entryComponents: [DialogOverviewExampleDialog]
 })
 
 export class TodolistModule {}

@@ -1,68 +1,75 @@
 <h4 class="title">to do list</h4>
-<mat-form-field>
-  <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
-    placeholder="Choose a date from">
-  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-  <mat-datepicker #pickerFrom></mat-datepicker>
-</mat-form-field>
-<mat-form-field>
-  <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo"
-    placeholder="Choose a date to">
-  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-  <mat-datepicker #pickerTo></mat-datepicker>
-</mat-form-field>
+<div class="row">
+  <div class="col">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Thêm công việc mới
+          </mat-panel-title>
+          <mat-panel-description>
+            Thêm các công việc cần làm mới
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="mt_form_add_todolist" (keyup.enter)="handleKeyPressAddTask()">
+          <mat-form-field>
+            <mat-label>Tiêu đề công việc</mat-label>
+            <textarea matInput [(ngModel)]="title" placeholder="Nhập tiêu đề công việc"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nội dung công việc</mat-label>
+            <textarea matInput [(ngModel)]="content" placeholder="Nhập nội dung công việc"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Ngày bắt đầu</mat-label>
+            <input matInput name="dateFrom" [(ngModel)]="dateFrom" [matDatepicker]="picker1" placeholder="Chọn ngày bắt đầu">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+    
+          <mat-form-field>
+            <mat-label>Ngày kết thúc</mat-label>
+            <input matInput name="dateTo" [(ngModel)]="dateTo" [matDatepicker]="picker2" placeholder="Chọn ngày kết thúc">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+    
+          <label>Mức độ ưu tiên</label>
+          <mat-radio-group [(ngModel)]="priority">
+            <mat-radio-button class="example-radio-button" *ngFor="let item of priorityArr" [value]="item.key">
+              {{item.value}}
+            </mat-radio-button>
+          </mat-radio-group>
+    
+          <button mat-stroked-button color="primary" (click)="handleClickAdd()">Thêm công việc mới</button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
+        placeholder="Choose a date from">
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo"
+        placeholder="Choose a date to">
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
 <hr>
-
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Thêm công việc mới
-      </mat-panel-title>
-      <mat-panel-description>
-        Thêm các công việc cần làm mới
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="mt_form_add_todolist" (keyup.enter)="handleKeyPressAddTask()">
-      <mat-form-field>
-        <mat-label>Tên công việc</mat-label>
-        <textarea matInput [(ngModel)]="content" placeholder="Nhập nội dung công việc"></textarea>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Ngày bắt đầu</mat-label>
-        <input matInput name="dateFrom" [(ngModel)]="dateFrom" [matDatepicker]="picker1" placeholder="Chọn ngày bắt đầu">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Ngày kết thúc</mat-label>
-        <input matInput name="dateTo" [(ngModel)]="dateTo" [matDatepicker]="picker2" placeholder="Chọn ngày kết thúc">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-
-      <label>Mức độ ưu tiên</label>
-      <mat-radio-group [(ngModel)]="priority">
-        <mat-radio-button class="example-radio-button" *ngFor="let item of priorityArr" [value]="item.key">
-          {{item.value}}
-        </mat-radio-button>
-      </mat-radio-group>
-
-      <button mat-stroked-button color="primary" (click)="handleClickAdd()">Thêm công việc mới</button>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
-<hr>
-<table class="table table-bordered">
+<!-- <table class="table table-bordered">
   <td>Ngày bắt đầu: {{convertDateToStrView(dateFilterFrom)}}</td>
   <td>Ngày kết thúc: {{convertDateToStrView(dateFilterTo)}}</td>
   <td>Công việc đã làm</td>
   <td>Công việc chưa làm</td>
   <td>Hiệu suất</td>
 </table>
-<hr>
+<hr> -->
 <div class="row">
   <div class="table-responsive table_todolist">
     <table class="table table-bordered table-hover">
@@ -84,15 +91,15 @@
             <td class="table_checkbox">
               <mat-slide-toggle [checked]="item.finish" (change)="hanleChangeCheckFinish(item.id, item.finish)"></mat-slide-toggle>
             </td>
-            <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">{{item.content}}</td>
-            <td>{{convertDateToStrView(item.dateStart)}}</td>
-            <td>{{convertDateToStrView(item.dateEnd)}}</td>
-            <td>
+            <td (click)="showContent(item.title, item.content)" >{{item.title}}</td>
+            <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">{{convertDateToStrView(item.dateStart)}}</td>
+            <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">{{convertDateToStrView(item.dateEnd)}}</td>
+            <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">
               <span *ngIf="item.priority == 1" class="text-primary">Nhẹ</span>
               <span *ngIf="item.priority == 2" class="text-warning">Trung bình</span>
               <span *ngIf="item.priority == 3" class="text-danger">Khẩn cấp</span>
             </td>
-            <td class="table_proccess">
+            <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)" class="table_proccess">
               <div class="progress" style="height:100%;">
                 <div class="progress-bar" style="height:100%" [ngStyle]="{'width':item.percent + '%'}">{{item.percent}}%
                 </div>
@@ -121,12 +128,15 @@
 
         <!-- Modal body -->
         <div class="modal-body">
-          <div class="mt_form_add_todolist" (keyup.enter)="handleKeyPressAddTask()">
+          <div class="mt_form_add_todolist" (keyup.enter)="handleEdit()">
             <mat-form-field>
-              <mat-label>Tên công việc</mat-label>
+              <mat-label>Tiêu đề công việc</mat-label>
+              <textarea matInput [(ngModel)]="titleEdit" placeholder="Tiêu đề công việc"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Nội dung công việc</mat-label>
               <textarea matInput [(ngModel)]="contentEdit" placeholder="Nhập nội dung công việc"></textarea>
             </mat-form-field>
-      
             <mat-form-field>
               <mat-label>Ngày bắt đầu </mat-label>
               <input matInput name="dateFrom" [(ngModel)]="dateFromEdit" [matDatepicker]="picker3" placeholder="Chọn ngày bắt đầu">

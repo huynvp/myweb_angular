@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ToDoListService } from './todolist.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 declare var $: any;
+
+export interface PopupData {
+  title: string;
+  content: string;
+}
 
 @Component({
   selector: 'app-todolist',
@@ -34,20 +40,22 @@ export class TodolistComponent implements OnInit {
   dateFilterFrom: any;
   dateFilterTo: any;
 
+  title: string;
   content: string;
   dateFrom: string;
   dateTo: string;
   priority: any;
 
   idEdit: any;
+  titleEdit: string;
   contentEdit: string;
   dateFromEdit: any;
   dateToEdit: any;
   priorityEdit: any;
-  processEdit:any = 0;
+  processEdit: any = 0;
   finishEdit: any;
 
-  constructor(private todolist: ToDoListService, private spinner: NgxSpinnerService) {
+  constructor(private todolist: ToDoListService, private spinner: NgxSpinnerService, public dialog: MatDialog) {
 
   }
 
@@ -55,6 +63,19 @@ export class TodolistComponent implements OnInit {
     this.dateFilterFrom = new Date();
     this.dateFilterTo = new Date();
     this.showAll();
+  }
+
+  showContent(title, content) {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: { title: title, content: content }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+      // this.animal = result;
+    });
   }
 
   async showAll() {
@@ -132,6 +153,7 @@ export class TodolistComponent implements OnInit {
   async addNewData() {
     this.spinner.show();
     var data = JSON.stringify({
+      Title: this.title,
       Content: this.content,
       DateStart: this.convertDateToString(this.dateFrom),
       DateEnd: this.convertDateToString(this.dateTo),
@@ -154,7 +176,7 @@ export class TodolistComponent implements OnInit {
           type: 'danger',
         });
       });
-      this.showAll();
+    this.showAll();
     this.spinner.hide();
   }
 
@@ -178,7 +200,7 @@ export class TodolistComponent implements OnInit {
             type: 'danger',
           });
         });
-        this.showAll();
+      this.showAll();
       this.spinner.hide();
     }
   }
@@ -186,31 +208,33 @@ export class TodolistComponent implements OnInit {
   async hanleLoadDetail(id) {
     this.spinner.show();
     await this.todolist.getDetail(id)
-    .then(res => {
-      var data = res['data'];
-      this.idEdit = data['id'];
-      this.contentEdit = data['content'];
-      this.dateFromEdit = new Date(data['dateStart']);
-      this.dateToEdit = new Date(data['dateEnd']);
-      this.priorityEdit = data['priority'];
-      this.processEdit = data['percent'];
-      this.finishEdit = data['finish'];
-      console.log(this)
-    })
-    .catch(err => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `Error: ${err.error.message}`,
-      }, {
-        type: 'danger',
-      });
-    })
+      .then(res => {
+        var data = res['data'];
+        this.idEdit = data['id'];
+        this.titleEdit = data['title'];
+        this.contentEdit = data['content'];
+        this.dateFromEdit = new Date(data['dateStart']);
+        this.dateToEdit = new Date(data['dateEnd']);
+        this.priorityEdit = data['priority'];
+        this.processEdit = data['percent'];
+        this.finishEdit = data['finish'];
+        // console.log(this)
+      })
+      .catch(err => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `Error: ${err.error.message}`,
+        }, {
+          type: 'danger',
+        });
+      })
     this.spinner.hide();
   }
 
   async handleEdit() {
     this.spinner.show();
     var req = JSON.stringify({
+      Title: this.titleEdit,
       Content: this.contentEdit,
       DateStart: this.convertDateToString(this.dateFromEdit),
       DateEnd: this.convertDateToString(this.dateToEdit),
@@ -218,24 +242,42 @@ export class TodolistComponent implements OnInit {
       Percent: this.processEdit
     });
     await this.todolist.updateData(this.idEdit, req)
-    .then(res => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `${res['message']}`,
-      }, {
-        type: 'success',
-      });
-    })
-    .catch(err => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `Error: ${err.error.message}`,
-      }, {
-        type: 'danger',
-      });
-    })
+      .then(res => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `${res['message']}`,
+        }, {
+          type: 'success',
+        });
+      })
+      .catch(err => {
+        $.notify({
+          icon: 'glyphicon glyphicon-remove',
+          message: `Error: ${err.error.message}`,
+        }, {
+          type: 'danger',
+        });
+      })
     this.showAll();
     this.spinner.hide();
   }
 }
 
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'todolistpopup.component.html',
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: PopupData) { }
+
+  ngOnInit() {
+    console.log(this);
+  }
+  // onNoClick(): void {
+  //   this.dialogRef.close();
+  // }
+
+}
