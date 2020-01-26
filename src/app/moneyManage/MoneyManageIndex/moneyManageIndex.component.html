@@ -1,0 +1,209 @@
+<h4 class="title">quản lí chi tiêu</h4>
+<div class="row">
+    <div class="col">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Thêm mới
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Thêm thông tin chi tiêu mới
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="mt_form_add_todolist" (keyup.enter)="handleKeyPressAddTask()">
+                    <mat-form-field>
+                        <mat-label>Nội dung chi tiêu</mat-label>
+                        <textarea matInput [(ngModel)]="title" placeholder="Nhập tiêu đề công việc"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Số tiền</mat-label>
+                        <input type="number" matInput [(ngModel)]="content" placeholder="Nhập nội dung công việc"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Ngày thực hiện</mat-label>
+                        <input matInput name="date" [(ngModel)]="date" [matDatepicker]="picker1"
+                            placeholder="Ngày thực hiện">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Danh mục</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let item of categories" [value]="item.id">
+                                <span *ngIf="item.type==1; else elseBlock">{{item.name}} - Thu</span>
+                                <ng-template #elseBlock>
+                                    <span>{{item.name}} - Chi</span>
+                                </ng-template>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-stroked-button color="primary" (click)="handleClickAdd()">Thêm chi tiêu mới</button>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="col">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Thêm danh mục
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Thêm danh mục chi tiêu
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="mt_form_category" (keyup.enter)="handleAddCategories()">
+                    <mat-form-field>
+                        <mat-label>Tên danh mục</mat-label>
+                        <input matInput [(ngModel)]="titleCategory" placeholder="Nhập tên danh mục"/>
+                    </mat-form-field>
+                    <label>Loại danh mục</label>
+                    <mat-radio-group [(ngModel)]="typeCategory">
+                        <mat-radio-button class="example-radio-button" *ngFor="let item of categorieArr"
+                            [value]="item.key">
+                            {{item.value}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <button mat-stroked-button color="primary" (click)="handleAddCategories()">Thêm danh mục mới</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!-- <div class="col">
+      <mat-form-field>
+        <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
+          placeholder="Choose a date from">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo"
+          placeholder="Choose a date to">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+    </div> -->
+</div>
+<hr>
+<div class="row">
+    <div class="table-responsive table_todolist">
+        <table class="table table-bordered table-hover">
+            <thead class="bg-info text-white">
+                <tr class="tr_border">
+                    <th>Hoàn thành</th>
+                    <th style="width: 40%;">Nội dung</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Mức độ</th>
+                    <th>Tiến trình</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <ng-template *ngFor="let item of datas"> -->
+                <ng-template ngFor let-item [ngForOf]="datas" let-i="index">
+                    <tr>
+                        <td class="table_checkbox">
+                            <mat-slide-toggle [checked]="item.finish"
+                                (change)="hanleChangeCheckFinish(item.id, item.finish)">
+                            </mat-slide-toggle>
+                        </td>
+                        <td (click)="showContent(item.title, item.content)">{{item.title}}</td>
+                        <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">
+                            {{convertDateToStrView(item.dateStart)}}</td>
+                        <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">
+                            {{convertDateToStrView(item.dateEnd)}}</td>
+                        <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)">
+                            <span *ngIf="item.priority == 1" class="text-primary">Nhẹ</span>
+                            <span *ngIf="item.priority == 2" class="text-warning">Trung bình</span>
+                            <span *ngIf="item.priority == 3" class="text-danger">Khẩn cấp</span>
+                        </td>
+                        <td data-toggle="modal" data-target="#modalEdit" (click)="hanleLoadDetail(item.id)"
+                            class="table_proccess">
+                            <div class="progress" style="height:100%;">
+                                <div class="progress-bar" style="height:100%" [ngStyle]="{'width':item.percent + '%'}">
+                                    {{item.percent}}%
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm rounded-pill"
+                                (click)="handleDeleteNote(item.id)">Xóa</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- The Modal -->
+<!-- Add permisison -->
+<div class="modal fade" id="modalEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit note</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="mt_form_add_todolist" (keyup.enter)="handleEdit()">
+                    <mat-form-field>
+                        <mat-label>Tiêu đề công việc</mat-label>
+                        <textarea matInput [(ngModel)]="titleEdit" placeholder="Tiêu đề công việc"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Nội dung công việc</mat-label>
+                        <textarea matInput [(ngModel)]="contentEdit" placeholder="Nhập nội dung công việc"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Ngày bắt đầu </mat-label>
+                        <input matInput name="dateFrom" [(ngModel)]="dateFromEdit" [matDatepicker]="picker3"
+                            placeholder="Chọn ngày bắt đầu">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Ngày kết thúc</mat-label>
+                        <input matInput name="dateTo" [(ngModel)]="dateToEdit" [matDatepicker]="picker4"
+                            placeholder="Chọn ngày kết thúc">
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                        <mat-datepicker #picker4></mat-datepicker>
+                    </mat-form-field>
+
+                    <label>Mức độ ưu tiên</label>
+                    <mat-radio-group [(ngModel)]="priorityEdit">
+                        <mat-radio-button class="example-radio-button" *ngFor="let item of priorityArr"
+                            [value]="item.key">
+                            {{item.value}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                    <div class="form-group">
+                        <mat-label>Mức độ hoàn thành</mat-label>
+                        <input type="range" class="form-control" [(ngModel)]="processEdit"
+                            placeholder="Nhập nội dung công việc">
+                        <span>{{processEdit}} %</span>
+                    </div>
+                    <div class="form-group">
+                        <mat-label>Trạng thái</mat-label>
+                        <!-- <input type="checkbox" [checked]=> -->
+                        <mat-slide-toggle [checked]="finishEdit"></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button mat-raised-button color="primary" data-dismiss="modal" (click)="handleEdit()">Cập nhật</button>
+                <button mat-raised-button color="warn" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
