@@ -29,6 +29,10 @@ const routes: Routes = [
                 path: 'to-do-list',
                 loadChildren: '../todolist/todolist.module#TodolistModule'
             },
+            {
+                path: 'moneyManage',
+                loadChildren: '../moneyManage/moneyManage.module#MoneyManageModule'
+            },
         ]
     }
   ];

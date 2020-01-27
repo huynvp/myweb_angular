@@ -1,0 +1,61 @@
+.card {
+    margin: 10px
+}
+
+#title {
+    text-align: center;
+    font-weight: bold;
+    color: #b1b1b1;
+}
+
+.title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #40363A;
+    color: white;
+}
+
+.table_todolist {
+    /* border: 2px solid black; */
+    /* box-shadow: 7px 7px grey; */
+    border-collapse: collapse;
+  /* border-radius: 2em; */
+}
+
+thead tr{
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #C9D1D7;
+    background-color: #3668B0;
+}
+td, th{
+    border: 2px solid #C9D1D7;
+}
+
+.table_checkbox {
+    text-align: center;
+    background: #DEDFE2;
+}
+
+.table_proccess {
+    background: #D4F9D2;
+}
+
+.mt_form_add_todolist {
+    display: flex;
+    flex-direction: column;
+}
+
+.mt_form_add_todolist > * {
+    width: 100%;
+}
+
+mat-radio-button {
+    margin: 5px;
+}
+
+::ng-deep .cdk-overlay-container {
+    position: fixed !important;
+    z-index: 100000 !important; /* set value you need */
+}
