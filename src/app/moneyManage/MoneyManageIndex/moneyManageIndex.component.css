@@ -12,7 +12,7 @@
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
-    background: #40363A;
+    background: #3668B0;
     color: white;
 }
 
@@ -42,12 +42,12 @@ td, th{
     background: #D4F9D2;
 }
 
-.mt_form_add_todolist {
+.mt_form_add_todolist, .mt_form_category {
     display: flex;
     flex-direction: column;
 }
 
-.mt_form_add_todolist > * {
+.mt_form_add_todolist > *, .mt_form_category > * {
     width: 100%;
 }
 
@@ -58,4 +58,10 @@ mat-radio-button {
 ::ng-deep .cdk-overlay-container {
     position: fixed !important;
     z-index: 100000 !important; /* set value you need */
+}
+
+button {
+    border-radius: 30px;
+    color: white !important;
+    background-color: #3668B0;
 }
