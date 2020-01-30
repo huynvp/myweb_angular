@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
+import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
 
 @NgModule({
   declarations: [
@@ -20,12 +22,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     CommonModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    //Graph
+    ApolloModule,
+    HttpLinkModule,
   ],
   providers: [
     HttpClient,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
-  ],
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {
+    provide: APOLLO_OPTIONS,
+    useFactory: (httpLink: HttpLink) => {
+      return {
+        cache: new InMemoryCache(),
+        link: httpLink.create({
+          uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
+        })
+      }
+    },
+    deps: [HttpLink]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

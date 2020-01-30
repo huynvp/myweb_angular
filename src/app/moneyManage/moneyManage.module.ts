@@ -41,12 +41,13 @@ const routes: Routes = [
         MatRadioModule,
         MatSlideToggleModule,
         MatSliderModule,
-        MatDialogModule
+        MatDialogModule,
+        
     ],
     declarations: [
         MoneyManageIndexComponent
     ],
-    entryComponents: []
+    entryComponents: [],
 })
 
 export class MoneyManageModule {}

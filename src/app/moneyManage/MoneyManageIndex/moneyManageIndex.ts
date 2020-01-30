@@ -5,6 +5,8 @@ import { MoneyManageService } from '../moneyManageIndex.service';
 import { BaseComponent } from 'src/shread/base.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 declare var $: any;
 
 export interface PopupData {
@@ -23,11 +25,11 @@ export interface PopupData {
 export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   categorieArr = [
     {
-      'key': 1,
+      'key': 0,
       'value': 'Chi',
     },
     {
-      'key': 2,
+      'key': 1,
       'value': 'Thu',
     }
   ];
@@ -62,12 +64,26 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
   }
 
-  constructor(private moneyManage: MoneyManageService, private spinner: NgxSpinnerService, public dialog: MatDialog, public router: Router, public http: HttpClient) {
+  constructor(private apollo: Apollo, private moneyManage: MoneyManageService, private spinner: NgxSpinnerService, public dialog: MatDialog, public router: Router, public http: HttpClient) {
     super(router, http);
   }
 
   async ngOnInit() {
     await this.loadData();
+    this.apollo
+      .watchQuery({
+        query: gql`
+        query CurrentUserForProfile {
+          currentUser {
+            login
+            avatar_url
+          }
+        }
+      `
+      })
+      .valueChanges.subscribe(result => {
+        console.log(result);
+      });
   }
 
   async loadData() {
