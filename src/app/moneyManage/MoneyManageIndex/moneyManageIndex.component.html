@@ -1,0 +1,179 @@
+<h4 class="title">quản lí chi tiêu</h4>
+<div class="row">
+    <div class="col">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Thêm mới
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Thêm thông tin chi tiêu mới
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="mt_form_add_todolist" (keyup.enter)="handleAddData()">
+                    <mat-form-field>
+                        <mat-label>Nội dung chi tiêu</mat-label>
+                        <textarea required matInput [(ngModel)]="content"
+                            placeholder="Nhập tiêu đề công việc"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Số tiền</mat-label>
+                        <input type="number" required matInput [(ngModel)]="money"
+                            placeholder="Nhập nội dung công việc" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Ngày thực hiện</mat-label>
+                        <input matInput required name="date" [(ngModel)]="date" [matDatepicker]="picker1"
+                            placeholder="Ngày thực hiện">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Danh mục</mat-label>
+                        <mat-select required [(ngModel)]="category">
+                            <mat-option *ngFor="let item of categories" [value]="item.id">
+                                <span *ngIf="item.type==1; else elseBlock">{{item.name}} - Thu</span>
+                                <ng-template #elseBlock>
+                                    <span>{{item.name}} - Chi</span>
+                                </ng-template>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <button mat-stroked-button color="primary" (click)="handleAddData()">Thêm chi tiêu mới</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="col">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Thêm danh mục
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Thêm danh mục chi tiêu
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="mt_form_category" (keyup.enter)="handleAddCategories()">
+                    <mat-form-field>
+                        <mat-label>Tên danh mục</mat-label>
+                        <input matInput required [(ngModel)]="titleCategory" placeholder="Nhập tên danh mục" />
+                    </mat-form-field>
+                    <label>Loại danh mục</label>
+                    <mat-radio-group required [(ngModel)]="typeCategory">
+                        <mat-radio-button class="example-radio-button" *ngFor="let item of categorieArr"
+                            [value]="item.key">
+                            {{item.value}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <button mat-stroked-button color="primary" (click)="handleAddCategories()">Thêm danh mục mới</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!-- <div class="col">
+      <mat-form-field>
+        <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
+          placeholder="Choose a date from">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo"
+          placeholder="Choose a date to">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+    </div> -->
+</div>
+<hr>
+<div class="row">
+    <div class="col-4">
+        <div class="card" style="padding-left: 20px;padding-right: 20px;margin: 0% !important; margin-bottom: 2% !important;">
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
+                    placeholder="Choose a date from">
+                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo" placeholder="Choose a date from">
+                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+            </mat-form-field>
+            <mat-radio-group aria-labelledby="example-radio-group-label"
+                [(ngModel)]="typeFilter">
+                <mat-radio-button class="example-radio-button" [value]="-1">Cả hai</mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="1">Thu</mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="0">Chi</mat-radio-button>
+            </mat-radio-group>
+            <button mat-stroked-button color="primary" class="btn-filter" (click)="handleAddCategories()">Lọc Dữ Liệu</button>
+            <button mat-stroked-button color="primary" class="btn-filter" (click)="handleAddCategories()">Xuất Báo Cáo</button>
+            <button mat-stroked-button color="primary" class="btn-filter" (click)="handleAddCategories()">Gửi EMail Báo Cáo</button>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item active"><i><strong>Thông tin tổng quan</strong></i></li>
+            <li class="list-group-item">Tổng thu: </li>
+            <li class="list-group-item">Tổng chi</li>
+            <li class="list-group-item">Từ ngày: </li>
+            <li class="list-group-item">Đến ngày</li>
+        </ul>
+    </div>
+    <div class="col-8">
+        <ng-template ngFor let-item [ngForOf]="data" let-i="index">
+            <div class="card mb-12" style="width: 100%;">
+                <div class="card-header text-white" [class.bg-primary]="item.categories.type==1"
+                    [class.bg-danger]="item.categories.type==0">
+                    <strong>{{convertDateToStrView(item.date)}}</strong>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span *ngIf="item.categories.type==1">Thu</span>
+                        <span *ngIf="item.categories.type==0">Chi</span>
+                        : {{item.categories.name}}
+                    </h5>
+                    <p class="card-text">{{item.content}}</p>
+                </div>
+                <div class="card-footer">{{formatNumber(item.money)}} VND</div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="table-responsive table_todolist">
+        <table class="table table-bordered table-hover">
+            <thead class="bg-info text-white">
+                <tr class="tr_border">
+                    <th>No</th>
+                    <th style="width: 30%;">Nội dung</th>
+                    <th>Số tiền</th>
+                    <th>Ngày</th>
+                    <th>Loại</th>
+                    <th>Danh mục</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-template ngFor let-item [ngForOf]="data" let-i="index">
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.content}}</td>
+                        <td style="text-align:right">{{formatNumber(item.money)}} VND</td>
+                        <td>{{convertDateToStrView(item.date)}}</td>
+                        <td>
+                            <span *ngIf="item.categories.type==1">Thu</span>
+                            <span *ngIf="item.categories.type==0">Chi</span>
+                        </td>
+                        <td>{{item.categories.name}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm rounded-pill"
+                                (click)="handleDeleteData(item.key)">Xóa</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</div> -->

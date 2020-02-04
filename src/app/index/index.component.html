@@ -23,8 +23,12 @@
     </div>
   </div>
   <div class="col-6">
+    <select name="" id="" class="form-control" (change)="handleChangeEvent($event.target.value)">
+      <option value="">--Chọn một cái sự kiện --</option>
+      <option *ngFor="let item of events" value="{{item.key}}">{{item.name}}</option>
+    </select>
     <h2>CountDown</h2>
-    <h4>Event name: <strong>HAPPY NEW YEAR 2020</strong></h4>
+    <h4>Event name: <strong>{{eventName}}</strong></h4>
     <h5>{{days}} days : {{hours}} hours : {{minutes}} minutes : {{seconds}} seconds</h5>
     <!-- <p>{{dateEvent}}</p> -->
   </div>
