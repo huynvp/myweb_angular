@@ -65,3 +65,14 @@ button {
     color: white !important;
     background-color: #3668B0;
 }
+
+button:hover {
+    color: #CCCCCC !important;
+    background-color: #336699;
+    box-shadow: 2px 2px grey;
+}
+
+.btn-filter {
+    margin: 5px;
+    font-size: small;
+}

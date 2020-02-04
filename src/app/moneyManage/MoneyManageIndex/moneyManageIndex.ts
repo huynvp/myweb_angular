@@ -73,10 +73,9 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.apollo
       .watchQuery({
         query: gql`
-        query CurrentUserForProfile {
-          currentUser {
-            login
-            avatar_url
+        query {
+          moneyManage {
+            money
           }
         }
       `
