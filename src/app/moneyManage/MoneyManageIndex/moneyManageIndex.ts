@@ -46,11 +46,15 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   dateFilterFrom: any;
   dateFilterTo:any;
-  typeFilter: any;
+  typeFilter: any = -1;
+
+  tongThu: number = 0;
+  tongChi: number = 0;
 
   convertDateToString(dateStr: string) {
-    if (dateStr === null) {
+    if (dateStr === null || dateStr === '' || dateStr === undefined) {
       var date = new Date();
+      return '';
     }
     else {
       var date = new Date(dateStr);
@@ -59,8 +63,9 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
 
   convertDateToStrView(dateStr: string) {
-    if (dateStr === null) {
+    if (dateStr === null || dateStr == undefined) {
       var date = new Date();
+      return '';
     }
     else {
       var date = new Date(dateStr);
@@ -74,19 +79,19 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadData();
-    this.apollo
-      .watchQuery({
-        query: gql`
-        query {
-          moneyManage {
-            money
-          }
-        }
-      `
-      })
-      .valueChanges.subscribe(result => {
-        console.log(result);
-      });
+    // this.apollo
+    //   .watchQuery({
+    //     query: gql`
+    //     query {
+    //       moneyManage {
+    //         money
+    //       }
+    //     }
+    //   `
+    //   })
+    //   .valueChanges.subscribe(result => {
+    //     console.log(result);
+    //   });
   }
 
   async loadData() {
@@ -110,9 +115,18 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
 
   async showTable() {
-    await this.moneyManage.getListMoneyManage()
+    this.tongChi = this.tongThu = 0;
+    this.spinner.show();
+    await this.moneyManage.getListMoneyManage(this.convertDateToString(this.dateFilterFrom), this.convertDateToString(this.dateFilterTo), this.typeFilter)
     .then(data => {
       this.data = data['data'];
+      this.data.forEach(element => {
+        if(element['categories']['type'] === 0) {
+          this.tongChi += Number(element['money']);
+        }else {
+          this.tongThu += Number(element['money']);
+        }
+      });
     })
     .catch(err => {
       $.notify({
@@ -122,6 +136,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
         type: 'danger',
       });
     })
+    this.spinner.hide();
   }
 
   async handleAddCategories() {

@@ -12,8 +12,8 @@ export class MoneyManageService {
     constructor(public http:HttpClient) {
 
     }
-    getListMoneyManage() {
-        return this.http.get(`${environment.baseUrl}/moneyManage`, { headers: this.header }).toPromise();
+    getListMoneyManage(dateFrom="", dateTo="", type=-1) {
+        return this.http.get(`${environment.baseUrl}/moneyManage?dateFrom=${dateFrom}&dateTo=${dateTo}&type=${type}`, { headers: this.header }).toPromise();
     }
     getListCategories() {
         return this.http.get(`${environment.baseUrl}/moneyManage/categories`, { headers: this.header }).toPromise();
