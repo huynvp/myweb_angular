@@ -32,7 +32,7 @@
                     <mat-form-field>
                         <mat-label>Danh mục</mat-label>
                         <mat-select required [(ngModel)]="category">
-                            <mat-option *ngFor="let item of categories" [value]="item.id">
+                            <mat-option *ngFor="let item of categories" [value]="item.key">
                                 <span *ngIf="item.type==1; else elseBlock">{{item.name}} - Thu</span>
                                 <ng-template #elseBlock>
                                     <span>{{item.name}} - Chi</span>
