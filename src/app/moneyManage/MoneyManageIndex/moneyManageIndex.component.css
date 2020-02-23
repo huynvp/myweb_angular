@@ -76,3 +76,12 @@ button:hover {
     margin: 5px;
     font-size: small;
 }
+
+.card-body, .card-header, .card-footer {
+    padding: 0.25rem 0.5rem;
+}
+
+.active {
+    background-color: #3668B0;
+    border: #3668B0;
+}

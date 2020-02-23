@@ -1,0 +1,62 @@
+<h4>Quản lí ví tiền</h4>
+<button class="btn btn-secondary" (click)="handleGoBack()">Go bach</button>
+<hr>
+<div class="row">
+    <div class="col-6">
+        <ul class="list-group">
+            <li class="list-group-item active">Ví tiền</li>
+            <li class="list-group-item">Tất cả</li>
+            <ng-template ngFor let-item [ngForOf]="walletList" let-i="index">
+                <li class="list-group-item" (click)="handleLoadCategories(item.key)">
+                    {{item.name}}
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+    <div class="col-6">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                <button data-toggle="modal" [disabled]="keyWallet==null" data-target="#addCategories1" id="addCategories">Thêm danh mục</button>
+                Danh mục
+            </li>
+            <ng-template ngFor let-item [ngForOf]="categoriesList" let-i="index">
+                <li class="list-group-item">
+                    {{item.name}}
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</div>
+
+<div class="modal fade" id="addCategories1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tên danh mục</label>
+                        <input type="text" [(ngModel)]="nameAddCategories" name="nameAddCategories" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Loại:</label><br>
+                        <input type="radio" [(ngModel)]="typeAddCategories" name="typeAddCategories" value="0"> 
+                        <span> Chi</span><br>
+                        <input type="radio" [(ngModel)]="typeAddCategories" name="typeAddCategories" value="1"> 
+                        <span> Thu</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="handleAddCategories()">Thêm danh mục</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,8 +15,12 @@ export class MoneyManageService {
     getListMoneyManage(dateFrom="", dateTo="", type=-1) {
         return this.http.get(`${environment.baseUrl}/moneyManage?dateFrom=${dateFrom}&dateTo=${dateTo}&type=${type}`, { headers: this.header }).toPromise();
     }
-    getListCategories() {
-        return this.http.get(`${environment.baseUrl}/moneyManage/categories`, { headers: this.header }).toPromise();
+    getListCategories(key=null) {
+        if(key == null) {
+            return this.http.get(`${environment.baseUrl}/moneyManage/categories`, { headers: this.header }).toPromise();
+        } else {
+            return this.http.get(`${environment.baseUrl}/moneyManage/wallet/${key}/categories`, { headers: this.header }).toPromise();
+        }
     }
     addCategories(data:any) {
         return this.http.post(`${environment.baseUrl}/moneyManage/categories`, data, { headers: this.header }).toPromise();
@@ -28,5 +32,9 @@ export class MoneyManageService {
 
     deleteMoneyManage(key) {
         return this.http.delete(`${environment.baseUrl}/moneyManage/${key}`, { headers: this.header }).toPromise();
+    }
+
+    showListWallet() {
+        return this.http.get(`${environment.baseUrl}/moneyManage/wallet`, { headers: this.header }).toPromise();
     }
 }

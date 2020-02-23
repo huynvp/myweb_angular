@@ -1,57 +1,51 @@
-<!-- <div class="container">
-<li class="list-group-item"><img src="{{url}}" alt="avatar" height="50px" width="50px"></li>
-<li class="list-group-item" ([ngModel])="username">Hello {{ username }}</li>
-<li class="list-group-item" ([ngModel])="permission">Permission {{ permission }}</li>
-</div> -->
-
 <nav class="navbar navbar-dark bg-info">
-    <a class="navbar-brand" routerLink="/index">MyWeb</a>
-  </nav>
-  <div class="row">
-    <div class="col-xs-2 col-md-2 left-menu fadeIn first">
-      <div class="d-flex flex-column mb-3 bg-dark nav nav-tabs">
-        <div>
-          <div class="p-3 text tab-title">Trang chủ</div>
-        </div>
-        <a class="nav-link p-3 text" routerLink="/index" routerLinkActive="active">
-          <i class="fas fa-users"></i> Trang chủ
-        </a>
-        <div>
-          <div class="p-3 text tab-title">Cá nhân</div>
-        </div>
-        <a class="nav-link p-3 text" routerLink="/user/change-info" routerLinkActive="active">
-          <i class="fas fa-users"></i> Thay đổi thông tin
-        </a>
-        <a class="nav-link p-3 text" routerLink="/user/change-pass" routerLinkActive="active">
-          <i class="fas fa-user-shield"></i> Thay đổi mật khẩu
-        </a>
-        <a class="nav-link p-3 text" routerLink="/log-out" routerLinkActive="active" (click)="handleLogout()">
-          <i class="fas fa-user-shield"></i> Đăng xuất
-        </a>
-        <div>
-          <div class="p-3 text tab-title">Quản lí</div>
-        </div>
-        <a class="nav-link p-3 text" routerLink="/admin" routerLinkActive="active">
-          <i class="fas fa-user-shield"></i> Quản trị
-        </a>
-        <a class="nav-link p-3 text" routerLink="/moneyManage" routerLinkActive="active">
-          <i class="fas fa-user-shield"></i> Quản lí thu chi
-        </a>
-        <div>
-          <div class="p-3 text tab-title">Ghi chú cá nhân</div>
-        </div>
-        <a class="nav-link p-3 text" routerLink="/to-do-list" routerLinkActive="active">
-          <i class="fas fa-user-shield"></i> Ghi chú cá nhân
-        </a>
-        <div>
-          <div class="p-3 text tab-title">Tài liệu API</div>
-        </div>
-        <a class="nav-link p-3 text" routerLink="/api-document" routerLinkActive="active">
-          <i class="fas fa-user-shield"></i> Tài liệu API
-        </a>
+  <a class="navbar-brand" routerLink="/index">MyWeb</a>
+</nav>
+<div class="row" style="margin-right: 0;">
+  <div class="col-xs-2 col-md-2 left-menu fadeIn first">
+    <div class="d-flex flex-column mb-3 bg-dark nav nav-tabs">
+      <div>
+        <div class="p-3 text tab-title">Trang chủ</div>
       </div>
-    </div>
-    <div class="col-xs-10 col-md-8 right-menu">
-      <router-outlet></router-outlet>
+      <a class="nav-link p-3 text" routerLink="/index" routerLinkActive="active">
+        <i class="fas fa-users"></i> Trang chủ
+      </a>
+      <div>
+        <div class="p-3 text tab-title">Cá nhân</div>
+      </div>
+      <a class="nav-link p-3 text" routerLink="/user/change-info" routerLinkActive="active">
+        <i class="fas fa-users"></i> Thay đổi thông tin
+      </a>
+      <a class="nav-link p-3 text" routerLink="/user/change-pass" routerLinkActive="active">
+        <i class="fas fa-user-shield"></i> Thay đổi mật khẩu
+      </a>
+      <a class="nav-link p-3 text" routerLink="/log-out" routerLinkActive="active" (click)="handleLogout()">
+        <i class="fas fa-user-shield"></i> Đăng xuất
+      </a>
+      <div>
+        <div class="p-3 text tab-title">Quản lí</div>
+      </div>
+      <a class="nav-link p-3 text" routerLink="/admin" routerLinkActive="active">
+        <i class="fas fa-user-shield"></i> Quản trị
+      </a>
+      <a class="nav-link p-3 text" routerLink="/moneyManage" routerLinkActive="active">
+        <i class="fas fa-user-shield"></i> Quản lí thu chi
+      </a>
+      <div>
+        <div class="p-3 text tab-title">Ghi chú cá nhân</div>
+      </div>
+      <a class="nav-link p-3 text" routerLink="/to-do-list" routerLinkActive="active">
+        <i class="fas fa-user-shield"></i> Ghi chú cá nhân
+      </a>
+      <div>
+        <div class="p-3 text tab-title">Tài liệu API</div>
+      </div>
+      <a class="nav-link p-3 text" routerLink="/api-document" routerLinkActive="active">
+        <i class="fas fa-user-shield"></i> Tài liệu API
+      </a>
     </div>
   </div>
+  <div class="col-xs-10 col-md-9 right-menu">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -95,8 +95,10 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
 
   async loadData() {
+    this.spinner.show();
     await this.showCategories();
     await this.showTable();
+    this.spinner.hide();
   }
 
   async showCategories() {
@@ -116,7 +118,6 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   async showTable() {
     this.tongChi = this.tongThu = 0;
-    this.spinner.show();
     await this.moneyManage.getListMoneyManage(this.convertDateToString(this.dateFilterFrom), this.convertDateToString(this.dateFilterTo), this.typeFilter)
     .then(data => {
       this.data = data['data'];
@@ -136,7 +137,6 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
         type: 'danger',
       });
     })
-    this.spinner.hide();
   }
 
   async handleAddCategories() {

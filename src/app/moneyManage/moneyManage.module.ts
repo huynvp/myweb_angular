@@ -15,11 +15,16 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MoneyManageIndexComponent } from './MoneyManageIndex/moneyManageIndex';
 import {MatSelectModule} from '@angular/material/select';
+import { MoneyManageWalletComponent } from './MoneyManageWallet/moneyManageWallet';
 
 const routes: Routes = [
     { 
         path: '', 
         component: MoneyManageIndexComponent 
+    },
+    {
+        path: 'wallet',
+        component: MoneyManageWalletComponent
     }
   ];
 
@@ -45,7 +50,8 @@ const routes: Routes = [
         
     ],
     declarations: [
-        MoneyManageIndexComponent
+        MoneyManageIndexComponent,
+        MoneyManageWalletComponent
     ],
     entryComponents: [],
 })

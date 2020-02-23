@@ -73,7 +73,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
     }, err => {
       localStorage.removeItem('access_token');
       console.log(err);
-      Swal.fire('Eror', 'Token invalid', 'error');
+      // Swal.fire('Eror', 'Token invalid', 'error');
       this.router.navigate(['/login']);
     });
     this.spinner.hide();

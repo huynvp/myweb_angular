@@ -1,51 +1,47 @@
 <h4 class="title">quản lí chi tiêu</h4>
-<div class="row">
-    <div class="col">
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Thêm mới
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Thêm thông tin chi tiêu mới
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="mt_form_add_todolist" (keyup.enter)="handleAddData()">
-                    <mat-form-field>
-                        <mat-label>Nội dung chi tiêu</mat-label>
-                        <textarea required matInput [(ngModel)]="content"
-                            placeholder="Nhập tiêu đề công việc"></textarea>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Số tiền</mat-label>
-                        <input type="number" required matInput [(ngModel)]="money"
-                            placeholder="Nhập nội dung công việc" />
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Ngày thực hiện</mat-label>
-                        <input matInput required name="date" [(ngModel)]="date" [matDatepicker]="picker1"
-                            placeholder="Ngày thực hiện">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Danh mục</mat-label>
-                        <mat-select required [(ngModel)]="category">
-                            <mat-option *ngFor="let item of categories" [value]="item.key">
-                                <span *ngIf="item.type==1; else elseBlock">{{item.name}} - Thu</span>
-                                <ng-template #elseBlock>
-                                    <span>{{item.name}} - Chi</span>
-                                </ng-template>
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <button mat-stroked-button color="primary" (click)="handleAddData()">Thêm chi tiêu mới</button>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-    <div class="col">
+<div class="col">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Thêm mới
+                </mat-panel-title>
+                <mat-panel-description>
+                    Thêm thông tin chi tiêu mới
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="mt_form_add_todolist" (keyup.enter)="handleAddData()">
+                <mat-form-field>
+                    <mat-label>Nội dung chi tiêu</mat-label>
+                    <textarea required matInput [(ngModel)]="content"
+                        placeholder="Nhập tiêu đề công việc"></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Số tiền</mat-label>
+                    <input type="number" required matInput [(ngModel)]="money"
+                        placeholder="Nhập nội dung công việc" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Ngày thực hiện</mat-label>
+                    <input matInput required name="date" [(ngModel)]="date" [matDatepicker]="picker1"
+                        placeholder="Ngày thực hiện">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Danh mục</mat-label>
+                    <mat-select required [(ngModel)]="category">
+                        <mat-option *ngFor="let item of categories" [value]="item.key">
+                            {{item.name}} - {{item.typeString}} - {{item.wallet.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button mat-stroked-button color="primary" (click)="handleAddData()">Thêm chi tiêu mới</button>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+    <!-- <div class="col">
         <mat-accordion>
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -72,22 +68,7 @@
                 <button mat-stroked-button color="primary" (click)="handleAddCategories()">Thêm danh mục mới</button>
             </mat-expansion-panel>
         </mat-accordion>
-    </div>
-    <!-- <div class="col">
-      <mat-form-field>
-        <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
-          placeholder="Choose a date from">
-        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFrom></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo"
-          placeholder="Choose a date to">
-        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-        <mat-datepicker #pickerTo></mat-datepicker>
-      </mat-form-field>
     </div> -->
-</div>
 <hr>
 <div class="row">
     <div class="col-lg-4 col-sm-12">
@@ -111,7 +92,8 @@
             </mat-radio-group>
             <button mat-stroked-button color="primary" class="btn-filter" (click)="showTable()">Lọc Dữ Liệu</button>
             <button mat-stroked-button color="primary" class="btn-filter" (click)="handleAddCategories()">Xuất Báo Cáo</button>
-            <button mat-stroked-button color="primary" class="btn-filter" (click)="handleAddCategories()">Gửi EMail Báo Cáo</button>
+            <button mat-stroked-button color="primary" class="btn-filter" (click)="handleAddCategories()">Gửi Email Báo Cáo</button>
+            <button mat-stroked-button color="primary" class="btn-filter" routerLink="/moneyManage/wallet">Quản lí danh mục</button>
         </div>
         <ul class="list-group">
             <li class="list-group-item active"><i><strong>Thông tin tổng quan</strong></i></li>
@@ -130,11 +112,9 @@
                     <strong>{{convertDateToStrView(item.date)}}</strong>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">
-                        <span *ngIf="item.categories.type==1">Thu</span>
-                        <span *ngIf="item.categories.type==0">Chi</span>
-                        : {{item.categories.name}}
-                    </h5>
+                    <h6 class="card-title">
+                        {{item.categories.name}} - {{item.categories.wallet.name}}
+                    </h6>
                     <p class="card-text">{{item.content}}</p>
                 </div>
                 <div class="card-footer">{{formatNumber(item.money)}} VND</div>
