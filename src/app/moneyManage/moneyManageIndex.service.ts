@@ -22,10 +22,16 @@ export class MoneyManageService {
             return this.http.get(`${environment.baseUrl}/moneyManage/wallet/${key}/categories`, { headers: this.header }).toPromise();
         }
     }
+
+    getDetailCategories(key) {
+        return this.http.get(`${environment.baseUrl}/moneyManage/categories/${key}`, { headers: this.header }).toPromise();
+    }
     addCategories(data:any) {
         return this.http.post(`${environment.baseUrl}/moneyManage/categories`, data, { headers: this.header }).toPromise();
     }
-
+    editCategories(key, data) {
+        return this.http.put(`${environment.baseUrl}/moneyManage/categories/${key}`, data, { headers: this.header }).toPromise();
+    }
     addMoneyManage(data) {
         return this.http.post(`${environment.baseUrl}/moneyManage`, data, { headers: this.header }).toPromise();
     }
@@ -36,5 +42,9 @@ export class MoneyManageService {
 
     showListWallet() {
         return this.http.get(`${environment.baseUrl}/moneyManage/wallet`, { headers: this.header }).toPromise();
+    }
+
+    editWallet(key, data) {
+        return this.http.put(`${environment.baseUrl}/moneyManage/wallet/${key}`, data, { headers: this.header }).toPromise();
     }
 }

@@ -7,7 +7,7 @@
             <li class="list-group-item active">Ví tiền</li>
             <li class="list-group-item">Tất cả</li>
             <ng-template ngFor let-item [ngForOf]="walletList" let-i="index">
-                <li class="list-group-item" (click)="handleLoadCategories(item.key)">
+                <li class="list-group-item" (click)="handleLoadCategories(item.key, item.name)">
                     {{item.name}}
                 </li>
             </ng-template>
@@ -16,12 +16,15 @@
     <div class="col-6">
         <ul class="list-group">
             <li class="list-group-item active">
-                <button data-toggle="modal" [disabled]="keyWallet==null" data-target="#addCategories1" id="addCategories">Thêm danh mục</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" [disabled]="keyWallet==null" data-target="#addCategories1" id="addCategories">Thêm danh mục</button>
                 Danh mục
+                <input type="text" [disabled]="keyWallet==null" [(ngModel)]="nameWallet" name="nameWallet"/>
+                <button class="btn btn-warning btn-sm" [disabled]="keyWallet==null" (click)="handleEditWallet()">Chỉnh sửa tên ví</button>
             </li>
             <ng-template ngFor let-item [ngForOf]="categoriesList" let-i="index">
                 <li class="list-group-item">
-                    {{item.name}}
+                    {{item.name}} 
+                    <button class="btn btn-primary btn-sm" (click)="loadDetailCategories(item.key)" data-toggle="modal" data-target="#modalChangeWallet" >Chuyển đổi ví</button>
                 </li>
             </ng-template>
         </ul>
@@ -56,6 +59,47 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" (click)="handleAddCategories()">Thêm danh mục</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalChangeWallet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chuyển Ví</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tên danh mục</label>
+                        <input type="text" [(ngModel)]="nameChangeCategories" [ngModelOptions]="{standalone: true}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Loại:</label><br>
+                        <select class="form-control" [(ngModel)]="typeChangeCategories" [ngModelOptions]="{standalone: true}">
+                            <option value="0">Chi</option>
+                            <option value="1">Thu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tên danh mục</label>
+                        <select class="form-control" [(ngModel)]="keyWalletChange" [ngModelOptions]="{standalone: true}">
+                            <ng-template ngFor let-item [ngForOf]="walletList" let-i="index">
+                                <option [selected]="item.key==keyWallet" value="{{item.key}}">{{item.name}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="handleChangeWallet()">Thêm danh mục</button>
             </div>
         </div>
     </div>
