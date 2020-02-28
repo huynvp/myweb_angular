@@ -22,6 +22,8 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
   public nameWallet:any = null; 
   public categoriesList:any;
 
+  public nameAddWallet:string;
+
   public nameAddCategories:string;
   public typeAddCategories:string;
 
@@ -91,6 +93,36 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
     })
     await this.loadData();
     await this.handleLoadCategories(this.keyWallet, this.nameWallet);
+    this.spinner.hide();
+  }
+
+  async handleAddWallet() {
+    this.spinner.show();
+    var data = {
+      name: this.nameAddWallet
+    };
+    await this.moneyManage.addWallet(data)
+    .then((data) => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    await this.loadData();
+    await this.handleLoadCategories(this.keyWallet, this.nameWallet);
+    this.spinner.hide();
+  }
+
+  async hanleDeleteWallet(key:string) {
+    this.spinner.show();
+    await this.moneyManage.deleteWallet(key)
+    .then((data) => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    await this.loadData();
     this.spinner.hide();
   }
 

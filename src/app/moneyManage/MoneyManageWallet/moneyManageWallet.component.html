@@ -3,12 +3,19 @@
 <hr>
 <div class="row">
     <div class="col-6">
+        <form action="" class="form-inline" style="margin-bottom: 2%;">
+            <input style="margin-right: 2%;" [(ngModel)]="nameAddWallet" [ngModelOptions]="{standalone: true}" type="text" class="form-control" placeholder="Nhập tên ví tiền thêm" />
+            <button class="btn btn-success btn-sm" (click)="handleAddWallet()">Thêm ví tiền</button>
+        </form>
         <ul class="list-group">
             <li class="list-group-item active">Ví tiền</li>
             <li class="list-group-item">Tất cả</li>
             <ng-template ngFor let-item [ngForOf]="walletList" let-i="index">
-                <li class="list-group-item" (click)="handleLoadCategories(item.key, item.name)">
-                    {{item.name}}
+                <li class="list-group-item">
+                    <span (click)="handleLoadCategories(item.key, item.name)">
+                        {{item.name}}
+                    </span>
+                    <a class="link" href="javascript:void(0);" (click)="hanleDeleteWallet(item.key)">Xóa ví</a>
                 </li>
             </ng-template>
         </ul>
@@ -24,7 +31,9 @@
             <ng-template ngFor let-item [ngForOf]="categoriesList" let-i="index">
                 <li class="list-group-item">
                     {{item.name}} 
-                    <button class="btn btn-primary btn-sm" (click)="loadDetailCategories(item.key)" data-toggle="modal" data-target="#modalChangeWallet" >Chuyển đổi ví</button>
+                    <a class="link" href="javascript:void(0);" (click)="loadDetailCategories(item.key)"data-toggle="modal" data-target="#modalChangeWallet">
+                        Chỉnh sửa
+                    </a>
                 </li>
             </ng-template>
         </ul>
