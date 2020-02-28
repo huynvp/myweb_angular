@@ -17,19 +17,19 @@ declare var $: any;
   ]
 })
 export class MoneyManageWalletComponent extends BaseComponent implements OnInit {
-  private walletList :any;
-  private keyWallet:any = null;
-  private nameWallet:any = null; 
-  private categoriesList:any;
+  public walletList :any;
+  public keyWallet:any = null;
+  public nameWallet:any = null; 
+  public categoriesList:any;
 
-  private nameAddCategories:string;
-  private typeAddCategories:string;
+  public nameAddCategories:string;
+  public typeAddCategories:string;
 
-  private keyWalletChange:string;
+  public keyWalletChange:string;
   
-  private nameChangeCategories:string;
-  private typeChangeCategories:any = 0;
-  private keyChangeCategories:any;
+  public nameChangeCategories:string;
+  public typeChangeCategories:any = 0;
+  public keyChangeCategories:any;
 
   constructor(private _location: Location, private moneyManage: MoneyManageService, private spinner: NgxSpinnerService, public dialog: MatDialog, public router: Router, public http: HttpClient) {
     super(router, http);
