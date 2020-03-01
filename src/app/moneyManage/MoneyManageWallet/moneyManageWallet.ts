@@ -58,8 +58,13 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
       this.walletList = data['data'];
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     this.spinner.hide();
   }
 
@@ -72,8 +77,13 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
       this.categoriesList = data['data'];
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     this.spinner.hide();
   }
 
@@ -85,12 +95,22 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
 	    wallet: this.keyWallet
     };
     await this.moneyManage.addCategories(data)
-    .then((data) => {
-      console.log(data);
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     await this.loadData();
     await this.handleLoadCategories(this.keyWallet, this.nameWallet);
     this.spinner.hide();
@@ -102,12 +122,22 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
       name: this.nameAddWallet
     };
     await this.moneyManage.addWallet(data)
-    .then((data) => {
-      console.log(data);
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     await this.loadData();
     await this.handleLoadCategories(this.keyWallet, this.nameWallet);
     this.spinner.hide();
@@ -116,12 +146,22 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
   async hanleDeleteWallet(key:string) {
     this.spinner.show();
     await this.moneyManage.deleteWallet(key)
-    .then((data) => {
-      console.log(data);
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     await this.loadData();
     this.spinner.hide();
   }
@@ -132,12 +172,22 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
       name: this.nameWallet,
     };
     await this.moneyManage.editWallet(this.keyWallet, data)
-    .then((data) => {
-      console.log(data);
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     await this.loadData();
     await this.handleLoadCategories(this.keyWallet, this.nameWallet);
     this.spinner.hide();
@@ -154,8 +204,13 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
       this.keyChangeCategories = key;
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     this.spinner.hide();
   }
 
@@ -167,12 +222,22 @@ export class MoneyManageWalletComponent extends BaseComponent implements OnInit 
       wallet: this.keyWalletChange
     };
     await this.moneyManage.editCategories(this.keyChangeCategories, data)
-    .then((data) => {
-      console.log(data);
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
-      console.log(err);
-    })
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
     await this.loadData();
     await this.handleLoadCategories(this.keyWallet, this.nameWallet);
     await this.loadDetailCategories(this.keyChangeCategories)

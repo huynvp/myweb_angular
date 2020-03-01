@@ -1,3 +1,19 @@
+input, select, button {
+    font-size: 14px !important;
+    /* border: none; */
+    /* border-bottom: #000000 solid 1%; */
+}
+
+label {
+    font-weight: bold;
+}
+
+input:focus {
+    /* border-color: inherit; */
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 .card {
     margin: 10px
 }
@@ -60,13 +76,13 @@ mat-radio-button {
     z-index: 100000 !important; /* set value you need */
 }
 
-button {
+.my-btn {
     border-radius: 30px;
     color: white !important;
     background-color: #3668B0;
 }
 
-button:hover {
+.my-btn:hover {
     color: #CCCCCC !important;
     background-color: #336699;
     box-shadow: 2px 2px grey;
@@ -84,4 +100,11 @@ button:hover {
 .active {
     background-color: #3668B0;
     border: #3668B0;
+}
+
+.modal-header{
+    padding: 0.3rem 0.3rem !important;
+    border-bottom: 1px solid #1c3956 !important;
+    color: #ffffff !important;
+    background-color: cadetblue !important;
 }

@@ -35,6 +35,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   ];
   categories: any;
   data:any;
+  listWallets:any;
 
   titleCategory:any;
   typeCategory: any;
@@ -50,6 +51,11 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   tongThu: number = 0;
   tongChi: number = 0;
+
+  walletOrigin: any;
+  walletChange: any;
+  moneyChangeWallet: any;
+  noteChangeWallet: any;
 
   convertDateToString(dateStr: string) {
     if (dateStr === null || dateStr === '' || dateStr === undefined) {
@@ -98,7 +104,24 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.spinner.show();
     await this.showCategories();
     await this.showTable();
+    await this.getWallet();
     this.spinner.hide();
+  }
+
+  async getWallet() {
+    await this.moneyManage.showListWallet()
+    .then(data => {
+      this.listWallets = data['data'];
+      console.log(this.listWallets)
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    })
   }
 
   async showCategories() {
@@ -230,6 +253,34 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       });
     });
     await this.loadData();
+    this.spinner.hide();
+  }
+
+  handleChangeMoney() {
+    this.spinner.show();
+    var data = JSON.stringify({
+      keyWallet: this.walletChange,
+      note: this.noteChangeWallet,
+      money: this.moneyChangeWallet
+    });
+    this.moneyManage.topupWallet(this.walletOrigin, data)
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
+    this.loadData();
     this.spinner.hide();
   }
 

@@ -56,4 +56,8 @@ export class MoneyManageService {
     deleteWallet(key) {
         return this.http.delete(`${environment.baseUrl}/moneyManage/wallet/${key}`, { headers: this.header }).toPromise();
     }
+
+    topupWallet(key, data) {
+        return this.http.post(`${environment.baseUrl}/moneyManage/wallet/${key}/topup`, data, { headers: this.header }).toPromise();
+    }
 }
