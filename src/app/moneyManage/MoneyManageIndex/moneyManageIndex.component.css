@@ -108,3 +108,8 @@ mat-radio-button {
     color: #ffffff !important;
     background-color: cadetblue !important;
 }
+
+.btn-sm {
+    margin-left: 2%;
+    margin-right: 2%;
+}

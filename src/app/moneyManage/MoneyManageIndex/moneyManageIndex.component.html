@@ -91,6 +91,7 @@
                 </div>
                 <div class="card-footer">
                     {{formatNumber(item.money)}} VND
+                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#changeMoneyManage" (click)="handleDetailData(item.key)">Sửa giao dịch</button>
                     <button class="btn btn-sm btn-danger" (click)="handleDeleteData(item.key)">Xóa giao dịch</button>
                 </div>
             </div>
@@ -136,6 +137,42 @@
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleChangeMoney()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changeMoneyManage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa giao dịch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="form-group">
+                        <label for="">Ví tiền</label>
+                        <select [(ngModel)]="walletUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
+                            <option value="{{item.key}}" *ngFor="let item of listWallets">{{item.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Số tiền</label>
+                        <input class="form-control" [(ngModel)]="moneyUpdate" [ngModelOptions]="{standalone: true}" type="text" >
+                    </div>
+                    <div class="form-group">
+                        <label for="">Nội dung</label>
+                        <textarea class="form-control" [(ngModel)]="contentUpdate" [ngModelOptions]="{standalone: true}"  type="text" ></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleUpdateMoneyManage()">Save changes</button>
             </div>
         </div>
     </div>

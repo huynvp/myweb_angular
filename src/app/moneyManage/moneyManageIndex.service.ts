@@ -16,8 +16,15 @@ export class MoneyManageService {
     getListMoneyManage(dateFrom="", dateTo="", type=-1) {
         return this.http.get(`${environment.baseUrl}/moneyManage?dateFrom=${dateFrom}&dateTo=${dateTo}&type=${type}`, { headers: this.header }).toPromise();
     }
+    getDetailMoneyManage(key:string) {
+        return this.http.get(`${environment.baseUrl}/moneyManage/${key}`, { headers: this.header }).toPromise();
+    }
     addMoneyManage(data) {
         return this.http.post(`${environment.baseUrl}/moneyManage`, data, { headers: this.header }).toPromise();
+    }
+
+    editMoneyManage(key, data) {
+        return this.http.put(`${environment.baseUrl}/moneyManage/${key}`, data, { headers: this.header }).toPromise();
     }
 
     deleteMoneyManage(key) {

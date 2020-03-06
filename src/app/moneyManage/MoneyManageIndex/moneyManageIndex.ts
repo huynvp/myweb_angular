@@ -57,6 +57,11 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   moneyChangeWallet: any;
   noteChangeWallet: any;
 
+  keyUpdate:any;
+  walletUpdate:any;
+  moneyUpdate:any;
+  contentUpdate:any;
+
   convertDateToString(dateStr: string) {
     if (dateStr === null || dateStr === '' || dateStr === undefined) {
       var date = new Date();
@@ -85,19 +90,6 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadData();
-    // this.apollo
-    //   .watchQuery({
-    //     query: gql`
-    //     query {
-    //       moneyManage {
-    //         money
-    //       }
-    //     }
-    //   `
-    //   })
-    //   .valueChanges.subscribe(result => {
-    //     console.log(result);
-    //   });
   }
 
   async loadData() {
@@ -162,24 +154,15 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     })
   }
 
-  async handleAddCategories() {
-    if(this.titleCategory == undefined || this.typeCategory == undefined)
-    {
-      alert('Lỗi nhập thiếu trường');
-      return;
-    }
-    var data = JSON.stringify({
-      'Name': this.titleCategory,
-      'Type': this.typeCategory
-    });
-    await this.moneyManage.addCategories(data)
+  async handleDetailData(key:string) {
+    this.spinner.show();
+    await this.moneyManage.getDetailMoneyManage(key)
     .then(res => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `${res['message']}`,
-      }, {
-        type: 'success',
-      });
+      var data = res['data'];
+      this.keyUpdate = data['key'];
+      this.walletUpdate = null;
+      this.moneyUpdate = data['money'];
+      this.contentUpdate = data['content'];
     })
     .catch(err => {
       $.notify({
@@ -189,9 +172,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
         type: 'danger',
       });
     });
-    this.titleCategory = undefined;
-    this.typeCategory = undefined;
-    await this.loadData();
+    // await this.loadData();
     this.spinner.hide();
   }
 
@@ -253,6 +234,33 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       });
     });
     await this.loadData();
+    this.spinner.hide();
+  }
+
+  handleUpdateMoneyManage() {
+    this.spinner.show();
+    var data = JSON.stringify({
+      content: this.contentUpdate,
+      money: this.moneyUpdate,
+    });
+    this.moneyManage.editMoneyManage(this.keyUpdate, data)
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
+    this.loadData();
     this.spinner.hide();
   }
 
