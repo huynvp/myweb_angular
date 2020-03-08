@@ -1,4 +1,4 @@
-input, select, button {
+input, select, button, textarea {
     font-size: 14px !important;
     /* border: none; */
     /* border-bottom: #000000 solid 1%; */
@@ -30,23 +30,6 @@ input:focus {
     font-weight: bold;
     background: #3668B0;
     color: white;
-}
-
-.table_todolist {
-    /* border: 2px solid black; */
-    /* box-shadow: 7px 7px grey; */
-    border-collapse: collapse;
-  /* border-radius: 2em; */
-}
-
-thead tr{
-    text-align: center;
-    text-transform: uppercase;
-    border: 1px solid #C9D1D7;
-    background-color: #3668B0;
-}
-td, th{
-    border: 2px solid #C9D1D7;
 }
 
 .table_checkbox {
@@ -112,4 +95,9 @@ mat-radio-button {
 .btn-sm {
     margin-left: 2%;
     margin-right: 2%;
+}
+
+thead {
+    text-align: center;
+    background-color: #17a2b8;
 }

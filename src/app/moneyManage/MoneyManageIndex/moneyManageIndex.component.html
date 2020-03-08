@@ -41,7 +41,54 @@
     </mat-accordion>
 </div>
 <div class="row" style="margin-top:2%">
-    <div class="col-lg-4 col-sm-12">
+    <div class="col">
+        <button class="btn my-btn" routerLink="/moneyManage/wallet">Quản lí danh mục</button>
+    </div>
+    <div class="col">
+        <button class="btn my-btn" data-toggle="modal" data-target="#changeMoneyToWallet">
+            Chuyển tiền trong ví
+        </button>
+    </div>
+    <div>
+        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="showTable($event)"></nz-range-picker>
+    </div>
+</div>
+<div class="row" style="margin-top:2%">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="text-white">
+                <tr>
+                    <th>STT</th>
+                    <th>Ví tiền</th>
+                    <th>Danh mục</th>
+                    <th>Nội dung</th>
+                    <th>Ngày giao dịch</th>
+                    <th>Số tiền</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{item.categories.wallet.name}}</td>
+                    <td>{{item.categories.name}}</td>
+                    <td>{{item.content}}</td>
+                    <td>{{convertDateToStrView(item.date)}}</td>
+                    <td 
+                        [class.text-danger]="item.categories.type==0" 
+                        [class.text-primary]="item.categories.type==1" 
+                        style="text-align: right;">
+                        <strong>{{formatNumber(item.money)}}VND</strong>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#changeMoneyManage" (click)="handleDetailData(item.key)">Chỉnh sửa</a>
+                        <a href="javascript:void(0);" (click)="handleDeleteData(item.key)">Xóa</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="col-lg-4 col-sm-12">
         <div class="card"
             style="padding-left: 20px;padding-right: 20px;margin: 0% !important; margin-bottom: 2% !important;">
             <mat-form-field>
@@ -96,7 +143,7 @@
                 </div>
             </div>
         </ng-template>
-    </div>
+    </div> -->
 </div>
 
 <!-- Modal -->
@@ -135,7 +182,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleChangeMoney()">Save changes</button>
             </div>
         </div>
@@ -155,15 +201,20 @@
             <div class="modal-body">
                 <form action="">
                     <div class="form-group">
-                        <label for="">Ví tiền</label>
-                        <select [(ngModel)]="walletUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
-                            <option value="{{item.key}}" *ngFor="let item of listWallets">{{item.name}}</option>
+                        <label for="">Danh mục</label>
+                        <select [(ngModel)]="categoriesUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
+                            <option value="{{item.key}}" *ngFor="let item of categories">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="">Số tiền</label>
                         <input class="form-control" [(ngModel)]="moneyUpdate" [ngModelOptions]="{standalone: true}" type="text" >
                     </div>
+                    <mat-form-field style="width: 100%;">
+                        <input class="from-control" matInput [(ngModel)]="dateUpdate" [ngModelOptions]="{standalone: true}" [matDatepicker]="pickerTo" placeholder="Chọn ngày">
+                        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo></mat-datepicker>
+                    </mat-form-field>
                     <div class="form-group">
                         <label for="">Nội dung</label>
                         <textarea class="form-control" [(ngModel)]="contentUpdate" [ngModelOptions]="{standalone: true}"  type="text" ></textarea>

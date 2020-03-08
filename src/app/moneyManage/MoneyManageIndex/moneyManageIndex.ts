@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import Swal from 'sweetalert2';
+import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd/i18n';
 declare var $: any;
 
 export interface PopupData {
@@ -58,9 +60,13 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   noteChangeWallet: any;
 
   keyUpdate:any;
-  walletUpdate:any;
+  dateUpdate:any;
+  categoriesUpdate:any;
   moneyUpdate:any;
   contentUpdate:any;
+
+  dateRange:any;
+  dateFormat:any = "yyyy/MM/dd";
 
   convertDateToString(dateStr: string) {
     if (dateStr === null || dateStr === '' || dateStr === undefined) {
@@ -70,7 +76,18 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     else {
       var date = new Date(dateStr);
     }
-    return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+  }
+
+  convertDateToString2(dateStr: string) {
+    if (dateStr === null || dateStr === '' || dateStr === undefined) {
+      var date = new Date();
+      return '';
+    }
+    else {
+      var date = new Date(dateStr);
+    }
+    return dateStr.substring(0, 10);
   }
 
   convertDateToStrView(dateStr: string) {
@@ -84,18 +101,19 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
   }
 
-  constructor(private apollo: Apollo, private moneyManage: MoneyManageService, private spinner: NgxSpinnerService, public dialog: MatDialog, public router: Router, public http: HttpClient) {
+  constructor(private i18n: NzI18nService, private moneyManage: MoneyManageService, private spinner: NgxSpinnerService, public dialog: MatDialog, public router: Router, public http: HttpClient) {
     super(router, http);
   }
 
   async ngOnInit() {
+    this.i18n.setLocale(en_US)
     await this.loadData();
   }
 
   async loadData() {
     this.spinner.show();
     await this.showCategories();
-    await this.showTable();
+    await this.showTable(['','']);
     await this.getWallet();
     this.spinner.hide();
   }
@@ -131,7 +149,9 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     })
   }
 
-  async showTable() {
+  async showTable(event) {
+    this.dateFilterFrom = event[0];
+    this.dateFilterTo = event[1];
     this.tongChi = this.tongThu = 0;
     await this.moneyManage.getListMoneyManage(this.convertDateToString(this.dateFilterFrom), this.convertDateToString(this.dateFilterTo), this.typeFilter)
     .then(data => {
@@ -160,7 +180,8 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     .then(res => {
       var data = res['data'];
       this.keyUpdate = data['key'];
-      this.walletUpdate = null;
+      this.categoriesUpdate = data['categories']['key'];
+      this.dateUpdate = this.convertDateToString2(data['date']);
       this.moneyUpdate = data['money'];
       this.contentUpdate = data['content'];
     })
@@ -215,26 +236,34 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
 
   async handleDeleteData(key) {
-    this.spinner.show();
-    await this.moneyManage.deleteMoneyManage(key)
-    .then(res => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `${res['message']}`,
-      }, {
-        type: 'success',
-      });
+    Swal.fire({
+      title: 'Xóa giao dịch?',
+      text: "Bạn có muốn xóa giao dịch này không, sau khi xóa không thể khôi phục lại?",
+      confirmButtonText: 'Xóa'
+    }).then(async (result) => {
+      if (result.value) {
+        this.spinner.show();
+        await this.moneyManage.deleteMoneyManage(key)
+        .then(res => {
+          $.notify({
+            icon: 'glyphicon glyphicon-remove',
+            message: `${res['message']}`,
+          }, {
+            type: 'success',
+          });
+        })
+        .catch(err => {
+          $.notify({
+            icon: 'glyphicon glyphicon-remove',
+            message: `Error: ${err.error.message}`,
+          }, {
+            type: 'danger',
+          });
+        });
+        await this.loadData();
+        this.spinner.hide();
+      }
     })
-    .catch(err => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `Error: ${err.error.message}`,
-      }, {
-        type: 'danger',
-      });
-    });
-    await this.loadData();
-    this.spinner.hide();
   }
 
   handleUpdateMoneyManage() {
@@ -242,6 +271,8 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     var data = JSON.stringify({
       content: this.contentUpdate,
       money: this.moneyUpdate,
+      date: this.dateUpdate,
+      categories: this.categoriesUpdate
     });
     this.moneyManage.editMoneyManage(this.keyUpdate, data)
     .then(res => {
