@@ -1,6 +1,6 @@
 <h4 class="title">quản lí chi tiêu</h4>
 <div class="col" style="margin: 0; padding: 0%;">
-    <mat-accordion>
+    <!-- <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -38,18 +38,25 @@
             <button mat-stroked-button color="primary" class="my-btn" (click)="handleAddData()">Thêm chi tiêu
                 mới</button>
         </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
 </div>
 <div class="row" style="margin-top:2%">
     <div class="col">
-        <button class="btn my-btn" routerLink="/moneyManage/wallet">Quản lí danh mục</button>
+        <button nz-button nzType="primary" nzSize="medium" nzShape="round" (click)="showModalAdd()">
+            Thêm giao dịch mới
+        </button>
     </div>
     <div class="col">
-        <button class="btn my-btn" data-toggle="modal" data-target="#changeMoneyToWallet">
+        <button nz-button nzType="primary" nzSize="medium" nzShape="round" routerLink="/moneyManage/wallet">Quản lí danh mục</button>
+    </div>
+</div>
+<div class="row" style="margin-top:2%">
+    <div class="col">
+        <button nz-button nzType="primary" nzSize="medium" nzShape="round" (click)="showModalTopup()">
             Chuyển tiền trong ví
         </button>
     </div>
-    <div>
+    <div class="col">
         <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="showTable($event)"></nz-range-picker>
     </div>
 </div>
@@ -74,157 +81,119 @@
                     <td>{{item.categories.name}}</td>
                     <td>{{item.content}}</td>
                     <td>{{convertDateToStrView(item.date)}}</td>
-                    <td 
-                        [class.text-danger]="item.categories.type==0" 
-                        [class.text-primary]="item.categories.type==1" 
+                    <td [class.text-danger]="item.categories.type==0" [class.text-primary]="item.categories.type==1"
                         style="text-align: right;">
                         <strong>{{formatNumber(item.money)}}VND</strong>
                     </td>
                     <td>
-                        <a href="javascript:void(0);" data-toggle="modal" data-target="#changeMoneyManage" (click)="handleDetailData(item.key)">Chỉnh sửa</a>
-                        <a href="javascript:void(0);" (click)="handleDeleteData(item.key)">Xóa</a>
+                        <a href="javascript:void(0);" 
+                            (click)="handleDetailData(item.key)">Chỉnh sửa</a>
+                        <a nz-popconfirm
+                            nzPopconfirmTitle="Bạn có muốn xóa giao dịch này không?"
+                            nzPopconfirmPlacement="bottom"
+                            (nzOnConfirm)="handleDeleteData(item.key)">Xóa</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <!-- <div class="col-lg-4 col-sm-12">
-        <div class="card"
-            style="padding-left: 20px;padding-right: 20px;margin: 0% !important; margin-bottom: 2% !important;">
-            <mat-form-field>
-                <input matInput [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
-                    placeholder="Choose a date from">
-                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFrom></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput [(ngModel)]="dateFilterTo" [matDatepicker]="pickerTo" placeholder="Choose a date to">
-                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                <mat-datepicker #pickerTo></mat-datepicker>
-            </mat-form-field>
-            <mat-radio-group aria-labelledby="example-radio-group-label" [(ngModel)]="typeFilter">
-                <mat-radio-button class="example-radio-button" [value]="-1">Cả hai</mat-radio-button>
-                <mat-radio-button class="example-radio-button" [value]="1">Thu</mat-radio-button>
-                <mat-radio-button class="example-radio-button" [value]="0">Chi</mat-radio-button>
-            </mat-radio-group>
-            <button class="btn-filter my-btn" (click)="loadData()">Lọc Dữ Liệu</button>
-            <button class="btn-filter my-btn">Xuất Báo Cáo</button>
-            <button class="btn-filter my-btn" data-toggle="modal" data-target="#changeMoneyToWallet">Chuyển tiền trong
-                ví</button>
-            <button class="btn-filter my-btn" routerLink="/moneyManage/wallet">Quản lí danh mục</button>
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item active"><i><strong>Thông tin tổng quan</strong></i></li>
-            <li class="list-group-item">Tổng thu: {{formatNumber(tongThu)}} VND</li>
-            <li class="list-group-item">Tổng chi: {{formatNumber(tongChi)}} VND</li>
-            <li class="list-group-item" [class.text-danger]="tongThu < tongChi">Số dư cuối kì:
-                {{formatNumber(tongThu - tongChi)}} VND</li>
-            <li class="list-group-item">Từ ngày: {{convertDateToStrView(dateFilterFrom)}}</li>
-            <li class="list-group-item">Đến ngày: {{convertDateToStrView(dateFilterTo)}}</li>
-        </ul>
-    </div>
-    <div class="col-lg-8 col-sm-12">
-        <ng-template ngFor let-item [ngForOf]="data" let-i="index">
-            <div class="card mb-12" style="width: 100%;">
-                <div class="card-header text-white" [class.bg-primary]="item.categories.type==1"
-                    [class.bg-danger]="item.categories.type==0">
-                    <strong>{{convertDateToStrView(item.date)}}</strong>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-title">
-                        {{item.categories.name}} - {{item.categories.wallet.name}}
-                    </h6>
-                    <p class="card-text">{{item.content}}</p>
-                </div>
-                <div class="card-footer">
-                    {{formatNumber(item.money)}} VND
-                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#changeMoneyManage" (click)="handleDetailData(item.key)">Sửa giao dịch</button>
-                    <button class="btn btn-sm btn-danger" (click)="handleDeleteData(item.key)">Xóa giao dịch</button>
-                </div>
-            </div>
-        </ng-template>
-    </div> -->
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="changeMoneyToWallet" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Chuyển tiền trong ví</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="form-group">
-                        <label for="">Ví tiền gốc</label>
-                        <select [(ngModel)]="walletOrigin" [ngModelOptions]="{standalone: true}" class="form-control">
-                            <option value="{{item.key}}" *ngFor="let item of listWallets">{{item.name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Ví tiền cần chuyển</label>
-                        <select [(ngModel)]="walletChange" [disabled]="walletOrigin == undefined" [ngModelOptions]="{standalone: true}" class="form-control">
-                            <option value="{{item.key}}" [disabled]="item.key == walletOrigin" *ngFor="let item of listWallets">{{item.name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Số tiền</label>
-                        <input class="form-control" [(ngModel)]="moneyChangeWallet" [ngModelOptions]="{standalone: true}" type="text" >
-                    </div>
-                    <div class="form-group">
-                        <label for="">Ghi chú</label>
-                        <input class="form-control" [(ngModel)]="noteChangeWallet" [ngModelOptions]="{standalone: true}"  type="text" >
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleChangeMoney()">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+<nz-modal [(nzVisible)]="isVisibleModalTopup" nzTitle="Nạp tiền từ ví khác" (nzOnCancel)="closeModalTopup()"
+    (nzOnOk)="chooseModalTopup()">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label>Ví tiền gốc</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền gốc" [(ngModel)]="walletOrigin" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Ví tiền cần chuyển</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền chuyển" [(ngModel)]="walletChange" [ngModelOptions]="{standalone: true}">
+                    <nz-option [nzDisabled]="item.key == walletOrigin" *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Số tiền</nz-form-label>
+            <nz-form-control>
+                <input nz-input [(ngModel)]="moneyChangeWallet" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Ghi chú</nz-form-label>
+            <nz-form-control>
+                <textarea [(ngModel)]="noteChangeWallet" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
 
-<div class="modal fade" id="changeMoneyManage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa giao dịch</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="form-group">
-                        <label for="">Danh mục</label>
-                        <select [(ngModel)]="categoriesUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
-                            <option value="{{item.key}}" *ngFor="let item of categories">{{item.name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Số tiền</label>
-                        <input class="form-control" [(ngModel)]="moneyUpdate" [ngModelOptions]="{standalone: true}" type="text" >
-                    </div>
-                    <mat-form-field style="width: 100%;">
-                        <input class="from-control" matInput [(ngModel)]="dateUpdate" [ngModelOptions]="{standalone: true}" [matDatepicker]="pickerTo" placeholder="Chọn ngày">
-                        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerTo></mat-datepicker>
-                    </mat-form-field>
-                    <div class="form-group">
-                        <label for="">Nội dung</label>
-                        <textarea class="form-control" [(ngModel)]="contentUpdate" [ngModelOptions]="{standalone: true}"  type="text" ></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="handleUpdateMoneyManage()">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+<nz-modal [(nzVisible)]="isVisibleModalEdit" nzTitle="Chỉnh sửa giao dịch" (nzOnCancel)="closeModalEdit()"
+    (nzOnOk)="chooseModalEdit()">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label>Danh mục</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn danh mục" [(ngModel)]="categoriesUpdate" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of categories" nzLabel="{{item.wallet.name}} - {{item.name}}" nzValue="{{item.key}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Số tiền</nz-form-label>
+            <nz-form-control>
+                <input nz-input type="number" [(ngModel)]="moneyUpdate" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Ngày giao dịch</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker [(ngModel)]="dateUpdate" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeDateEdit($event)"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Nhập nội dung</nz-form-label>
+            <nz-form-control>
+                <textarea [(ngModel)]="contentUpdate" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleModalAdd" nzTitle="Thêm giao dịch mới" (nzOnCancel)="closeModalAdd()"
+    (nzOnOk)="chooseModalAdd()">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label>Danh mục</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn danh mục" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of categories" nzLabel="{{item.wallet.name}} - {{item.name}}" nzValue="{{item.key}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Số tiền</nz-form-label>
+            <nz-form-control>
+                <input nz-input type="number" [(ngModel)]="money" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Ngày giao dịch</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker [(ngModel)]="date" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeDateEdit($event)"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Nhập nội dung</nz-form-label>
+            <nz-form-control>
+                <textarea [(ngModel)]="content" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>

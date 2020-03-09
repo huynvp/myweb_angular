@@ -5,9 +5,6 @@ import { MoneyManageService } from '../moneyManageIndex.service';
 import { BaseComponent } from 'src/shread/base.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import Swal from 'sweetalert2';
 import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd/i18n';
 declare var $: any;
 
@@ -67,6 +64,10 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   dateRange:any;
   dateFormat:any = "yyyy/MM/dd";
+
+  isVisibleModalTopup: boolean  = false;
+  isVisibleModalEdit: boolean=false;
+  isVisibleModalAdd: boolean=false;
 
   convertDateToString(dateStr: string) {
     if (dateStr === null || dateStr === '' || dateStr === undefined) {
@@ -149,41 +150,30 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     })
   }
 
-  async showTable(event) {
-    this.dateFilterFrom = event[0];
-    this.dateFilterTo = event[1];
-    this.tongChi = this.tongThu = 0;
-    await this.moneyManage.getListMoneyManage(this.convertDateToString(this.dateFilterFrom), this.convertDateToString(this.dateFilterTo), this.typeFilter)
-    .then(data => {
-      this.data = data['data'];
-      this.data.forEach(element => {
-        if(element['categories']['type'] === 0) {
-          this.tongChi += Number(element['money']);
-        }else {
-          this.tongThu += Number(element['money']);
-        }
-      });
-    })
-    .catch(err => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `Error: ${err.error.message}`,
-      }, {
-        type: 'danger',
-      });
-    })
+  // Modal topup wallet
+  showModalTopup() {
+    this.isVisibleModalTopup = true;
   }
 
-  async handleDetailData(key:string) {
+  closeModalTopup() {
+    this.isVisibleModalTopup = false;
+  }
+
+  chooseModalTopup() {
     this.spinner.show();
-    await this.moneyManage.getDetailMoneyManage(key)
+    var data = JSON.stringify({
+      keyWallet: this.walletChange,
+      note: this.noteChangeWallet,
+      money: this.moneyChangeWallet
+    });
+    this.moneyManage.topupWallet(this.walletOrigin, data)
     .then(res => {
-      var data = res['data'];
-      this.keyUpdate = data['key'];
-      this.categoriesUpdate = data['categories']['key'];
-      this.dateUpdate = this.convertDateToString2(data['date']);
-      this.moneyUpdate = data['money'];
-      this.contentUpdate = data['content'];
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
     })
     .catch(err => {
       $.notify({
@@ -193,11 +183,67 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
         type: 'danger',
       });
     });
-    // await this.loadData();
+    this.loadData();
+    this.spinner.hide();
+    this.isVisibleModalTopup = false;
+  }
+  //end modal topup
+
+  // Modal edit
+  showModalEdit() {
+    this.isVisibleModalEdit = true;
+  }
+
+  closeModalEdit() {
+    this.isVisibleModalEdit = false;
+  }
+
+  chooseModalEdit() {
+    this.isVisibleModalEdit = false;
+    this.spinner.show();
+    var data = JSON.stringify({
+      content: this.contentUpdate,
+      money: this.moneyUpdate,
+      date: this.convertDateToString(this.dateUpdate),
+      categories: this.categoriesUpdate
+    });
+    this.moneyManage.editMoneyManage(this.keyUpdate, data)
+    .then(res => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `${res['message']}`,
+      }, {
+        type: 'success',
+      });
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
+    });
+    this.loadData();
     this.spinner.hide();
   }
 
-  async handleAddData() {
+  onChangeDateEdit(event) {
+    console.log(event);
+  }
+  // End modal edit
+
+  // Modal add 
+  showModalAdd() {
+    this.isVisibleModalAdd = true;
+  }
+
+  closeModalAdd() {
+    this.isVisibleModalAdd = false;
+  }
+
+  async chooseModalAdd() {
+    this.isVisibleModalAdd = false;
     if(this.content == undefined || this.date == undefined || this.money == undefined || this.category == undefined) {
       alert('Nhập thông tin thiếu');
       return;
@@ -205,7 +251,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.spinner.show();
     var data = JSON.stringify({
       content: this.content,
-      date: this.date,
+      date: this.convertDateToString(this.date),
       categories: this.category,
       money: this.money
     });
@@ -234,53 +280,21 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.category = undefined;
     this.spinner.hide();
   }
+  // End modal add 
 
-  async handleDeleteData(key) {
-    Swal.fire({
-      title: 'Xóa giao dịch?',
-      text: "Bạn có muốn xóa giao dịch này không, sau khi xóa không thể khôi phục lại?",
-      confirmButtonText: 'Xóa'
-    }).then(async (result) => {
-      if (result.value) {
-        this.spinner.show();
-        await this.moneyManage.deleteMoneyManage(key)
-        .then(res => {
-          $.notify({
-            icon: 'glyphicon glyphicon-remove',
-            message: `${res['message']}`,
-          }, {
-            type: 'success',
-          });
-        })
-        .catch(err => {
-          $.notify({
-            icon: 'glyphicon glyphicon-remove',
-            message: `Error: ${err.error.message}`,
-          }, {
-            type: 'danger',
-          });
-        });
-        await this.loadData();
-        this.spinner.hide();
-      }
-    })
-  }
-
-  handleUpdateMoneyManage() {
-    this.spinner.show();
-    var data = JSON.stringify({
-      content: this.contentUpdate,
-      money: this.moneyUpdate,
-      date: this.dateUpdate,
-      categories: this.categoriesUpdate
-    });
-    this.moneyManage.editMoneyManage(this.keyUpdate, data)
-    .then(res => {
-      $.notify({
-        icon: 'glyphicon glyphicon-remove',
-        message: `${res['message']}`,
-      }, {
-        type: 'success',
+  async showTable(event) {
+    this.dateFilterFrom = event[0];
+    this.dateFilterTo = event[1];
+    this.tongChi = this.tongThu = 0;
+    await this.moneyManage.getListMoneyManage(this.convertDateToString(this.dateFilterFrom), this.convertDateToString(this.dateFilterTo), this.typeFilter)
+    .then(data => {
+      this.data = data['data'];
+      this.data.forEach(element => {
+        if(element['categories']['type'] === 0) {
+          this.tongChi += Number(element['money']);
+        }else {
+          this.tongThu += Number(element['money']);
+        }
       });
     })
     .catch(err => {
@@ -290,19 +304,36 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       }, {
         type: 'danger',
       });
+    })
+  }
+
+  async handleDetailData(key:string) {
+    this.showModalEdit();
+    this.spinner.show();
+    await this.moneyManage.getDetailMoneyManage(key)
+    .then(res => {
+      var data = res['data'];
+      this.keyUpdate = data['key'];
+      this.categoriesUpdate = data['categories']['key'];
+      this.dateUpdate = new Date(data['date']);
+      this.moneyUpdate = data['money'];
+      this.contentUpdate = data['content'];
+    })
+    .catch(err => {
+      $.notify({
+        icon: 'glyphicon glyphicon-remove',
+        message: `Error: ${err.error.message}`,
+      }, {
+        type: 'danger',
+      });
     });
-    this.loadData();
+    // await this.loadData();
     this.spinner.hide();
   }
 
-  handleChangeMoney() {
+  async handleDeleteData(key) {
     this.spinner.show();
-    var data = JSON.stringify({
-      keyWallet: this.walletChange,
-      note: this.noteChangeWallet,
-      money: this.moneyChangeWallet
-    });
-    this.moneyManage.topupWallet(this.walletOrigin, data)
+    await this.moneyManage.deleteMoneyManage(key)
     .then(res => {
       $.notify({
         icon: 'glyphicon glyphicon-remove',
@@ -319,7 +350,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
         type: 'danger',
       });
     });
-    this.loadData();
+    await this.loadData();
     this.spinner.hide();
   }
 

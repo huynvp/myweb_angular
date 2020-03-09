@@ -17,7 +17,7 @@ import { MoneyManageIndexComponent } from './MoneyManageIndex/moneyManageIndex';
 import {MatSelectModule} from '@angular/material/select';
 import { MoneyManageWalletComponent } from './MoneyManageWallet/moneyManageWallet';
 
-import { NgZorroAntdModule, NZ_I18N, en_US, NzDatePickerModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_I18N, en_US, NzDatePickerModule, NzButtonModule, NzModalModule, NzFormModule, NzSelectModule, NzPopconfirmModule } from 'ng-zorro-antd';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
@@ -52,7 +52,13 @@ const routes: Routes = [
         MatDialogModule,
         // BrowserAnimationsModule,
         NgZorroAntdModule,
-        NzDatePickerModule
+        NzDatePickerModule,
+        NzButtonModule,
+        NzModalModule,
+        NzFormModule,
+        FormsModule,
+        NzSelectModule,
+        NzPopconfirmModule
     ],
     declarations: [
         MoneyManageIndexComponent,

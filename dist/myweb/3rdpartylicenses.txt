@@ -89,8 +89,6 @@ THE SOFTWARE.
 
 @angular/material/button
 
-@angular/material/core
-
 @angular/material/datepicker
 
 @angular/material/dialog
@@ -100,8 +98,6 @@ THE SOFTWARE.
 @angular/material/form-field
 
 @angular/material/radio
-
-@angular/material/select
 
 @angular/material/slide-toggle
 
@@ -950,6 +946,8 @@ ng-zorro-antd/drawer
 ng-zorro-antd/dropdown
 
 ng-zorro-antd/empty
+
+ng-zorro-antd/form
 
 ng-zorro-antd/message
 
