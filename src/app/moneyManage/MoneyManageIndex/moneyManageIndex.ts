@@ -63,11 +63,14 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   contentUpdate:any;
 
   dateRange:any;
+  walletFilter: any;
+  contentFilter: any;
   dateFormat:any = "yyyy/MM/dd";
 
   isVisibleModalTopup: boolean  = false;
   isVisibleModalEdit: boolean=false;
   isVisibleModalAdd: boolean=false;
+  isVisibleModalFilter: boolean=false;
 
   convertDateToString(dateStr: string) {
     if (dateStr === null || dateStr === '' || dateStr === undefined) {
@@ -282,11 +285,47 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
   // End modal add 
 
-  async showTable(event) {
-    this.dateFilterFrom = event[0];
-    this.dateFilterTo = event[1];
+  // Modal filter
+  showModalFilter() {
+    this.isVisibleModalFilter = true;
+  }
+
+  closeModalFilter() {
+    this.isVisibleModalFilter = false;
+  }
+
+  chooseModalFilter() {
+    var dateRange = ['', ''];
+    if(this.dateRange != undefined)
+    {
+      dateRange = this.dateRange;
+    }
+    this.showTable(dateRange);
+    this.isVisibleModalFilter = false;
+  }
+  // End Modal filter
+  async showTable(dateRange=undefined) {
+    var wallet = this.walletFilter;
+    var content = this.contentFilter;
+    if(this.walletFilter == null || this.walletFilter == undefined)
+    {
+      wallet = '';
+    }
+    if(this.contentFilter == null || this.contentFilter == undefined)
+    {
+      content = '';
+    }
+
+    this.dateFilterFrom = dateRange[0];
+    this.dateFilterTo = dateRange[1];
     this.tongChi = this.tongThu = 0;
-    await this.moneyManage.getListMoneyManage(this.convertDateToString(this.dateFilterFrom), this.convertDateToString(this.dateFilterTo), this.typeFilter)
+    await this.moneyManage.getListMoneyManage(
+      this.convertDateToString(this.dateFilterFrom), 
+      this.convertDateToString(this.dateFilterTo), 
+      this.typeFilter,
+      wallet,
+      content
+    )
     .then(data => {
       this.data = data['data'];
       this.data.forEach(element => {

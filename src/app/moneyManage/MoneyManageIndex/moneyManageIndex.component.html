@@ -57,7 +57,9 @@
         </button>
     </div>
     <div class="col">
-        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="showTable($event)"></nz-range-picker>
+        <button nz-button nzType="primary" nzSize="medium" nzShape="round" (click)="showModalFilter()">
+            Lọc dữ liệu
+        </button>
     </div>
 </div>
 <div class="row" style="margin-top:2%">
@@ -193,6 +195,38 @@
             <nz-form-label>Nhập nội dung</nz-form-label>
             <nz-form-control>
                 <textarea [(ngModel)]="content" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleModalFilter" nzTitle="Lọc dữ liệu" (nzOnCancel)="closeModalFilter()"
+    (nzOnOk)="chooseModalFilter()">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label>Ví tiền</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền" [(ngModel)]="walletFilter" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <!-- <nz-form-item>
+            <nz-form-label>Số tiền</nz-form-label>
+            <nz-form-control>
+                <input nz-input type="number" [(ngModel)]="money" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+            </nz-form-control>
+        </nz-form-item> -->
+        <nz-form-item>
+            <nz-form-label>Ngày giao dịch</nz-form-label>
+            <nz-form-control>
+                <nz-range-picker [(ngModel)]="dateRange" [ngModelOptions]="{standalone: true}"></nz-range-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Nội dung</nz-form-label>
+            <nz-form-control>
+                <textarea [(ngModel)]="contentFilter" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>
