@@ -63,6 +63,15 @@
     </div>
 </div>
 <div class="row" style="margin-top:2%">
+    <nz-pagination style="margin-top: 2%;margin-bottom: 2%;"
+        [nzPageIndex]="1" 
+        [nzShowSizeChanger]="true" 
+        [nzPageSizeOptions]="[10, 20, 30, 50, 100]" 
+        [nzTotal]="page" 
+        (nzPageIndexChange)="showPagination($event)"
+        (nzPageSizeChange)="changeSizePage($event)"
+        >
+    </nz-pagination>
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead class="text-white">

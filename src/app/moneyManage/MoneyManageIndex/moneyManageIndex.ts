@@ -72,6 +72,10 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   isVisibleModalAdd: boolean=false;
   isVisibleModalFilter: boolean=false;
 
+  page: any = 0;
+  currentPage:any = 1;
+  numberOfPage: number = 10;
+
   convertDateToString(dateStr: string) {
     if (dateStr === null || dateStr === '' || dateStr === undefined) {
       var date = new Date();
@@ -304,6 +308,16 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.isVisibleModalFilter = false;
   }
   // End Modal filter
+
+  showPagination(e) {
+    this.currentPage = e;
+    this.loadData();
+  }
+
+  changeSizePage(e) {
+    this.numberOfPage = e;
+    this.loadData();
+  }
   async showTable(dateRange=undefined) {
     var wallet = this.walletFilter;
     var content = this.contentFilter;
@@ -324,10 +338,14 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       this.convertDateToString(this.dateFilterTo), 
       this.typeFilter,
       wallet,
-      content
+      content,
+      this.currentPage,
+      this.numberOfPage
     )
     .then(data => {
-      this.data = data['data'];
+      this.data = data['data']['data'];
+      this.page = data['data']['count'];
+      console.log(this.page)
       this.data.forEach(element => {
         if(element['categories']['type'] === 0) {
           this.tongChi += Number(element['money']);

@@ -13,8 +13,8 @@ export class MoneyManageService {
 
     }
     // data
-    getListMoneyManage(dateFrom="", dateTo="", type=-1, wallet='', search='') {
-        return this.http.get(`${environment.baseUrl}/moneyManage?dateFrom=${dateFrom}&dateTo=${dateTo}&type=${type}&wallet=${wallet}&search=${search}`, { headers: this.header }).toPromise();
+    getListMoneyManage(dateFrom="", dateTo="", type=-1, wallet='', search='', page=0, limit=0) {
+        return this.http.get(`${environment.baseUrl}/moneyManage?dateFrom=${dateFrom}&dateTo=${dateTo}&type=${type}&wallet=${wallet}&search=${search}&page=${page}&limit=${limit}`, { headers: this.header }).toPromise();
     }
     getDetailMoneyManage(key:string) {
         return this.http.get(`${environment.baseUrl}/moneyManage/${key}`, { headers: this.header }).toPromise();
