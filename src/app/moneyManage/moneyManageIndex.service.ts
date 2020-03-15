@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { AppService } from '../app.service';
 
 @Injectable()
 
-export class MoneyManageService {
-    header: any = new HttpHeaders({
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.access_token
-    });
-    constructor(public http:HttpClient) {
+export class MoneyManageService extends AppService {
+    // header: any = new HttpHeaders({
+    //     'content-type': 'application/json',
+    //     'Authorization': 'Bearer ' + localStorage.access_token
+    // });
 
-    }
     // data
     getListMoneyManage(dateFrom="", dateTo="", type=-1, wallet='', search='', page=0, limit=0) {
         return this.http.get(`${environment.baseUrl}/moneyManage?dateFrom=${dateFrom}&dateTo=${dateTo}&type=${type}&wallet=${wallet}&search=${search}&page=${page}&limit=${limit}`, { headers: this.header }).toPromise();

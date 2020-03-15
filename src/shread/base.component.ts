@@ -13,24 +13,11 @@ export class BaseComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if(localStorage.access_token != null)
-      this.subcCription = this.app_service.refreshToken()
-      .subscribe(res => {
-        localStorage.access_token = res['data']['accessToken'];
-        localStorage.refresh_token = res['data']['refreshToken'];
-      }, err => {
-        console.log(err)
-      });
+    if(localStorage.access_token != null) {
       this.time = setInterval(() => {
-        this.subcCription = this.app_service.refreshToken()
-        .subscribe(res => {
-          localStorage.access_token = res['data']['accessToken'];
-          localStorage.refresh_token = res['data']['refreshToken'];
-        }, err => {
-          console.log(err)
-        });
-      }, 300000);
-
+        this.subcCription = this.app_service.refreshToken();
+      }, 15000);
+    }
     //check user
     if(localStorage.access_token === undefined) {
       this.router.navigate(['/login']);

@@ -32,6 +32,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       'value': 'Thu',
     }
   ];
+  loading:any=true;
   categories: any;
   data:any;
   listWallets:any;
@@ -119,11 +120,11 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
 
   async loadData() {
-    this.spinner.show();
+    this.loading = true;
     await this.showCategories();
     await this.showTable(['','']);
     await this.getWallet();
-    this.spinner.hide();
+    this.loading = false;
   }
 
   async getWallet() {
@@ -167,7 +168,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
   }
 
   chooseModalTopup() {
-    this.spinner.show();
+    this.loading = true;
     var data = JSON.stringify({
       keyWallet: this.walletChange,
       note: this.noteChangeWallet,
@@ -191,7 +192,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       });
     });
     this.loadData();
-    this.spinner.hide();
+    this.loading = false;
     this.isVisibleModalTopup = false;
   }
   //end modal topup
@@ -207,7 +208,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   chooseModalEdit() {
     this.isVisibleModalEdit = false;
-    this.spinner.show();
+    this.loading = true;
     var data = JSON.stringify({
       content: this.contentUpdate,
       money: this.moneyUpdate,
@@ -232,7 +233,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       });
     });
     this.loadData();
-    this.spinner.hide();
+    this.loading = false;
   }
 
   onChangeDateEdit(event) {
@@ -255,7 +256,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       alert('Nhập thông tin thiếu');
       return;
     }
-    this.spinner.show();
+    this.loading = true;
     var data = JSON.stringify({
       content: this.content,
       date: this.convertDateToString(this.date),
@@ -285,7 +286,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.date = undefined;
     this.money = undefined;
     this.category = undefined;
-    this.spinner.hide();
+    this.loading = false;
   }
   // End modal add 
 
@@ -298,14 +299,17 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
     this.isVisibleModalFilter = false;
   }
 
-  chooseModalFilter() {
+  async chooseModalFilter() {
+    this.loading = true;
     var dateRange = ['', ''];
+    this.currentPage = 1;
     if(this.dateRange != undefined)
     {
       dateRange = this.dateRange;
     }
-    this.showTable(dateRange);
+    await this.showTable(dateRange);
     this.isVisibleModalFilter = false;
+    this.loading = false;
   }
   // End Modal filter
 
@@ -366,7 +370,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
 
   async handleDetailData(key:string) {
     this.showModalEdit();
-    this.spinner.show();
+    this.loading = true;
     await this.moneyManage.getDetailMoneyManage(key)
     .then(res => {
       var data = res['data'];
@@ -385,11 +389,11 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       });
     });
     // await this.loadData();
-    this.spinner.hide();
+    this.loading = false;
   }
 
   async handleDeleteData(key) {
-    this.spinner.show();
+    this.loading = true;
     await this.moneyManage.deleteMoneyManage(key)
     .then(res => {
       $.notify({
@@ -408,7 +412,7 @@ export class MoneyManageIndexComponent extends BaseComponent implements OnInit {
       });
     });
     await this.loadData();
-    this.spinner.hide();
+    this.loading = false;
   }
 
   formatNumber(number) {

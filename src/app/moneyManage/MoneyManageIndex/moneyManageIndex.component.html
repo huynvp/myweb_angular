@@ -1,76 +1,23 @@
 <h4 class="title">quản lí chi tiêu</h4>
-<div class="col" style="margin: 0; padding: 0%;">
-    <!-- <mat-accordion>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Thêm mới
-                </mat-panel-title>
-                <mat-panel-description>
-                    Thêm thông tin chi tiêu mới
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="mt_form_add_todolist" (keyup.enter)="handleAddData()">
-                <mat-form-field>
-                    <mat-label>Nội dung chi tiêu</mat-label>
-                    <textarea required matInput [(ngModel)]="content" placeholder="Nhập tiêu đề công việc"></textarea>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Số tiền</mat-label>
-                    <input type="number" required matInput [(ngModel)]="money" placeholder="Nhập nội dung công việc" />
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Ngày thực hiện</mat-label>
-                    <input matInput required name="date" [(ngModel)]="date" [matDatepicker]="picker1"
-                        placeholder="Ngày thực hiện">
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Danh mục</mat-label>
-                    <mat-select required [(ngModel)]="category">
-                        <mat-option *ngFor="let item of categories" [value]="item.key">
-                            {{item.name}} - {{item.typeString}} - {{item.wallet.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <button mat-stroked-button color="primary" class="my-btn" (click)="handleAddData()">Thêm chi tiêu
-                mới</button>
-        </mat-expansion-panel>
-    </mat-accordion> -->
-</div>
 <div class="row" style="margin-top:2%">
-    <div class="col">
-        <button nz-button nzType="primary" nzSize="medium" nzShape="round" (click)="showModalAdd()">
-            Thêm giao dịch mới
-        </button>
-    </div>
-    <div class="col">
-        <button nz-button nzType="primary" nzSize="medium" nzShape="round" routerLink="/moneyManage/wallet">Quản lí danh mục</button>
-    </div>
+    <a nz-dropdown [nzDropdownMenu]="menu">
+        <strong>Chức năng</strong> <i nz-icon nzType="down"></i>
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+            <li nz-menu-item (click)="showModalAdd()"><i class="fas fa-plus"></i> Thêm giao dịch mới</li>
+            <li nz-menu-item routerLink="/moneyManage/wallet"><i class="fas fa-tachometer-alt"></i> Quản lí danh mục</li>
+            <li nz-menu-item (click)="showModalTopup()"><i class="fas fa-wallet"></i> Chuyển tiền trong ví</li>
+            <li nz-menu-item (click)="showModalFilter()"><i class="fas fa-filter"></i> Lọc dữ liệu</li>
+            <li nz-menu-item (click)="showModalFilter()"><i class="fas fa-chart-line"></i> Báo cáo thống kê</li>
+        </ul>
+    </nz-dropdown-menu>
 </div>
-<div class="row" style="margin-top:2%">
-    <div class="col">
-        <button nz-button nzType="primary" nzSize="medium" nzShape="round" (click)="showModalTopup()">
-            Chuyển tiền trong ví
-        </button>
-    </div>
-    <div class="col">
-        <button nz-button nzType="primary" nzSize="medium" nzShape="round" (click)="showModalFilter()">
-            Lọc dữ liệu
-        </button>
-    </div>
-</div>
-<div class="row" style="margin-top:2%">
-    <nz-pagination style="margin-top: 2%;margin-bottom: 2%;"
-        [nzPageIndex]="1" 
-        [nzShowSizeChanger]="true" 
-        [nzPageSizeOptions]="[10, 20, 30, 50, 100]" 
-        [nzTotal]="page" 
-        (nzPageIndexChange)="showPagination($event)"
-        (nzPageSizeChange)="changeSizePage($event)"
-        >
+<nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzParagraph]="{ rows: 20 }"></nz-skeleton>
+<div class="row" [class.invisible]="loading==true" style="margin-top:2%">
+    <nz-pagination style="margin-top: 2%;margin-bottom: 2%;" [nzPageIndex]="currentPage" [nzShowSizeChanger]="true"
+        [nzPageSizeOptions]="[10, 20, 30, 50, 100]" [nzTotal]="page" (nzPageIndexChange)="showPagination($event)"
+        (nzPageSizeChange)="changeSizePage($event)">
     </nz-pagination>
     <div class="table-responsive">
         <table class="table table-bordered">
@@ -92,17 +39,14 @@
                     <td>{{item.categories.name}}</td>
                     <td>{{item.content}}</td>
                     <td>{{convertDateToStrView(item.date)}}</td>
-                    <td [class.text-danger]="item.categories.type==0" [class.text-primary]="item.categories.type==1"
-                        style="text-align: right;">
+                    <td class="test" [class.text-danger]="item.categories.type==0"
+                        [class.text-primary]="item.categories.type==1">
                         <strong>{{formatNumber(item.money)}}VND</strong>
                     </td>
                     <td>
-                        <a href="javascript:void(0);" 
-                            (click)="handleDetailData(item.key)">Chỉnh sửa</a>
-                        <a nz-popconfirm
-                            nzPopconfirmTitle="Bạn có muốn xóa giao dịch này không?"
-                            nzPopconfirmPlacement="bottom"
-                            (nzOnConfirm)="handleDeleteData(item.key)">Xóa</a>
+                        <a href="javascript:void(0);" (click)="handleDetailData(item.key)">Chỉnh sửa</a>
+                        <a nz-popconfirm nzPopconfirmTitle="Bạn có muốn xóa giao dịch này không?"
+                            nzPopconfirmPlacement="bottom" (nzOnConfirm)="handleDeleteData(item.key)">Xóa</a>
                     </td>
                 </tr>
             </tbody>
@@ -117,29 +61,35 @@
         <nz-form-item>
             <nz-form-label>Ví tiền gốc</nz-form-label>
             <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền gốc" [(ngModel)]="walletOrigin" [ngModelOptions]="{standalone: true}">
-                    <nz-option *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền gốc" [(ngModel)]="walletOrigin"
+                    [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}">
+                    </nz-option>
                 </nz-select>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Ví tiền cần chuyển</nz-form-label>
             <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền chuyển" [(ngModel)]="walletChange" [ngModelOptions]="{standalone: true}">
-                    <nz-option [nzDisabled]="item.key == walletOrigin" *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền chuyển" [(ngModel)]="walletChange"
+                    [ngModelOptions]="{standalone: true}">
+                    <nz-option [nzDisabled]="item.key == walletOrigin" *ngFor="let item of listWallets"
+                        nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
                 </nz-select>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Số tiền</nz-form-label>
             <nz-form-control>
-                <input nz-input [(ngModel)]="moneyChangeWallet" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+                <input nz-input [(ngModel)]="moneyChangeWallet" [ngModelOptions]="{standalone: true}"
+                    placeholder="Nhập số tiền" />
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Ghi chú</nz-form-label>
             <nz-form-control>
-                <textarea [(ngModel)]="noteChangeWallet" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+                <textarea [(ngModel)]="noteChangeWallet" [ngModelOptions]="{standalone: true}" nz-input
+                    placeholder="Ghi chú"></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>
@@ -151,27 +101,32 @@
         <nz-form-item>
             <nz-form-label>Danh mục</nz-form-label>
             <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn danh mục" [(ngModel)]="categoriesUpdate" [ngModelOptions]="{standalone: true}">
-                    <nz-option *ngFor="let item of categories" nzLabel="{{item.wallet.name}} - {{item.name}}" nzValue="{{item.key}}"></nz-option>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn danh mục" [(ngModel)]="categoriesUpdate"
+                    [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of categories" nzLabel="{{item.wallet.name}} - {{item.name}}"
+                        nzValue="{{item.key}}"></nz-option>
                 </nz-select>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Số tiền</nz-form-label>
             <nz-form-control>
-                <input nz-input type="number" [(ngModel)]="moneyUpdate" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+                <input nz-input type="number" [(ngModel)]="moneyUpdate" [ngModelOptions]="{standalone: true}"
+                    placeholder="Nhập số tiền" />
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Ngày giao dịch</nz-form-label>
             <nz-form-control>
-                <nz-date-picker [(ngModel)]="dateUpdate" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeDateEdit($event)"></nz-date-picker>
+                <nz-date-picker [(ngModel)]="dateUpdate" [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="onChangeDateEdit($event)"></nz-date-picker>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Nhập nội dung</nz-form-label>
             <nz-form-control>
-                <textarea [(ngModel)]="contentUpdate" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+                <textarea [(ngModel)]="contentUpdate" [ngModelOptions]="{standalone: true}" nz-input
+                    placeholder="Ghi chú"></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>
@@ -183,27 +138,32 @@
         <nz-form-item>
             <nz-form-label>Danh mục</nz-form-label>
             <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn danh mục" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
-                    <nz-option *ngFor="let item of categories" nzLabel="{{item.wallet.name}} - {{item.name}}" nzValue="{{item.key}}"></nz-option>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn danh mục" [(ngModel)]="category"
+                    [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of categories" nzLabel="{{item.wallet.name}} - {{item.name}}"
+                        nzValue="{{item.key}}"></nz-option>
                 </nz-select>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Số tiền</nz-form-label>
             <nz-form-control>
-                <input nz-input type="number" [(ngModel)]="money" [ngModelOptions]="{standalone: true}" placeholder="Nhập số tiền" />
+                <input nz-input type="number" [(ngModel)]="money" [ngModelOptions]="{standalone: true}"
+                    placeholder="Nhập số tiền" />
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Ngày giao dịch</nz-form-label>
             <nz-form-control>
-                <nz-date-picker [(ngModel)]="date" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeDateEdit($event)"></nz-date-picker>
+                <nz-date-picker [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="onChangeDateEdit($event)"></nz-date-picker>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>Nhập nội dung</nz-form-label>
             <nz-form-control>
-                <textarea [(ngModel)]="content" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+                <textarea [(ngModel)]="content" [ngModelOptions]="{standalone: true}" nz-input
+                    placeholder="Ghi chú"></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>
@@ -215,8 +175,10 @@
         <nz-form-item>
             <nz-form-label>Ví tiền</nz-form-label>
             <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền" [(ngModel)]="walletFilter" [ngModelOptions]="{standalone: true}">
-                    <nz-option *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}"></nz-option>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn ví tiền" [(ngModel)]="walletFilter"
+                    [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of listWallets" nzLabel="{{item.name}}" nzValue="{{item.key}}">
+                    </nz-option>
                 </nz-select>
             </nz-form-control>
         </nz-form-item>
@@ -235,7 +197,8 @@
         <nz-form-item>
             <nz-form-label>Nội dung</nz-form-label>
             <nz-form-control>
-                <textarea [(ngModel)]="contentFilter" [ngModelOptions]="{standalone: true}" nz-input placeholder="Ghi chú"></textarea>
+                <textarea [(ngModel)]="contentFilter" [ngModelOptions]="{standalone: true}" nz-input
+                    placeholder="Ghi chú"></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>
