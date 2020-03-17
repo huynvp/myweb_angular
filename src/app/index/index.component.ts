@@ -12,6 +12,7 @@ import { AppService } from '../app.service';
   styleUrls: ['./index.component.css']
 })
 export class IndexComponent extends BaseComponent implements OnInit {
+  corona: any = '';
   username: string;
   url: string = "";
   admin: string = "";
@@ -24,6 +25,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
   minutes: any;
   seconds: any;
   time1: any;
+  time2: any;
   dateNow: any = new Date();
   constructor(public router: Router, public http: HttpClient, private spinner: NgxSpinnerService, private app: AppService) {
     super(router, http);
@@ -40,15 +42,17 @@ export class IndexComponent extends BaseComponent implements OnInit {
     this.time1 = setInterval(() => {
       let dateNow: any = new Date();
       var distance = this.eventDate - dateNow;
-      console.log(this.eventDate);
-      console.log(dateNow);
       this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
       this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       this.seconds = Math.floor((distance % (1000 * 60)) / (1000));
 
-      console.log(this.seconds);
+      // console.log(this.seconds);
     }, 500);
+
+    this.time2 = setInterval(async () => {
+      await this.getCorona();
+    }, 5000);
     this.spinner.show();
     await super.ngOnInit();
     this.http.get(`${environment.baseUrl}/user/me`, {
@@ -72,18 +76,26 @@ export class IndexComponent extends BaseComponent implements OnInit {
       }
     }, err => {
       localStorage.removeItem('access_token');
-      console.log(err);
+      // console.log(err);
       // Swal.fire('Eror', 'Token invalid', 'error');
       this.router.navigate(['/login']);
     });
     this.spinner.hide();
   }
+
+  async getCorona() {
+    await this.app.callApiCorona()
+    .then(data => {
+      this.corona = data;
+    })
+  }
+
   handleChangeEvent(id) {
     this.app.getDetailEvent(id)
     .then(data => {
       this.eventName = data['data']['name'];
       this.eventDate = new Date(data['data']['date']);
-      console.log(data);
+      // console.log(data);
     })
     .catch(err => {
       console.log(err)
@@ -98,6 +110,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
 
   ngOnDestroy() {
     clearInterval(this.time1);
+    clearInterval(this.time2);
     super.ngOnDestroy();
   }
 }

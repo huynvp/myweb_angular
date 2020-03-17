@@ -66,4 +66,8 @@ export class MoneyManageService extends AppService {
     topupWallet(key, data) {
         return this.http.post(`${environment.baseUrl}/moneyManage/wallet/${key}/topup`, data, { headers: this.header }).toPromise();
     }
+
+    walletReport() {
+        return this.http.get(`${environment.baseUrl}/moneyManage/wallet/money`, { headers: this.header }).toPromise();
+    }
 }

@@ -33,3 +33,54 @@
     <!-- <p>{{dateEvent}}</p> -->
   </div>
 </div>
+
+<div class="row">
+  <h4>Tình hình corona mới nhất</h4>
+</div>
+<div class="row">
+  <div class="col">
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Thế giới</strong></li>
+      <li class="list-group-item">Số ca phát hiện: {{corona == '' ? 'N/A' : corona.summaryStats.global.confirmed}}</li>
+      <li class="list-group-item">Số ca tử vong: {{corona == '' ? 'N/A' : corona.summaryStats.global.deaths}}</li>
+      <li class="list-group-item">Số ca chữa khỏi: {{corona == '' ? 'N/A' : corona.summaryStats.global.recovered}}</li>
+      <li class="list-group-item"><strong>Trung Quốc</strong></li>
+      <li class="list-group-item">Số ca phát hiện: {{corona == '' ? 'N/A' : corona.summaryStats.china.confirmed}}</li>
+      <li class="list-group-item">Số ca tử vong: {{corona == '' ? 'N/A' : corona.summaryStats.china.deaths}}</li>
+      <li class="list-group-item">Số ca chữa khỏi: {{corona == '' ? 'N/A' : corona.summaryStats.china.recovered}}</li>
+      <li class="list-group-item"><strong>Ngoài Trung Quốc</strong></li>
+      <li class="list-group-item">Số ca phát hiện: {{corona == '' ? 'N/A' : corona.summaryStats.nonChina.confirmed}}</li>
+      <li class="list-group-item">Số ca tử vong: {{corona == '' ? 'N/A' : corona.summaryStats.nonChina.deaths}}</li>
+      <li class="list-group-item">Số ca chữa khỏi: {{corona == '' ? 'N/A' : corona.summaryStats.nonChina.recovered}}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Thành phố</th>
+                <th>Quốc gia</th>
+                <th>Số ca nhiễm</th>
+                <th>Số ca tử vong</th>
+                <th>Số ca chữa khỏi</th>
+                <th>Ngày cập nhật</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of corona.rawData; index as i">
+                <td>{{i+1}}</td>
+                <td>{{item['Province/State']}}</td>
+                <td>{{item['Country/Region']}}</td>
+                <td>{{item.Confirmed}}</td>
+                <td>{{item.Deaths}}</td>
+                <td>{{item.Recovered}}</td>
+                <td>{{convertDateTimeToStrView(item['Last Update'])}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

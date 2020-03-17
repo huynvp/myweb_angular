@@ -54,5 +54,9 @@ export class AppService{
         	headers: this.header
         }).toPromise();
     }
+
+    callApiCorona() {
+        return this.http.get('https://coronavirus.m.pipedream.net/').toPromise();
+    }
 }
 
