@@ -73,12 +73,12 @@
         <tbody>
             <tr *ngFor="let item of corona.rawData; index as i">
                 <td>{{i+1}}</td>
-                <td>{{item['Province/State']}}</td>
-                <td>{{item['Country/Region']}}</td>
-                <td>{{item.Confirmed}}</td>
-                <td>{{item.Deaths}}</td>
-                <td>{{item.Recovered}}</td>
-                <td>{{convertDateTimeToStrView(item['Last Update'])}}</td>
+                <td>{{item['province']}}</td>
+                <td>{{item['country']}}</td>
+                <td>{{item['data'][0]['confirmed']}}</td>
+                <td>{{item['data'][0]['deaths']}}</td>
+                <td>{{item['data'][0]['recovered']}}</td>
+                <td>{{convertDateTimeToStrView(item['data'][0]['createdAt'])}}</td>
             </tr>
         </tbody>
     </table>

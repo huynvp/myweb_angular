@@ -86,7 +86,8 @@ export class IndexComponent extends BaseComponent implements OnInit {
   async getCorona() {
     await this.app.callApiCorona()
     .then(data => {
-      this.corona = data;
+      console.log(data)
+      this.corona = data['data'];
     })
   }
 

@@ -56,7 +56,7 @@ export class AppService{
     }
 
     callApiCorona() {
-        return this.http.get('https://coronavirus.m.pipedream.net/').toPromise();
+        return this.http.get(`${environment.baseUrl}/event/corona`).toPromise();
     }
 }
 
