@@ -12,7 +12,10 @@ import { AppService } from '../app.service';
   styleUrls: ['./index.component.css']
 })
 export class IndexComponent extends BaseComponent implements OnInit {
+  loading:any=false;
+  showModal:any = false;
   corona: any = '';
+  detailCorona: any='';
   username: string;
   url: string = "";
   admin: string = "";
@@ -49,10 +52,10 @@ export class IndexComponent extends BaseComponent implements OnInit {
 
       // console.log(this.seconds);
     }, 500);
-
+    await this.getCorona();
     this.time2 = setInterval(async () => {
       await this.getCorona();
-    }, 5000);
+    }, 50000);
     this.spinner.show();
     await super.ngOnInit();
     this.http.get(`${environment.baseUrl}/user/me`, {
@@ -84,11 +87,27 @@ export class IndexComponent extends BaseComponent implements OnInit {
   }
 
   async getCorona() {
+    this.loading = true;
     await this.app.callApiCorona()
     .then(data => {
       console.log(data)
       this.corona = data['data'];
     })
+    this.loading = false;
+  }
+
+  handleCancel() {
+    this.showModal = false;
+  }
+
+  handleOk() {
+    this.showModal = false;
+  }
+
+  viewDetail(data) {
+    console.log(data);
+    this.detailCorona = data;
+    this.showModal = true;
   }
 
   handleChangeEvent(id) {

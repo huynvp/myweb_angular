@@ -45,7 +45,7 @@ const routes: Routes = [
         FormsModule,
         AngularEditorModule,
         DataTablesModule,
-        BrowserModule
+        BrowserModule,
     ],
     declarations: [
         HomeComponent
