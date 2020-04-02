@@ -19,6 +19,7 @@ import { MoneyManageWalletComponent } from './MoneyManageWallet/moneyManageWalle
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgZorroAntdModule, NZ_I18N, en_US, NzDatePickerModule, NzButtonModule, NzModalModule, NzFormModule, NzSelectModule, NzPopconfirmModule } from 'ng-zorro-antd';
 import { MoneyManageReportComponent } from './MoneyManageReport/moneyManageReport';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
@@ -64,7 +65,8 @@ const routes: Routes = [
         FormsModule,
         NzSelectModule,
         NzPopconfirmModule,
-        NzIconModule
+        NzIconModule,
+        NzDividerModule
     ],
     declarations: [
         MoneyManageIndexComponent,

@@ -17,6 +17,9 @@ declare var $: any;
   ]
 })
 export class MoneyManageReportComponent extends BaseComponent implements OnInit {
+  data: any;
+  detail:any;
+  showModal: boolean = false;
   constructor(private _location: Location, private moneyManage: MoneyManageService, private spinner: NgxSpinnerService, public dialog: MatDialog, public router: Router, public http: HttpClient) {
     super(router, http);
   }
@@ -33,7 +36,29 @@ export class MoneyManageReportComponent extends BaseComponent implements OnInit 
   loadData() {
     this.moneyManage.walletReport()
     .then(data => {
-      console.log(data)
+      this.data = data['data'];
     })
+  }
+
+  formatMoney(data, type) {
+    var money = Number(data).toLocaleString('en-GB');
+    if(type === 0) {
+      return `-${money} VND`;
+    }else {
+      return `${money} VND`;
+    }
+  }
+
+  showDetail(detail) {
+    this.detail = detail;
+    this.showModal = true;
+  }
+
+  handleCancel() {
+    this.showModal = false;
+  }
+
+  handleOk() {
+    this.showModal = false;    
   }
 }
