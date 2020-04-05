@@ -1,6 +1,41 @@
 <h4 class="title">to do list</h4>
+<button class="btn btn-sm btn-primary" (click)="handelShowModalAdd()">Thêm công việc mới</button>
+
+<nz-modal [(nzVisible)]="showModalAdd" nzTitle="Thêm công việc mới" (nzOnCancel)="handleCancelModalAdd()"
+  (nzOnOk)="handleClickAdd()">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label>Tiêu đề</nz-form-label>
+        <nz-input-group>
+          <input type="text" nz-input [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Tiêu đề công việc" />
+        </nz-input-group>
+        <nz-form-label>Nội dung</nz-form-label>
+        <nz-input-group>
+          <ckeditor 
+            [config]="{ placeholder:'Nội dung công việc' }" 
+            [editor]="Editor" 
+            [(ngModel)]="content" 
+            [ngModelOptions]="{standalone: true}">
+          </ckeditor>
+        </nz-input-group>
+        <nz-form-label>Ngày</nz-form-label>
+        <nz-input-group>
+          <nz-range-picker [(ngModel)]="dateRange" [ngModelOptions]="{standalone: true}"></nz-range-picker>
+        </nz-input-group>
+        <nz-form-label>Mức độ ưu tiên</nz-form-label>
+        <nz-input-group>
+          <nz-radio-group [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
+            <label nz-radio nzValue="{{item.key}}" *ngFor="let item of priorityArr">{{item.value}}</label>
+          </nz-radio-group>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
 <div class="row">
-  <div class="col">
+  <!-- <div class="col">
     <mat-accordion>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -47,7 +82,7 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-  </div>
+  </div> -->
   <div class="col">
     <mat-form-field>
       <input matInput (dateChange)="hanleChangeDateInput()" [(ngModel)]="dateFilterFrom" [matDatepicker]="pickerFrom"
@@ -64,6 +99,7 @@
   </div>
 </div>
 <hr>
+
 <div class="row">
   <div class="table-responsive table_todolist">
     <table class="table table-bordered table-hover">

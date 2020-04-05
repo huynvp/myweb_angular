@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ToDoListService } from './todolist.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { NzI18nService, en_US } from 'ng-zorro-antd';
 declare var $: any;
 
 export interface PopupData {
@@ -18,7 +20,10 @@ export interface PopupData {
   ]
 })
 export class TodolistComponent implements OnInit {
+  showModalAdd = false;
+
   datas = [];
+  public Editor = ClassicEditor;
   dateChange = null;
   dateStrView = null;
   panelOpenState = false;
@@ -41,10 +46,9 @@ export class TodolistComponent implements OnInit {
   dateFilterTo: any;
 
   title: string;
-  content: string;
-  dateFrom: string;
-  dateTo: string;
+  content: string = '';
   priority: any;
+  dateRange:any;
 
   idEdit: any;
   titleEdit: string;
@@ -55,13 +59,14 @@ export class TodolistComponent implements OnInit {
   processEdit: any = 0;
   finishEdit: any;
 
-  constructor(private todolist: ToDoListService, private spinner: NgxSpinnerService, public dialog: MatDialog) {
+  constructor(private i18n: NzI18nService, private todolist: ToDoListService, private spinner: NgxSpinnerService, public dialog: MatDialog) {
 
   }
 
   ngOnInit() {
-    this.dateFilterFrom = new Date();
-    this.dateFilterTo = new Date();
+    this.i18n.setLocale(en_US);
+    this.dateFilterFrom = null;
+    this.dateFilterTo = null;
     this.showAll();
   }
 
@@ -124,7 +129,7 @@ export class TodolistComponent implements OnInit {
 
   convertDateToString(dateStr: string) {
     if (dateStr === null) {
-      var date = new Date();
+      return '';
     }
     else {
       var date = new Date(dateStr);
@@ -148,15 +153,31 @@ export class TodolistComponent implements OnInit {
 
   handleClickAdd() {
     this.addNewData();
+    this.showModalAdd = false;
+  }
+
+  handelShowModalAdd() {
+    this.showModalAdd = true;
+  }
+
+  handleCancelModalAdd() {
+    this.showModalAdd = false;
   }
 
   async addNewData() {
-    this.spinner.show();
+    // this.spinner.show();
+    var date = this.dateRange;
+    if(date[0] == undefined) {
+      date[0] = new Date();
+    }
+    if(date[1] == undefined) {
+      date[1] = new Date();
+    }
     var data = JSON.stringify({
       Title: this.title,
       Content: this.content,
-      DateStart: this.convertDateToString(this.dateFrom),
-      DateEnd: this.convertDateToString(this.dateTo),
+      DateStart: this.convertDateToString(date[0]),
+      DateEnd: this.convertDateToString(date[1]),
       Priority: this.priority
     });
     await this.todolist.addNewData(data)

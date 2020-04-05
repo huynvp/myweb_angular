@@ -1,11 +1,16 @@
 <h4>Báo cáo thông kê</h4>
 <button (click)="handleGoBack()" class="btn btn-secondary">Go back</button>
-
-<ul nz-list [nzDataSource]="data" nzBordered nzSize="large" [nzHeader]="'Header'" [nzFooter]="'Footer'"
+<nz-divider></nz-divider>
+<ul nz-list [nzDataSource]="data" nzBordered nzSize="large"
     [nzRenderItem]="largeItem">
     <ng-template #largeItem let-item>
-        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item.name" nzNoFlex></li>
-        <ng-template #opAction><a (click)="showDetail(item.detail)">edit</a></ng-template>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="report" nzNoFlex></li>
+        <ng-template #report>
+            <p>Tên ví tiền {{item.name}}</p>
+            <p>Tổng chi: </p>
+            <p>Tổng thu</p>
+        </ng-template>
+        <ng-template #opAction><a (click)="showDetail(item.detail)"><i class="fas fa-info-circle"></i> Xem chi tiết</a></ng-template>
     </ng-template>
 </ul>
 

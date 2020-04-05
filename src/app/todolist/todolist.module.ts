@@ -4,7 +4,7 @@ import { TodolistadminComponent } from './ToDoListAdmin/todolistadmin.component'
 import { Routes,RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDatepickerModule, MatDatepickerInput} from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +15,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgZorroAntdModule, NzDatePickerModule, NzButtonModule, NzModalModule, NzFormModule, NzSelectModule, NzPopconfirmModule, NzIconModule, NzDividerModule } from 'ng-zorro-antd';
 
 const routes: Routes = [
     { 
@@ -44,7 +45,19 @@ const routes: Routes = [
         MatRadioModule,
         MatSlideToggleModule,
         MatSliderModule,
-        MatDialogModule
+        MatDialogModule,
+
+        NgZorroAntdModule,
+        NzDatePickerModule,
+        NzButtonModule,
+        NzModalModule,
+        NzFormModule,
+        FormsModule,
+        NzSelectModule,
+        NzPopconfirmModule,
+        NzIconModule,
+        NzDividerModule,
+        ReactiveFormsModule
     ],
     declarations: [
         TodolistComponent,
