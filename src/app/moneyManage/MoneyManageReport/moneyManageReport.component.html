@@ -15,14 +15,12 @@
 </ul>
 
 <nz-modal [(nzVisible)]="showModal" nzTitle="Xuất chi tiết giao dịch" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-    <nz-list [nzDataSource]="detailCorona" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
-        <div *ngFor="let item of detail">
-            <p>{{item.categories.name}} - {{item.content}}</p>
-            <p [class.text-danger]="item.categories.type==0"
-                [class.text-primary]="item.categories.type==1">{{formatMoney(item.money, item.categories.type)}}</p>
-            
-            <span nz-text><code>{{convertDateTimeToStrView(item.date)}}</code></span>
-            <nz-divider></nz-divider>
-        </div>
-        </nz-list>
+    <div *ngFor="let item of detail">
+        <p>{{item.categories.name}} - {{item.content}}</p>
+        <p [class.text-danger]="item.categories.type==0"
+            [class.text-primary]="item.categories.type==1">{{formatMoney(item.money, item.categories.type)}}</p>
+        
+        <span nz-text><code>{{convertDateTimeToStrView(item.date)}}</code></span>
+        <nz-divider></nz-divider>
+    </div>
   </nz-modal>
