@@ -6,9 +6,10 @@
     <ng-template #largeItem let-item>
         <li nz-list-item [nzActions]="[opAction]" [nzContent]="report" nzNoFlex></li>
         <ng-template #report>
-            <p>Tên ví tiền {{item.name}}</p>
-            <p>Tổng chi: </p>
-            <p>Tổng thu</p>
+            <p><strong>Tên ví tiền: {{item.name}}</strong></p>
+            <p>Tổng chi: {{formatMoney(tongChi(item.detail))}}</p>
+            <p>Tổng thu: {{formatMoney(tongThu(item.detail))}}</p>
+            <p>Số dư còn lại {{formatMoney(tongDu(item.detail))}}</p>
         </ng-template>
         <ng-template #opAction><a (click)="showDetail(item.detail)"><i class="fas fa-info-circle"></i> Xem chi tiết</a></ng-template>
     </ng-template>

@@ -61,4 +61,39 @@ export class MoneyManageReportComponent extends BaseComponent implements OnInit 
   handleOk() {
     this.showModal = false;    
   }
+
+  /* check report */
+  tongChi(detail) {
+    let tongChi = 0;
+    detail.forEach(e => {
+      if(e['categories']['type'] == 0) {
+        tongChi += (e['money']*1);
+      }
+    })
+    return tongChi;
+  }
+
+  tongThu(detail) {
+    let tongThu = 0;
+    detail.forEach(e => {
+      if(e['categories']['type'] == 1) {
+        tongThu += (e['money']*1);
+      }
+    })
+    return tongThu;
+  }
+
+  tongDu(detail) {
+    let tongThu = 0;
+    let tongChi = 0;
+    detail.forEach(e => {
+      if(e['categories']['type'] == 0) {
+        tongChi += (e['money']*1);
+      }
+      if(e['categories']['type'] == 1) {
+        tongThu += (e['money']*1);
+      }
+    })
+    return tongThu -  tongChi;
+  }
 }
