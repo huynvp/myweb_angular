@@ -20,10 +20,6 @@ export class AppService{
     }
 
     refreshToken() {
-        console.log('========');
-        console.log(this.accessToken);
-        console.log(this.refresh_token);
-        console.log('========');
         let json = JSON.stringify({
         	refreshToken: this.refresh_token
         })

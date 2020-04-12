@@ -1,62 +1,51 @@
-<div class="container fadeIn first">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h3>Change infomation</h3>
-        </div>
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <label for="">Name</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        [(ngModel)]="name" 
-                        [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        [(ngModel)]="email"
-                        [ngModelOptions]="{standalone: true}"
-                        readonly>
-                </div>
-                <div class="form-group">
-                    <label for="">Birthday</label>
-                    <input 
-                        type="date" 
-                        class="form-control"
-                        [(ngModel)]="birthday"
-                        [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="form-group">
-                    <label for="">Address</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        [(ngModel)]="address"
-                        [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="form-group">
-                    <label for="">Phone</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        [(ngModel)]="phone"
-                        [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="form-group">
-                    <label for="">Avatar</label>
-                    <input 
-                        type="file" 
-                        class="form-control"
-                        (change)="onFileSelected($event)">
-                </div>
-                <button class="btn btn-success" (click)="handleChangeInfo()">Change infomation</button>
-                 - 
-                <a class="btn btn-warning" routerLink="/home">Back to home</a>
+<div class="container">
+    <nz-spin [nzSpinning]="isLoading">
+        <nz-card nzTitle="Thay đổi thông tin">
+            <form nz-form>
+                <nz-form-item>
+                    <nz-form-label nzFor="name">Tên</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="name" type="text" id="name" [(ngModel)]="name">
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzFor="email">Email</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="email" type="email" id="email" [(ngModel)]="email" readonly>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzFor="birthday">Ngày sinh</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker [(ngModel)]="birthday" name="birthday"></nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzFor="address">Địa chỉ</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="address" type="text" id="address" [(ngModel)]="address">
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzFor="phone">Điện thoại</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="phone" type="text" id="phone" [(ngModel)]="phone">
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzFor="file">Hình đại diện</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="file" type="file" id="file" (change)="onFileSelected($event)">
+                    </nz-form-control>
+                </nz-form-item>
+
+                <button nz-button nzType="primary" (click)="handleChangeInfo()">Cập nhật thông tin</button>
             </form>
-        </div>
-    </div>
+        </nz-card>
+    </nz-spin>
 </div>

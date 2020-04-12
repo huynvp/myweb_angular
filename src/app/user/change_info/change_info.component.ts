@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChangeInfoService } from './change_info.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { en_US, NzI18nService } from 'ng-zorro-antd';
 declare var $: any;
 
 @Component({
@@ -17,14 +18,17 @@ export class ChangeInfoComponent implements OnInit {
   public birthday:string = '';
   public phone:string = '';
   public file = null;
+  public isLoading: boolean=false;
 
   constructor(
+    private i18n: NzI18nService,
     private change_info_service: ChangeInfoService,
     private router:Router
     ) { 
   }
 
   ngOnInit() {
+    this.i18n.setLocale(en_US);
     this.change_info_service.getInfo()
     .then(res => {
       this.name = res['data']['name'];
@@ -44,8 +48,9 @@ export class ChangeInfoComponent implements OnInit {
     this.file = event.target.files['0'];
   }
 
-  handleChangeInfo() {
-    this.change_info_service.changeInfo(this.name, this.birthday, this.address, this.phone, this.file)
+  async handleChangeInfo() {
+    this.isLoading = true;
+    await this.change_info_service.changeInfo(this.name, this.birthday, this.address, this.phone, this.file)
     .then(res => {
       $.notify({
         icon: 'glyphicon glyphicon-remove',
@@ -66,6 +71,8 @@ export class ChangeInfoComponent implements OnInit {
       });
       console.log(err)
     })
+
+    this.isLoading = false;
   }
 
 

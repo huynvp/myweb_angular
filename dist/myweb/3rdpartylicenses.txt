@@ -229,10 +229,6 @@ MIT
 @angular/forms
 MIT
 
-@angular/material/form-field
-
-@angular/material/radio
-
 @angular/material/slide-toggle
 
 @angular/platform-browser
@@ -939,6 +935,8 @@ ng-zorro-antd/button
 
 ng-zorro-antd/calendar
 
+ng-zorro-antd/card
+
 ng-zorro-antd/checkbox
 
 ng-zorro-antd/date-picker
@@ -974,6 +972,8 @@ ng-zorro-antd/radio
 ng-zorro-antd/select
 
 ng-zorro-antd/skeleton
+
+ng-zorro-antd/slider
 
 ng-zorro-antd/spin
 

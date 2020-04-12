@@ -21,6 +21,8 @@ export interface PopupData {
 })
 export class TodolistComponent implements OnInit {
   showModalAdd = false;
+  showModalEdit = false;
+  loading = false;
 
   datas = [];
   public Editor = ClassicEditor;
@@ -53,8 +55,7 @@ export class TodolistComponent implements OnInit {
   idEdit: any;
   titleEdit: string;
   contentEdit: string;
-  dateFromEdit: any;
-  dateToEdit: any;
+  dateRangeEdit:any;
   priorityEdit: any;
   processEdit: any = 0;
   finishEdit: any;
@@ -92,10 +93,14 @@ export class TodolistComponent implements OnInit {
     this.spinner.hide();
   }
 
-  async hanleChangeDateInput() {
-    this.spinner.show();
-    await this.showAll();
-    this.spinner.hide();
+  async hanleChangeDateInput(event) {
+    if(event[0] != undefined && event[1] != undefined) {
+      this.spinner.show();
+      this.dateFilterFrom = event[0];
+      this.dateFilterTo = event[1];
+      await this.showAll();
+      this.spinner.hide();
+    }
   }
 
   async hanleChangeCheckFinish(id, checked) {
@@ -148,6 +153,8 @@ export class TodolistComponent implements OnInit {
     this.addNewData();
   }
 
+  // modal add
+
   handleClickAdd() {
     this.addNewData();
     this.showModalAdd = false;
@@ -159,6 +166,20 @@ export class TodolistComponent implements OnInit {
 
   handleCancelModalAdd() {
     this.showModalAdd = false;
+  }
+
+  //modal edit
+  handleClickEdit() {
+    this.handleEdit();
+    this.showModalEdit = false;
+  }
+
+  handelShowModalEdit() {
+    this.showModalEdit = true;
+  }
+
+  handleCancelModalEdit() {
+    this.showModalEdit = false;
   }
 
   async addNewData() {
@@ -225,18 +246,18 @@ export class TodolistComponent implements OnInit {
 
   async hanleLoadDetail(id) {
     this.spinner.show();
+    this.showModalEdit = true;
     await this.todolist.getDetail(id)
       .then(res => {
         var data = res['data'];
         this.idEdit = data['id'];
         this.titleEdit = data['title'];
         this.contentEdit = data['content'];
-        this.dateFromEdit = new Date(data['dateStart']);
-        this.dateToEdit = new Date(data['dateEnd']);
+        this.dateRangeEdit = [new Date(data['dateStart']), new Date(data['dateEnd'])]
         this.priorityEdit = data['priority'];
         this.processEdit = data['percent'];
         this.finishEdit = data['finish'];
-        // console.log(this)
+        // console.log(this.priorityEdit)
       })
       .catch(err => {
         $.notify({
@@ -250,12 +271,16 @@ export class TodolistComponent implements OnInit {
   }
 
   async handleEdit() {
-    this.spinner.show();
+    var dateRange = this.dateRangeEdit;
+    if(dateRange[0] == undefined || dateRange[1] == undefined) {
+      alert('Nhập đầy đủ ngày bắt đầu và kết thúc');
+      return;
+    }
     var req = JSON.stringify({
       Title: this.titleEdit,
       Content: this.contentEdit,
-      DateStart: this.convertDateToString(this.dateFromEdit),
-      DateEnd: this.convertDateToString(this.dateToEdit),
+      DateStart: this.convertDateToString(dateRange[0]),
+      DateEnd: this.convertDateToString(dateRange[1]),
       Priority: this.priorityEdit,
       Percent: this.processEdit
     });
