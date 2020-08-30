@@ -53,11 +53,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
       // console.log(this.seconds);
     }, 500);
     this.loading = true;
-    await this.getCorona();
     this.loading = false;
-    this.time2 = setInterval(async () => {
-      await this.getCorona();
-    }, 50000);
     this.spinner.show();
     await super.ngOnInit();
     this.http.get(`${environment.baseUrl}/user/me`, {
@@ -88,13 +84,13 @@ export class IndexComponent extends BaseComponent implements OnInit {
     this.spinner.hide();
   }
 
-  async getCorona() {
-    await this.app.callApiCorona()
-    .then(data => {
-      console.log(data)
-      this.corona = data['data'];
-    })
-  }
+  // async getCorona() {
+  //   await this.app.callApiCorona()
+  //   .then(data => {
+  //     console.log(data)
+  //     this.corona = data['data'];
+  //   })
+  // }
 
   handleCancel() {
     this.showModal = false;

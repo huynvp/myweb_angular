@@ -10,18 +10,18 @@ import { BaseComponent } from '../../shread/base.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent extends BaseComponent implements OnInit {
+export class HomeComponent implements OnInit {
   username: string;
   url: string = "";
   admin: string = "";
   permission: string;
   constructor(public router: Router, public http: HttpClient, private spinner: NgxSpinnerService) {
-    super(router, http);
+    // super(router, http);
     this.url = ``;
   }
   async ngOnInit() {
     this.spinner.show();
-    await super.ngOnInit();
+    // await super.ngOnInit();
     this.http.get(`${environment.baseUrl}/user/me`, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.access_token

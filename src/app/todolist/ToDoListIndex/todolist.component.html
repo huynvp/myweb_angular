@@ -1,7 +1,10 @@
 <h4 class="title">to do list</h4>
 <div class="row">
   <div class="col">
-    <button class="btn btn-sm btn-primary" (click)="handelShowModalAdd()">Thêm công việc mới</button>
+    <button class="btn btn-sm btn-primary" (click)="handelShowModalAdd()">
+      <i class="fas fa-folder-plus"></i> 
+      <span> Thêm công việc mới</span>
+    </button>
   </div>
   <div class="col">
     <nz-range-picker (nzOnCalendarChange)=hanleChangeDateInput($event)></nz-range-picker>
@@ -24,31 +27,28 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <ng-template *ngFor="let item of datas"> -->
         <ng-template ngFor let-item [ngForOf]="datas" let-i="index">
           <tr>
             <td class="table_checkbox">
-              <mat-slide-toggle [checked]="item.finish" (change)="hanleChangeCheckFinish(item.id, item.finish)">
+              <mat-slide-toggle [checked]="item.finish" (change)="hanleChangeCheckFinish(item.key, item.finish)">
               </mat-slide-toggle>
             </td>
             <td (click)="showContent(item.title, item.content)">{{item.title}}</td>
-            <td (click)="hanleLoadDetail(item.id)">
-              {{convertDateToStrView(item.dateStart)}}</td>
-            <td (click)="hanleLoadDetail(item.id)">
-              {{convertDateToStrView(item.dateEnd)}}</td>
-            <td (click)="hanleLoadDetail(item.id)">
+            <td (click)="hanleLoadDetail(item.key)">{{convertDateToStrView(item.dateStart)}}</td>
+            <td (click)="hanleLoadDetail(item.key)">{{convertDateToStrView(item.dateEnd)}}</td>
+            <td (click)="hanleLoadDetail(item.key)">
               <span *ngIf="item.priority == 1" class="text-primary">Nhẹ</span>
               <span *ngIf="item.priority == 2" class="text-warning">Trung bình</span>
               <span *ngIf="item.priority == 3" class="text-danger">Khẩn cấp</span>
             </td>
-            <td (click)="hanleLoadDetail(item.id)" class="table_proccess">
+            <td (click)="hanleLoadDetail(item.key)" class="table_proccess">
               <div class="progress" style="height:100%;">
                 <div class="progress-bar" style="height:100%" [ngStyle]="{'width':item.percent + '%'}">{{item.percent}}%
                 </div>
               </div>
             </td>
             <td>
-              <button class="btn btn-danger btn-sm rounded-pill" (click)="handleDeleteNote(item.id)">Xóa</button>
+              <button class="btn btn-danger btn-sm rounded-pill" (click)="handleDeleteNote(item.key)">Xóa</button>
             </td>
           </tr>
         </ng-template>

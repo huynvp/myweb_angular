@@ -1,12 +1,33 @@
 <h4>Quản lí ví tiền</h4>
-<button class="btn btn-secondary" (click)="handleGoBack()">Go back</button>
+<button class="btn btn-sm btn-secondary" (click)="handleGoBack()"><i class="fas fa-backspace"></i> Back</button>
 <hr>
 <div class="row">
     <div class="col-6">
         <form action="" class="form-inline" style="margin-bottom: 2%;">
-            <input style="margin-right: 2%;" [(ngModel)]="nameAddWallet" [ngModelOptions]="{standalone: true}" type="text" class="form-control" placeholder="Nhập tên ví tiền thêm" />
+            <input style="margin-right: 2%;" [(ngModel)]="nameAddWallet" [ngModelOptions]="{standalone: true}"
+                type="text" class="form-control" placeholder="Nhập tên ví tiền thêm" />
             <button class="btn btn-success btn-sm" (click)="handleAddWallet()">Thêm ví tiền</button>
         </form>
+        <ul
+            nz-list
+            [nzDataSource]="walletList"
+            nzBordered
+            nzSize="large"
+            [nzHeader]="'Ví tiền'"
+            [nzFooter]="'Footer'"
+            [nzRenderItem]="walletItem"
+            >
+        <!-- <nz-list [nzDataSource]="walletList" nzBordered [nzHeader]="'Ví tiền'" [nzRenderItem]="walletItem"> -->
+            <ng-template #walletItem let-item>
+                <nz-list-item>
+                    <li nz-list-item [nzActions]="[opAction]" [nzContent]="item.name" nzNoFlex></li>
+                    <ng-template #opAction>
+                        <a href="javascript:void(0);" (click)="hanleDeleteWallet(item.key)">Xóa ví</a>
+                    </ng-template>
+                </nz-list-item>
+            </ng-template>
+        </ul>
+
         <ul class="list-group">
             <li class="list-group-item active">Ví tiền</li>
             <li class="list-group-item">Tất cả</li>
@@ -23,15 +44,18 @@
     <div class="col-6">
         <ul class="list-group">
             <li class="list-group-item active">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" [disabled]="keyWallet==null" data-target="#addCategories1" id="addCategories">Thêm danh mục</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" [disabled]="keyWallet==null"
+                    data-target="#addCategories1" id="addCategories">Thêm danh mục</button>
                 Danh mục
-                <input type="text" [disabled]="keyWallet==null" [(ngModel)]="nameWallet" name="nameWallet"/>
-                <button class="btn btn-warning btn-sm" [disabled]="keyWallet==null" (click)="handleEditWallet()">Chỉnh sửa tên ví</button>
+                <input type="text" [disabled]="keyWallet==null" [(ngModel)]="nameWallet" name="nameWallet" />
+                <button class="btn btn-warning btn-sm" [disabled]="keyWallet==null" (click)="handleEditWallet()">Chỉnh
+                    sửa tên ví</button>
             </li>
             <ng-template ngFor let-item [ngForOf]="categoriesList" let-i="index">
                 <li class="list-group-item">
-                    {{item.name}} 
-                    <a class="link" href="javascript:void(0);" (click)="loadDetailCategories(item.key)"data-toggle="modal" data-target="#modalChangeWallet">
+                    {{item.name}}
+                    <a class="link" href="javascript:void(0);" (click)="loadDetailCategories(item.key)"
+                        data-toggle="modal" data-target="#modalChangeWallet">
                         Chỉnh sửa
                     </a>
                 </li>
@@ -54,13 +78,14 @@
                 <form>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Tên danh mục</label>
-                        <input type="text" [(ngModel)]="nameAddCategories" name="nameAddCategories" class="form-control">
+                        <input type="text" [(ngModel)]="nameAddCategories" name="nameAddCategories"
+                            class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Loại:</label><br>
-                        <input type="radio" [(ngModel)]="typeAddCategories" name="typeAddCategories" value="0"> 
+                        <input type="radio" [(ngModel)]="typeAddCategories" name="typeAddCategories" value="0">
                         <span> Chi</span><br>
-                        <input type="radio" [(ngModel)]="typeAddCategories" name="typeAddCategories" value="1"> 
+                        <input type="radio" [(ngModel)]="typeAddCategories" name="typeAddCategories" value="1">
                         <span> Thu</span>
                     </div>
                 </form>
@@ -87,18 +112,21 @@
                 <form>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Tên danh mục</label>
-                        <input type="text" [(ngModel)]="nameChangeCategories" [ngModelOptions]="{standalone: true}" class="form-control">
+                        <input type="text" [(ngModel)]="nameChangeCategories" [ngModelOptions]="{standalone: true}"
+                            class="form-control">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Loại:</label><br>
-                        <select class="form-control" [(ngModel)]="typeChangeCategories" [ngModelOptions]="{standalone: true}">
+                        <select class="form-control" [(ngModel)]="typeChangeCategories"
+                            [ngModelOptions]="{standalone: true}">
                             <option value="0">Chi</option>
                             <option value="1">Thu</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Tên danh mục</label>
-                        <select class="form-control" [(ngModel)]="keyWalletChange" [ngModelOptions]="{standalone: true}">
+                        <select class="form-control" [(ngModel)]="keyWalletChange"
+                            [ngModelOptions]="{standalone: true}">
                             <ng-template ngFor let-item [ngForOf]="walletList" let-i="index">
                                 <option [selected]="item.key==keyWallet" value="{{item.key}}">{{item.name}}</option>
                             </ng-template>

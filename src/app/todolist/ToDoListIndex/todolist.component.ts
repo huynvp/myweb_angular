@@ -4,6 +4,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NzI18nService, en_US } from 'ng-zorro-antd';
+import { BaseComponent } from 'src/shread/base.component';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 declare var $: any;
 
 export interface PopupData {
@@ -19,7 +22,7 @@ export interface PopupData {
     ToDoListService
   ]
 })
-export class TodolistComponent implements OnInit {
+export class TodolistComponent extends BaseComponent implements OnInit {
   showModalAdd = false;
   showModalEdit = false;
   loading = false;
@@ -60,11 +63,19 @@ export class TodolistComponent implements OnInit {
   processEdit: any = 0;
   finishEdit: any;
 
-  constructor(private i18n: NzI18nService, private todolist: ToDoListService, private spinner: NgxSpinnerService, public dialog: MatDialog) {
-
+  constructor(
+    private i18n: NzI18nService, 
+    private todolist: ToDoListService, 
+    private spinner: NgxSpinnerService, 
+    public dialog: MatDialog, 
+    public router: Router, 
+    public http: HttpClient
+    ) {
+    super(router, http);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await super.ngOnInit();
     this.i18n.setLocale(en_US);
     this.dateFilterFrom = null;
     this.dateFilterTo = null;
